@@ -1,7 +1,4 @@
 
-// Keep these placeholder values until the final Firebase connection step.
-// Then replace them with the values from:
-// Firebase Console -> Project settings -> General -> Your apps -> SDK setup and configuration.
 export const firebaseConfig = {
   apiKey: "PASTE_API_KEY_HERE",
   authDomain: "PASTE_PROJECT_ID.firebaseapp.com",

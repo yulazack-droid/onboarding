@@ -10,182 +10,132 @@
 <body>
   <div class="app-shell">
     <header class="hero">
-      <div class="hero-brand">
-        <div id="brandAsset" class="brand-asset">
-          <span class="brand-word">SCOPELY</span>
-          <span class="brand-sub">AI Transformation</span>
-        </div>
+      <div class="hero-main">
+        <div class="brand-mark">S</div>
         <div>
-          <p class="eyebrow">First-quarter workspace</p>
+          <p class="eyebrow light">First-quarter workspace</p>
           <h1>Mary Fisher</h1>
           <p class="hero-subtitle">AI Transformation Lead · Manager: Yula Zack</p>
         </div>
       </div>
 
       <div class="hero-meta">
-        <div class="meta-item">
-          <span>Start date</span>
-          <strong>August 11, 2026</strong>
-        </div>
-        <div class="meta-item">
-          <span>Current phase</span>
-          <strong id="currentPhase">Pre-onboarding</strong>
-        </div>
-        <div class="meta-item">
-          <span>Day counter</span>
-          <strong id="dayCounter">Before start</strong>
-        </div>
+        <div><span>Start date</span><strong>August 11, 2026</strong></div>
+        <div><span>Current phase</span><strong id="currentPhase">Pre-onboarding</strong></div>
+        <div><span>Day counter</span><strong id="dayCounter">Before start</strong></div>
       </div>
 
       <div class="hero-actions">
-        <span id="saveStatus" class="save-status">Saved locally</span>
-        <button id="signInBtn" class="button primary hidden">Sign in with Google</button>
-        <button id="signOutBtn" class="button ghost hidden">Sign out</button>
+        <span id="saveStatus">Saved locally</span>
+        <button id="signInBtn" class="button light hidden">Sign in with Google</button>
+        <button id="signOutBtn" class="button glass hidden">Sign out</button>
       </div>
     </header>
 
-    <article class="card operating-model">
-          <div>
-            <p class="eyebrow">Ongoing role operating model</p>
-            <h3>This allocation applies beyond the first 90 days</h3>
-          </div>
-          <div class="allocation">
-            <div><strong>70%</strong><span>Hands-on delivery</span></div>
-            <div><strong>20%</strong><span>Project management</span></div>
-            <div><strong>10%</strong><span>Relationship building & opportunity mapping</span></div>
-          </div>
-        </article>
+    <section class="operating-strip">
+      <div>
+        <p class="eyebrow">Ongoing role operating model</p>
+        <strong>This allocation applies beyond the first 90 days</strong>
+      </div>
+      <div class="allocation">
+        <div><strong>70%</strong><span>Hands-on delivery</span></div>
+        <div><strong>20%</strong><span>Project management</span></div>
+        <div><strong>10%</strong><span>Stakeholder engagement & opportunity mapping</span></div>
+      </div>
+    </section>
 
-
-    <nav class="tabs" aria-label="Workspace navigation">
+    <nav class="tabs">
       <button class="tab active" data-tab="overview">Overview</button>
       <button class="tab" data-tab="days30">30 Days</button>
       <button class="tab" data-tab="days60">60 Days</button>
       <button class="tab" data-tab="days90">90 Days</button>
       <button class="tab" data-tab="people">People</button>
       <button class="tab" data-tab="barcelona">Barcelona</button>
-      <button class="tab" data-tab="opportunities">Initiatives</button>
+      <button class="tab" data-tab="initiatives">Initiatives</button>
       <button class="tab" data-tab="notes">Notes</button>
     </nav>
 
-    <main class="workspace">
+    <main>
       <section id="overview" class="panel active">
-        <div class="overview-layout">
-          <article class="card overview-intro">
+        <article class="mission-card">
+          <div>
             <p class="eyebrow">Role mission</p>
             <h2>Build trust, deliver practical value and establish a sustainable AI capability</h2>
-            <p>
+            <p class="muted">
               The first quarter is designed to create a strong foundation: understand the studio,
               build productive relationships, map and prioritize opportunities, deliver one focused
               optimization, and shape the next six months of AI transformation.
             </p>
+          </div>
+          <div class="mission-pillars">
+            <div><span>01</span><strong>Understand</strong><p>Learn the organization, workflows, tools, dashboards and business context.</p></div>
+            <div><span>02</span><strong>Explore</strong><p>Identify manual effort, human-error risk and capacity gaps where AI can help.</p></div>
+            <div><span>03</span><strong>Deliver</strong><p>Turn one focused opportunity into a practical, measurable optimization.</p></div>
+          </div>
+        </article>
 
-            <div class="focus-pillars">
+        <div class="overview-grid">
+          <article class="card weekly-focus-card">
+            <div class="section-header">
               <div>
-                <span class="pillar-icon">01</span>
-                <strong>Understand</strong>
-                <p>Learn the organization, workflows, tools, dashboards and business context.</p>
+                <p class="eyebrow">This week</p>
+                <h3 id="currentWeekTitle">Key initiatives</h3>
               </div>
-              <div>
-                <span class="pillar-icon">02</span>
-                <strong>Explore</strong>
-                <p>Identify manual effort, human-error risks and capacity gaps where AI can help.</p>
-              </div>
-              <div>
-                <span class="pillar-icon">03</span>
-                <strong>Deliver</strong>
-                <p>Turn one focused opportunity into a practical, measurable optimization.</p>
-              </div>
+              <button id="addWeeklyTaskBtn" class="button secondary">Add task</button>
             </div>
+            <div id="weeklyTasks" class="weekly-list"></div>
           </article>
 
-          <div class="overview-right">
-            <article class="card progress-card">
-              <div class="card-heading">
-                <div>
-                  <p class="eyebrow">Overall progress</p>
-                  <div class="progress-number" id="overallProgress">0%</div>
-                </div>
-                <span class="soft-badge" id="phaseBadge">Pre-onboarding</span>
-              </div>
-              <div class="progress-track">
-                <div id="overallProgressBar" class="progress-bar"></div>
-              </div>
-              <div class="category-progress" aria-label="Progress by category">
-                <div class="category-row learning">
-                  <div class="category-label"><span>Learning</span><strong id="learningProgress">0%</strong></div>
-                  <div class="category-track"><div id="learningProgressBar" class="category-bar"></div></div>
-                </div>
-                <div class="category-row relationships">
-                  <div class="category-label"><span>Relationships</span><strong id="relationshipsProgress">0%</strong></div>
-                  <div class="category-track"><div id="relationshipsProgressBar" class="category-bar"></div></div>
-                </div>
-                <div class="category-row discovery">
-                  <div class="category-label"><span>Discovery</span><strong id="discoveryProgress">0%</strong></div>
-                  <div class="category-track"><div id="discoveryProgressBar" class="category-bar"></div></div>
-                </div>
-                <div class="category-row delivery">
-                  <div class="category-label"><span>Delivery</span><strong id="deliveryProgress">0%</strong></div>
-                  <div class="category-track"><div id="deliveryProgressBar" class="category-bar"></div></div>
-                </div>
-              </div>
-              <div class="progress-mini">
-                <span><strong id="peopleMetCount">0</strong> people met</span>
-                <span><strong id="opportunityCount">0</strong> initiatives</span>
-                <span><strong id="initiativesDelivered">0</strong> delivered</span>
-              </div>
-            </article>
-
-            <article class="card checkin-card">
-              <div class="card-heading">
-                <div>
-                  <p class="eyebrow">Our next check-in</p>
-                  <h3>Weekly manager conversation</h3>
-                </div>
-              </div>
-              <div class="two-fields">
-                <div>
-                  <label>Date</label>
-                  <input type="date" data-field="nextCheckinDate" />
-                </div>
-                <div>
-                  <label>Weekly sync with Shronger</label>
-                  <select data-field="shrSubsetStatus">
-                    <option value="Not scheduled">Not scheduled</option>
-                    <option value="Scheduled">Scheduled</option>
-                    <option value="Recurring">Recurring</option>
-                  </select>
-                </div>
-              </div>
-              <label>Topics, decisions and support needed</label>
-              <textarea data-field="nextCheckinTopics" placeholder="What should Mary and Yula cover?"></textarea>
-            </article>
-          </div>
+          <article class="card agenda-card">
+            <p class="eyebrow">Weekly 1:1 agenda</p>
+            <textarea data-field="weeklyAgenda" placeholder="Topics, decisions, questions, support needed and open items"></textarea>
+          </article>
         </div>
 
-        <article class="card weekly-card">
-          <div class="card-heading">
+        <article class="card progress-card">
+          <div class="section-header">
             <div>
-              <p class="eyebrow">Focus for the coming week</p>
-              <h3 id="overviewWeekTitle">Current week key activities</h3>
+              <p class="eyebrow">Progress dashboard</p>
+              <h3>Completion based on real activity</h3>
             </div>
-            <button id="addWeeklyTaskBtn" class="button secondary">Add extra task</button>
+            <div class="overall-progress">
+              <span>Overall</span>
+              <strong id="overallProgress">0%</strong>
+            </div>
           </div>
-          <div id="weeklyTasks" class="weekly-tasks"></div>
+
+          <div class="progress-categories">
+            <div class="progress-category learning">
+              <div><span>Learning</span><strong id="learningValue">0%</strong></div>
+              <div class="track"><div id="learningBar"></div></div>
+              <small>Access, organization, tools, dashboards and business context</small>
+            </div>
+            <div class="progress-category relationships">
+              <div><span>Stakeholder Engagement</span><strong id="relationshipsValue">0%</strong></div>
+              <div class="track"><div id="relationshipsBar"></div></div>
+              <small>Priority stakeholders, recurring cadences and established working relationships</small>
+            </div>
+            <div class="progress-category discovery">
+              <div><span>Discovery</span><strong id="discoveryValue">0%</strong></div>
+              <div class="track"><div id="discoveryBar"></div></div>
+              <small>Manual effort, human-error exposure, capacity gaps and validated opportunities</small>
+            </div>
+            <div class="progress-category delivery">
+              <div><span>Delivery</span><strong id="deliveryValue">0%</strong></div>
+              <div class="track"><div id="deliveryBar"></div></div>
+              <small>Solution delivery, measured value, roadmap and operating model</small>
+            </div>
+          </div>
         </article>
       </section>
 
       <section id="days30" class="panel">
-        <div class="panel-header">
+        <div class="phase-hero">
           <div>
-            <p class="eyebrow">Days 1–30</p>
+            <p class="eyebrow light">Days 1–30</p>
             <h2>Foundation, immersion and initial exploration</h2>
-            <p class="panel-description">
-              Build the practical and organizational foundation required to work effectively,
-              start structured exploration, and establish the first stakeholder relationships.
-            </p>
+            <p>August 11 – September 9, 2026</p>
           </div>
-          <span class="phase-date">Aug 11 – Sep 9, 2026</span>
         </div>
 
         <div class="week-tabs">
@@ -195,56 +145,46 @@
           <button class="week-tab" data-week="3">Week 4</button>
         </div>
 
-        <div id="weekDetail" class="week-detail"></div>
+        <div id="weekDetail"></div>
 
-        <div class="phase-review-grid">
+        <div class="phase-bottom-grid">
           <article class="card">
             <p class="eyebrow">30-day deliverables</p>
-            <ul id="deliverables30" class="display-list"></ul>
+            <ul id="deliverables30" class="standard-list"></ul>
           </article>
           <article class="card">
-            <p class="eyebrow">30-day success criteria review</p>
+            <p class="eyebrow">30-day success criteria</p>
             <div id="success30" class="success-review"></div>
           </article>
         </div>
 
-        <article class="card reflection-card">
-          <div>
-            <label>Mary's 30-day reflection</label>
-            <textarea data-field="maryReflection30" placeholder="What feels achieved? What remains unclear?"></textarea>
-          </div>
-          <div>
-            <label>Yula's 30-day assessment</label>
-            <textarea data-field="yulaAssessment30" placeholder="Manager assessment, feedback and next expectations"></textarea>
-          </div>
+        <article class="card dual-reflection">
+          <div><label>Mary's 30-day reflection</label><textarea data-field="maryReflection30"></textarea></div>
+          <div><label>Yula's 30-day assessment</label><textarea data-field="yulaAssessment30"></textarea></div>
         </article>
       </section>
 
       <section id="days60" class="panel">
-        <div class="panel-header">
+        <div class="phase-hero">
           <div>
-            <p class="eyebrow">Days 31–60</p>
+            <p class="eyebrow light">Days 31–60</p>
             <h2>Structured portfolio mapping and opportunity validation</h2>
-            <p class="panel-description">
-              Move from immersion into a repeatable discovery approach across the portfolio,
-              establish stakeholder routines, and prioritize the first practical solution.
-            </p>
+            <p>September 10 – October 9, 2026</p>
           </div>
-          <span class="phase-date">Sep 10 – Oct 9, 2026</span>
         </div>
 
-        <div class="phase-content-grid">
+        <div class="phase-grid">
           <article class="card">
             <p class="eyebrow">Objectives</p>
-            <ul id="objectives60" class="check-list"></ul>
+            <div id="objectives60"></div>
           </article>
           <article class="card">
             <p class="eyebrow">Key deliverables</p>
-            <ul id="deliverables60" class="display-list"></ul>
+            <ul id="deliverables60" class="standard-list"></ul>
           </article>
         </div>
 
-        <article class="card discovery-framework">
+        <article class="card framework-card">
           <p class="eyebrow">Portfolio exploration framework</p>
           <div class="framework-grid">
             <div><strong>Manual effort</strong><span>Which recurring tasks consume the most time?</span></div>
@@ -255,102 +195,70 @@
         </article>
 
         <article class="card">
-          <p class="eyebrow">60-day success criteria review</p>
+          <p class="eyebrow">60-day success criteria</p>
           <div id="success60" class="success-review"></div>
         </article>
 
-        <article class="card reflection-card">
-          <div>
-            <label>Mary's 60-day reflection</label>
-            <textarea data-field="maryReflection60"></textarea>
-          </div>
-          <div>
-            <label>Yula's 60-day assessment</label>
-            <textarea data-field="yulaAssessment60"></textarea>
-          </div>
+        <article class="card dual-reflection">
+          <div><label>Mary's 60-day reflection</label><textarea data-field="maryReflection60"></textarea></div>
+          <div><label>Yula's 60-day assessment</label><textarea data-field="yulaAssessment60"></textarea></div>
         </article>
       </section>
 
       <section id="days90" class="panel">
-        <div class="panel-header">
+        <div class="phase-hero">
           <div>
-            <p class="eyebrow">Days 61–90</p>
+            <p class="eyebrow light">Days 61–90</p>
             <h2>Deliver, measure and establish the path forward</h2>
-            <p class="panel-description">
-              Deliver the first optimization or validated pilot, measure the value,
-              and align the next six months of delivery and organizational adoption.
-            </p>
+            <p>October 10 – November 8, 2026</p>
           </div>
-          <span class="phase-date">Oct 10 – Nov 8, 2026</span>
         </div>
 
-        <div class="phase-content-grid">
+        <div class="phase-grid">
           <article class="card">
             <p class="eyebrow">Objectives</p>
-            <ul id="objectives90" class="check-list"></ul>
+            <div id="objectives90"></div>
           </article>
           <article class="card">
             <p class="eyebrow">Key deliverables</p>
-            <ul id="deliverables90" class="display-list"></ul>
+            <ul id="deliverables90" class="standard-list"></ul>
           </article>
         </div>
 
-        <article class="card roadmap-card">
-          <p class="eyebrow">High-level six-month roadmap</p>
-          <div class="roadmap-columns">
-            <div>
-              <label>Now</label>
-              <textarea data-field="roadmapNow" placeholder="Immediate execution and validation"></textarea>
-            </div>
-            <div>
-              <label>Next</label>
-              <textarea data-field="roadmapNext" placeholder="Priority opportunities for the following quarter"></textarea>
-            </div>
-            <div>
-              <label>Later</label>
-              <textarea data-field="roadmapLater" placeholder="Longer-term capability and culture initiatives"></textarea>
-            </div>
+        <article class="card">
+          <p class="eyebrow">Six-month roadmap</p>
+          <div class="roadmap-grid">
+            <div><label>Now</label><textarea data-field="roadmapNow"></textarea></div>
+            <div><label>Next</label><textarea data-field="roadmapNext"></textarea></div>
+            <div><label>Later</label><textarea data-field="roadmapLater"></textarea></div>
           </div>
         </article>
 
         <article class="card">
-          <p class="eyebrow">90-day success criteria review</p>
+          <p class="eyebrow">90-day success criteria</p>
           <div id="success90" class="success-review"></div>
         </article>
 
-        <article class="card reflection-card">
-          <div>
-            <label>Mary's 90-day reflection</label>
-            <textarea data-field="maryReflection90"></textarea>
-          </div>
-          <div>
-            <label>Yula's 90-day assessment</label>
-            <textarea data-field="yulaAssessment90"></textarea>
-          </div>
+        <article class="card dual-reflection">
+          <div><label>Mary's 90-day reflection</label><textarea data-field="maryReflection90"></textarea></div>
+          <div><label>Yula's 90-day assessment</label><textarea data-field="yulaAssessment90"></textarea></div>
         </article>
       </section>
 
       <section id="people" class="panel table-panel">
-        <div class="panel-header compact">
+        <div class="table-header">
           <div>
             <p class="eyebrow">People</p>
-            <h2>Stakeholder meeting tracker</h2>
+            <h2>Stakeholder engagement tracker</h2>
           </div>
           <button id="addPersonBtn" class="button secondary">Add person</button>
         </div>
-
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Studio</th>
-                <th>Meeting purpose</th>
-                <th>Status</th>
-                <th>Follow-up</th>
-                <th>Key takeaways</th>
-                <th></th>
+                <th>Name</th><th>Role</th><th>Studio</th><th>Priority</th><th>Meeting purpose</th>
+                <th>Status</th><th>Follow-up</th><th>Relationship established</th><th>Key takeaways</th><th></th>
               </tr>
             </thead>
             <tbody id="peopleBody"></tbody>
@@ -359,111 +267,66 @@
       </section>
 
       <section id="barcelona" class="panel">
-        <div class="panel-header">
+        <div class="phase-hero">
           <div>
-            <p class="eyebrow">Barcelona visit</p>
+            <p class="eyebrow light">Barcelona visit</p>
             <h2>September 6–8, 2026</h2>
-            <p class="panel-description">
-              A manager-supported introduction trip focused on relationships, context and cross-functional alignment.
-            </p>
+            <p>Manager-supported introductions, context and cross-functional alignment</p>
           </div>
-          <span class="phase-date">Three-day visit</span>
         </div>
 
-        <div class="barcelona-grid">
-          <article class="card">
-            <p class="eyebrow">Visit objectives</p>
-            <div id="barcelonaObjectives" class="editable-list"></div>
-          </article>
-          <article class="card">
-            <p class="eyebrow">Preparation with Yula</p>
-            <div id="barcelonaPrep" class="editable-list"></div>
-          </article>
+        <div class="phase-grid">
+          <article class="card"><p class="eyebrow">Visit objectives</p><div id="barcelonaObjectives"></div></article>
+          <article class="card"><p class="eyebrow">Preparation with Yula</p><div id="barcelonaPrep"></div></article>
         </div>
 
         <article class="card">
-          <div class="card-heading">
-            <div>
-              <p class="eyebrow">Agenda and meeting schedule</p>
-              <h3>Build the trip together</h3>
-            </div>
+          <div class="section-header">
+            <div><p class="eyebrow">Agenda</p><h3>Build the trip together</h3></div>
             <button id="addBarcelonaMeetingBtn" class="button secondary">Add meeting</button>
           </div>
           <div class="table-wrap embedded">
             <table>
               <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Person / group</th>
-                  <th>Objective</th>
-                  <th>Location</th>
-                  <th>Preparation</th>
-                  <th></th>
-                </tr>
+                <tr><th>Date</th><th>Time</th><th>Person / group</th><th>Objective</th><th>Location</th><th>Preparation</th><th></th></tr>
               </thead>
               <tbody id="barcelonaBody"></tbody>
             </table>
           </div>
         </article>
 
-        <article class="card">
-          <label>Barcelona visit notes and follow-ups</label>
-          <textarea data-field="barcelonaNotes"></textarea>
-        </article>
+        <article class="card"><label>Visit notes and follow-ups</label><textarea data-field="barcelonaNotes"></textarea></article>
       </section>
 
-      <section id="opportunities" class="panel table-panel">
-        <div class="panel-header compact">
+      <section id="initiatives" class="panel table-panel">
+        <div class="table-header">
           <div>
             <p class="eyebrow">Initiatives</p>
             <h2>AI opportunities, quick wins and projects</h2>
-            <p class="panel-description">
-              Track each opportunity in one place, including the estimated timeline and scope,
-              then classify it as a quick win or a broader project.
-            </p>
           </div>
-          <button id="addOpportunityBtn" class="button secondary">Add initiative</button>
+          <button id="addInitiativeBtn" class="button secondary">Add initiative</button>
         </div>
-
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Initiative</th>
-                <th>Team / studio</th>
-                <th>Problem type</th>
-                <th>Estimated time</th>
-                <th>Scope</th>
-                <th>Type</th>
-                <th>Impact</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th></th>
+                <th>Initiative</th><th>Team / studio</th><th>Problem type</th><th>Estimated time</th>
+                <th>Scope</th><th>Type</th><th>Impact</th><th>Priority</th><th>Status</th><th>Notes</th><th></th>
               </tr>
             </thead>
-            <tbody id="opportunitiesBody"></tbody>
+            <tbody id="initiativesBody"></tbody>
           </table>
         </div>
       </section>
 
-
       <section id="notes" class="panel">
         <div class="notes-grid">
-          <article class="card">
-            <p class="eyebrow">Mary's notes</p>
-            <textarea class="notes-area" data-field="maryNotes" placeholder="Observations, questions, reflections and learning"></textarea>
-          </article>
-          <article class="card">
-            <p class="eyebrow">Yula's notes</p>
-            <textarea class="notes-area" data-field="yulaNotes" placeholder="Feedback, decisions, context and follow-ups"></textarea>
-          </article>
+          <article class="card"><p class="eyebrow">Mary's notes</p><textarea class="notes-area" data-field="maryNotes"></textarea></article>
+          <article class="card"><p class="eyebrow">Yula's notes</p><textarea class="notes-area" data-field="yulaNotes"></textarea></article>
         </div>
       </section>
     </main>
   </div>
-
   <script type="module" src="app.js"></script>
 </body>
 </html>
