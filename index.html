@@ -1,12 +1,245 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mary Fisher | AI Transformation Journey</title><style>
-:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#6b778c;--line:#dfe6ef;--blue:#0f6fff;--soft:#eaf2ff;--shadow:0 14px 34px rgba(28,45,78,.08)}*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}.app{width:min(1450px,calc(100% - 32px));margin:auto;padding:20px 0 36px}.top{display:grid;grid-template-columns:1.2fr 1.4fr auto;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:var(--shadow)}.brand{display:flex;gap:12px;align-items:center}.mark{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:800}.eyebrow{margin:0 0 4px;text-transform:uppercase;letter-spacing:.11em;font-size:.72rem;color:var(--blue);font-weight:800}h1,h2,h3,p{margin-top:0}h1{font-size:1.45rem;margin-bottom:0}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.meta div{border-left:1px solid var(--line);padding-left:12px;display:flex;flex-direction:column}.meta span,.muted{color:var(--muted);font-size:.82rem}.auth{display:flex;gap:8px;align-items:center}.tabs{display:flex;gap:5px;margin:15px 0;padding:5px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:auto}.tab,.subtab{border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;white-space:nowrap}.tab.active,.subtab.active{background:var(--soft);color:var(--blue)}.panel{display:none}.panel.active{display:block}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:15px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.card,.table-card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:19px}.big{font-size:2.4rem;font-weight:850}.track{height:9px;background:#e7edf5;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),#45b7ff)}.mission{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center;margin-bottom:15px}.allocation{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.allocation div{border:1px solid var(--line);background:#f8fafc;border-radius:12px;padding:13px}.allocation strong{display:block;font-size:1.4rem;color:var(--blue)}.allocation span{color:var(--muted);font-size:.8rem}.list{padding-left:18px;color:var(--muted);line-height:1.55}.subtabs{display:inline-flex;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:14px}.journey{display:grid;grid-template-columns:.8fr 1.2fr;gap:15px}.task{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:13px}.actions{display:flex;gap:9px;align-items:center}.chip{background:var(--soft);color:var(--blue);border-radius:99px;padding:8px 11px;font-size:.8rem;font-weight:700}.btn{border:0;border-radius:10px;padding:9px 13px;cursor:pointer;font-weight:750}.primary{background:var(--blue);color:#fff}.secondary{background:#f8fafc;border:1px solid var(--line)}.hidden{display:none}.table-card{overflow:auto}table{width:100%;border-collapse:collapse;min-width:920px}th{background:#f8fafc;color:var(--muted);text-align:left;text-transform:uppercase;letter-spacing:.08em;font-size:.7rem}th,td{padding:10px;border-bottom:1px solid var(--line)}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff;color:var(--text);outline:none}textarea{min-height:88px;resize:vertical}.large{min-height:380px}.delete{border:0;background:transparent;color:#d94b62;font-size:1.2rem;cursor:pointer}.wins{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.win{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:17px}.checkins{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}label{display:block;margin:10px 0 6px;color:var(--muted);font-size:.82rem}@media(max-width:1050px){.top{grid-template-columns:1fr}.meta,.grid3,.grid2,.mission,.journey,.wins,.checkins{grid-template-columns:1fr}}@media(max-width:700px){.app{width:calc(100% - 18px)}.meta{grid-template-columns:1fr}.meta div{border:0;padding:0}.allocation{grid-template-columns:1fr}.head,.auth{align-items:stretch;flex-direction:column}}
-</style></head><body><div class="app"><header class="top"><div class="brand"><div class="mark">AI</div><div><p class="eyebrow">AI Transformation Journey</p><h1>Mary Fisher</h1></div></div><div class="meta"><div><span>Manager</span><strong>Yula Zack</strong></div><div><span>Start date</span><strong>August 18, 2026</strong></div><div><span>Current status</span><strong id="dayCounter">Before start</strong></div></div><div class="auth"><span id="cloudStatus" class="chip">Local mode</span><button id="loginBtn" class="btn primary">Sign in with Google</button><button id="logoutBtn" class="btn secondary hidden">Sign out</button></div></header><nav class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="journey">Journey</button><button class="tab" data-tab="stakeholders">Stakeholders</button><button class="tab" data-tab="opportunities">Opportunities</button><button class="tab" data-tab="wins">Quick Wins</button><button class="tab" data-tab="notes">Notes</button></nav><main>
-<section id="overview" class="panel active"><div class="grid3"><article class="card"><p class="eyebrow">Overall progress</p><div id="overallProgress" class="big">0%</div><div class="track"><div id="overallProgressBar" class="bar"></div></div><p id="saveStatus" class="muted" style="margin-top:10px">Changes save automatically</p></article><article class="card"><p class="eyebrow">Current phase</p><h2 id="currentPhase">Pre-onboarding</h2><p class="muted" style="margin-top:10px">Updates automatically based on the start date.</p></article><article class="card"><p class="eyebrow">Next check-in</p><input type="date" data-field="nextCheckin"><textarea data-field="nextCheckinFocus" placeholder="Focus for the next conversation" style="margin-top:9px"></textarea></article></div><article class="card mission"><div><p class="eyebrow">Role mission</p><h2>Build sustainable AI capability across the studio</h2><p class="muted" style="margin-top:10px;line-height:1.55">Accelerate AI adoption across the studio by identifying high-impact opportunities, delivering practical AI solutions, and building a sustainable capability that empowers teams to work smarter and more efficiently.</p></div><div class="allocation"><div><strong>70%</strong><span>Hands-on delivery</span></div><div><strong>20%</strong><span>Project management</span></div><div><strong>10%</strong><span>Relationships & opportunity mapping</span></div></div></article><div class="grid3"><article class="card"><p class="eyebrow">30-day success</p><ul class="list"><li>Relationships established</li><li>Core workflows and pain points mapped</li><li>AI maturity and adoption barriers assessed</li></ul></article><article class="card"><p class="eyebrow">60-day success</p><ul class="list"><li>Backlog validated and prioritized</li><li>First optimization selected and scoped</li><li>Implementation plan agreed</li></ul></article><article class="card"><p class="eyebrow">90-day success</p><ul class="list"><li>First optimization delivered</li><li>Six-month backlog completed</li><li>High-level roadmap drafted</li></ul></article></div></section>
-<section id="journey" class="panel"><div class="subtabs"><button class="subtab active" data-phase="0">Days 1–30</button><button class="subtab" data-phase="1">Days 31–60</button><button class="subtab" data-phase="2">Days 61–90</button></div><div id="journeyContent"></div></section>
-<section id="stakeholders" class="panel"><div class="head"><div><p class="eyebrow">Stakeholder tracker</p><h2>People to meet</h2></div><div class="actions"><span class="chip"><strong id="stakeholderDone">0</strong>&nbsp;completed</span><button class="btn secondary" data-add="stakeholders">Add stakeholder</button></div></div><div class="table-card"><table><thead><tr><th>Team</th><th>Name</th><th>Role</th><th>Status</th><th>Meeting date</th><th>Notes</th><th></th></tr></thead><tbody id="stakeholdersBody"></tbody></table></div></section>
-<section id="opportunities" class="panel"><div class="head"><div><p class="eyebrow">Opportunity backlog</p><h2>AI opportunities</h2></div><div class="actions"><span class="chip"><strong id="opportunityCount">0</strong>&nbsp;opportunities</span><button class="btn secondary" data-add="opportunities">Add opportunity</button></div></div><div class="table-card"><table><thead><tr><th>Opportunity</th><th>Team</th><th>Priority</th><th>Status</th><th>Owner</th><th></th></tr></thead><tbody id="opportunitiesBody"></tbody></table></div></section>
-<section id="wins" class="panel"><div class="head"><div><p class="eyebrow">Delivery tracker</p><h2>Quick wins</h2></div><div class="actions"><span class="chip"><strong id="winsDone">0</strong>&nbsp;delivered</span><button class="btn secondary" data-add="quickWins">Add quick win</button></div></div><div id="quickWinsGrid" class="wins"></div></section>
-<section id="notes" class="panel"><div class="grid2"><article class="card"><p class="eyebrow">Mary's notes</p><textarea class="large" data-field="maryNotes" placeholder="Observations, questions, priorities and reflections"></textarea></article><article class="card"><p class="eyebrow">Manager notes</p><textarea class="large" data-field="managerNotes" placeholder="Feedback, decisions, support needed and follow-ups"></textarea></article></div><article class="card" style="margin-top:15px"><p class="eyebrow">Check-in prompts</p><div class="checkins"><div><label>What is going well?</label><textarea data-field="checkinGoingWell"></textarea></div><div><label>What is blocked?</label><textarea data-field="checkinBlocked"></textarea></div><div><label>What support or decisions are needed?</label><textarea data-field="checkinSupport"></textarea></div></div></article></section>
-</main></div><script type="module">
-const firebaseConfig={apiKey:'PASTE_API_KEY_HERE',authDomain:'PASTE_PROJECT_ID.firebaseapp.com',projectId:'PASTE_PROJECT_ID',storageBucket:'PASTE_PROJECT_ID.firebasestorage.app',messagingSenderId:'PASTE_MESSAGING_SENDER_ID',appId:'PASTE_APP_ID'};const workspaceId='mary-fisher-ai-transformation';const KEY='mary-fisher-ai-transformation-v2';const firebaseEnabled=!Object.values(firebaseConfig).some(v=>String(v).includes('PASTE_'));const defaults={activeTab:'overview',activePhase:0,nextCheckin:'',nextCheckinFocus:'',maryNotes:'',managerNotes:'',checkinGoingWell:'',checkinBlocked:'',checkinSupport:'',phases:[{label:'Days 1–30',title:'Learn, connect and assess',objective:"Build context, trust and a clear picture of the studio's workflows, AI maturity and highest-potential opportunities.",notes:'',tasks:[['Meet leaders across Product, Analytics, Economy, Production, Engineering, Community and VIP',false],['Map key workflows, recurring pain points and manual work',false],['Assess current AI tools, usage patterns and adoption barriers',false],['Create the initial AI opportunity backlog',false]]},{label:'Days 31–60',title:'Prioritize, validate and design',objective:'Deepen discovery, validate the backlog and move one practical AI opportunity into a clear implementation plan.',notes:'',tasks:[['Deep-dive into the highest-value workflows',false],['Validate and prioritize the opportunity backlog',false],['Select and scope the first AI optimization',false],['Define success metrics and implementation milestones',false]]},{label:'Days 61–90',title:'Deliver and build the roadmap',objective:'Deliver the first meaningful optimization and establish a credible six-month direction for continued AI transformation.',notes:'',tasks:[['Deliver the first practical AI solution or optimization',false],['Measure initial impact and document learnings',false],['Complete a prioritized six-month backlog',false],['Draft a high-level roadmap and repeatable operating model',false]]}],stakeholders:['Product','Analytics','Economy','Production','Engineering','Community','VIP'].map(team=>({team,name:'',role:'',status:'Not started',date:'',notes:''})),opportunities:[],quickWins:[]};let state=structuredClone(defaults),fb=null,unsub=null,timer=null;const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];try{const x=localStorage.getItem(KEY);if(x)state={...structuredClone(defaults),...JSON.parse(x)}}catch(e){}function saveLocal(){localStorage.setItem(KEY,JSON.stringify(state));$('#saveStatus').textContent='Saved locally'}function scheduleSave(){saveLocal();if(!fb?.auth.currentUser)return;clearTimeout(timer);timer=setTimeout(saveCloud,500)}async function initFirebase(){if(!firebaseEnabled){$('#cloudStatus').textContent='Local mode';$('#loginBtn').classList.add('hidden');return}const a=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js'),u=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js'),f=await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');const app=a.initializeApp(firebaseConfig),auth=u.getAuth(app),db=f.getFirestore(app),provider=new u.GoogleAuthProvider(),docRef=f.doc(db,'workspaces',workspaceId);fb={u,f,auth,docRef};$('#loginBtn').onclick=()=>u.signInWithPopup(auth,provider);$('#logoutBtn').onclick=()=>u.signOut(auth);u.onAuthStateChanged(auth,user=>{if(unsub){unsub();unsub=null}if(!user){$('#cloudStatus').textContent='Sign in required';$('#loginBtn').classList.remove('hidden');$('#logoutBtn').classList.add('hidden');return}$('#cloudStatus').textContent='Connected: '+user.email;$('#loginBtn').classList.add('hidden');$('#logoutBtn').classList.remove('hidden');unsub=f.onSnapshot(docRef,s=>{if(s.exists()){state={...structuredClone(defaults),...s.data()};localStorage.setItem(KEY,JSON.stringify(state));renderAll()}else saveCloud()},()=>$('#cloudStatus').textContent='Cloud access error')})}async function saveCloud(){if(!fb?.auth.currentUser)return;$('#saveStatus').textContent='Saving to Firebase…';try{await fb.f.setDoc(fb.docRef,{...state,updatedAt:fb.f.serverTimestamp()},{merge:true});$('#saveStatus').textContent='Saved to Firebase'}catch(e){$('#saveStatus').textContent='Cloud save failed'}}function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}function nav(){$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.activeTab));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===state.activeTab))}$$('.tab').forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;nav();scheduleSave()});$$('.subtab').forEach(b=>b.onclick=()=>{state.activePhase=+b.dataset.phase;renderJourney();scheduleSave()});function renderJourney(){$$('.subtab').forEach(b=>b.classList.toggle('active',+b.dataset.phase===state.activePhase));const p=state.phases[state.activePhase],c=$('#journeyContent');c.innerHTML=`<div class="journey"><article class="card"><p class="eyebrow">${p.label}</p><h2>${p.title}</h2><p class="muted" style="margin-top:10px;line-height:1.6">${p.objective}</p><label>Phase notes</label><textarea id="phaseNotes">${esc(p.notes)}</textarea></article><article class="card"><p class="eyebrow">Checklist</p><h2>Key activities</h2><div id="tasks"></div></article></div>`;$('#phaseNotes').oninput=e=>{p.notes=e.target.value;scheduleSave()};p.tasks.forEach((t,i)=>{const l=document.createElement('label');l.className='task';l.innerHTML=`<input type="checkbox" ${t[1]?'checked':''}><span>${t[0]}</span>`;l.querySelector('input').onchange=e=>{p.tasks[i][1]=e.target.checked;summary();scheduleSave()};$('#tasks').appendChild(l)})}function cell(v,cb,type='text'){const td=document.createElement('td'),i=document.createElement('input');i.type=type;i.value=v||'';i.oninput=e=>{cb(e.target.value);scheduleSave()};td.appendChild(i);return td}function selectCell(v,opts,cb){const td=document.createElement('td'),s=document.createElement('select');opts.forEach(o=>{const x=document.createElement('option');x.value=x.textContent=o;x.selected=o===v;s.appendChild(x)});s.onchange=e=>{cb(e.target.value);summary();scheduleSave()};td.appendChild(s);return td}function delCell(arr,i,fn){const td=document.createElement('td'),b=document.createElement('button');b.className='delete';b.textContent='×';b.onclick=()=>{state[arr].splice(i,1);fn();summary();scheduleSave()};td.appendChild(b);return td}function renderStakeholders(){const body=$('#stakeholdersBody');body.innerHTML='';state.stakeholders.forEach((r,i)=>{const tr=document.createElement('tr');tr.append(cell(r.team,v=>r.team=v),cell(r.name,v=>r.name=v),cell(r.role,v=>r.role=v),selectCell(r.status,['Not started','Scheduled','Completed'],v=>r.status=v),cell(r.date,v=>r.date=v,'date'),cell(r.notes,v=>r.notes=v),delCell('stakeholders',i,renderStakeholders));body.appendChild(tr)})}function renderOpps(){const body=$('#opportunitiesBody');body.innerHTML='';state.opportunities.forEach((r,i)=>{const tr=document.createElement('tr');tr.append(cell(r.title,v=>r.title=v),cell(r.team,v=>r.team=v),selectCell(r.priority,['Low','Medium','High'],v=>r.priority=v),selectCell(r.status,['Discovery','Validating','Planned','Delivered'],v=>r.status=v),cell(r.owner,v=>r.owner=v),delCell('opportunities',i,renderOpps));body.appendChild(tr)})}function renderWins(){const g=$('#quickWinsGrid');g.innerHTML='';if(!state.quickWins.length){g.innerHTML='<article class="card"><p class="muted">No quick wins added yet.</p></article>';return}state.quickWins.forEach((w,i)=>{const a=document.createElement('article');a.className='win';a.innerHTML=`<label>Initiative</label><input value="${esc(w.title||'')}"><label>Impact</label><textarea>${esc(w.impact||'')}</textarea><div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px"><select>${['Planned','In progress','Delivered'].map(s=>`<option ${s===w.status?'selected':''}>${s}</option>`).join('')}</select><button class="delete">×</button></div>`;const [inp,ta,se,del]=[a.querySelector('input'),a.querySelector('textarea'),a.querySelector('select'),a.querySelector('button')];inp.oninput=e=>{w.title=e.target.value;scheduleSave()};ta.oninput=e=>{w.impact=e.target.value;scheduleSave()};se.onchange=e=>{w.status=e.target.value;summary();scheduleSave()};del.onclick=()=>{state.quickWins.splice(i,1);renderWins();summary();scheduleSave()};g.appendChild(a)})}function bindFields(){$$('[data-field]').forEach(f=>{const k=f.dataset.field;f.value=state[k]||'';f.oninput=e=>{state[k]=e.target.value;scheduleSave()}})}function bindAdds(){$$('[data-add]').forEach(b=>b.onclick=()=>{const t=b.dataset.add;if(t==='stakeholders'){state.stakeholders.push({team:'',name:'',role:'',status:'Not started',date:'',notes:''});renderStakeholders()}if(t==='opportunities'){state.opportunities.push({title:'',team:'',priority:'Medium',status:'Discovery',owner:''});renderOpps()}if(t==='quickWins'){state.quickWins.push({title:'',impact:'',status:'Planned'});renderWins()}summary();scheduleSave()})}function summary(){const tasks=state.phases.flatMap(p=>p.tasks),doneTasks=tasks.filter(t=>t[1]).length,doneS=state.stakeholders.filter(x=>x.status==='Completed').length,doneO=state.opportunities.filter(x=>x.status==='Delivered').length,doneW=state.quickWins.filter(x=>x.status==='Delivered').length,total=tasks.length+Math.max(state.stakeholders.length,1)+Math.max(state.opportunities.length,1)+Math.max(state.quickWins.length,1),pct=Math.min(100,Math.round((doneTasks+doneS+doneO+doneW)/total*100));$('#overallProgress').textContent=pct+'%';$('#overallProgressBar').style.width=pct+'%';$('#stakeholderDone').textContent=doneS;$('#opportunityCount').textContent=state.opportunities.length;$('#winsDone').textContent=doneW}function dates(){const start=new Date('2026-08-18T00:00:00'),today=new Date();today.setHours(0,0,0,0);const d=Math.floor((today-start)/86400000)+1;$('#dayCounter').textContent=d<1?'Before start':d<=90?`Day ${d} of 90`:'90-day period complete';$('#currentPhase').textContent=d<1?'Pre-onboarding':d<=30?'Learn, connect and assess':d<=60?'Prioritize, validate and design':d<=90?'Deliver and build the roadmap':'Quarter completed'}function renderAll(){nav();renderJourney();renderStakeholders();renderOpps();renderWins();bindFields();bindAdds();summary();dates()}renderAll();initFirebase().catch(()=>$('#cloudStatus').textContent='Firebase setup error');
-</script></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary Fisher | First 90 Days</title>
+<style>
+:root{
+  --bg:#f5f7fb;--surface:#fff;--soft:#f8fafc;--text:#172033;--muted:#69758a;
+  --line:#dfe6ef;--accent:#5b67f1;--accent-soft:#eef0ff;--teal:#1aa6a6;
+  --success:#178f63;--danger:#c94f62;--shadow:0 12px 30px rgba(30,45,80,.08)
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+button,input,select,textarea{font:inherit}
+.app{height:100vh;max-width:1600px;margin:auto;padding:16px;display:grid;grid-template-rows:auto auto 1fr;gap:12px}
+.header{background:linear-gradient(135deg,#fff,#f3f5ff);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 20px;display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:center}
+.identity{display:flex;gap:13px;align-items:center}.mark{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--teal));color:#fff;display:grid;place-items:center;font-weight:850}
+.eyebrow{margin:0 0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:.11em;font-size:.7rem;font-weight:850}
+h1,h2,h3,p{margin-top:0}h1{margin-bottom:0;font-size:1.48rem}.subtitle{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.meta{border:1px solid var(--line);background:rgba(255,255,255,.8);border-radius:12px;padding:9px 11px}.meta span{display:block;color:var(--muted);font-size:.72rem}.meta strong{font-size:.88rem}
+.tabs{display:flex;gap:5px;padding:5px;background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow-x:auto}
+.tab,.phase-tab{border:0;background:transparent;color:var(--muted);padding:9px 14px;border-radius:9px;font-weight:750;cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--accent-soft);color:var(--accent)}.phase-tab.active{background:var(--accent);color:#fff}
+.workspace{min-height:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.panel{display:none;height:100%}.panel.active{display:grid}
+.overview{padding:16px;grid-template-columns:1.2fr .8fr;gap:14px;min-height:0}
+.card{border:1px solid var(--line);border-radius:15px;background:var(--surface);padding:18px}
+.hero-card{background:linear-gradient(135deg,#fff,#f7f8ff)}
+.hero-card h2{margin:4px 0 8px;font-size:1.35rem}.hero-card p{color:var(--muted);line-height:1.5}
+.mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.mission-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.mission-item strong{display:block;margin-bottom:5px}.mission-item span{font-size:.84rem;color:var(--muted);line-height:1.4}
+.side-stack{display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
+.progress-top{display:flex;justify-content:space-between;align-items:end}.big{font-size:2rem;font-weight:850}.muted{color:var(--muted);font-size:.83rem}
+.track{height:9px;background:#e8edf5;border-radius:999px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--teal))}
+.week-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:12px}.checkin-box,.week-box{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:13px}
+label{display:block;color:var(--muted);font-size:.78rem;margin:8px 0 4px}
+input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:9px;padding:8px 9px;outline:none}
+textarea{min-height:74px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,103,241,.08)}
+.week-task{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}.week-task:last-child{border-bottom:0}.week-task input[type=checkbox]{width:auto}.week-task button,.icon{border:0;background:transparent;color:var(--danger);cursor:pointer;font-size:1.1rem}
+.small-button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;cursor:pointer;font-weight:700}
+.journey{grid-template-rows:auto 1fr;min-height:0}.phase-tabs{display:flex;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--soft)}
+.phase-content{min-height:0;display:grid;grid-template-columns:.9fr 1.1fr;gap:14px;padding:16px;overflow:auto}
+.content-card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff}.content-card h2{margin:3px 0 10px}.objective{color:var(--muted);line-height:1.5}
+.section-title{font-size:.76rem;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:850;margin:18px 0 7px}
+.list{margin:0;padding-left:19px;color:var(--muted);line-height:1.5}.list li+li{margin-top:7px}
+.task{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;padding:9px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input{width:auto;margin-top:3px}
+.simple{grid-template-rows:auto 1fr;min-height:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--soft)}
+.panel-head h2{margin:2px 0 0}.head-actions{display:flex;gap:9px;align-items:center}.chip{background:var(--accent-soft);color:var(--accent);padding:7px 10px;border-radius:999px;font-size:.79rem;font-weight:750}
+.table-wrap{overflow:auto;min-height:0}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:9px;border-bottom:1px solid var(--line)}th{position:sticky;top:0;background:#fff;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-size:.69rem;text-align:left}
+.wins-grid{padding:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:auto;align-content:start}.win{border:1px solid var(--line);border-radius:13px;padding:14px}.win-actions{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:8px}
+.notes{padding:16px;grid-template-columns:1fr 1fr;gap:14px;overflow:auto}.notes textarea{min-height:330px}
+@media(max-width:1050px){body{overflow:auto}.app{height:auto}.header{grid-template-columns:1fr}.overview,.phase-content,.notes{grid-template-columns:1fr}.mission-grid,.wins-grid,.week-grid{grid-template-columns:1fr}.workspace{overflow:visible}.panel{height:auto}.meta-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="identity">
+      <div class="mark">AI</div>
+      <div><p class="eyebrow">First 90 Days</p><h1>Mary Fisher · AI Transformation Lead</h1><p class="subtitle">A focused working plan for the first quarter at the studio</p></div>
+    </div>
+    <div class="meta-grid">
+      <div class="meta"><span>Manager</span><strong>Yula Zack</strong></div>
+      <div class="meta"><span>Start date</span><strong>August 18, 2026</strong></div>
+      <div class="meta"><span>Current phase</span><strong id="currentPhase">Pre-onboarding</strong></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="journey">30 / 60 / 90 Journey</button>
+    <button class="tab" data-tab="stakeholders">Stakeholders</button>
+    <button class="tab" data-tab="opportunities">Opportunities</button>
+    <button class="tab" data-tab="wins">Quick Wins</button>
+    <button class="tab" data-tab="notes">Notes</button>
+  </nav>
+
+  <main class="workspace">
+    <section id="overview" class="panel overview active">
+      <article class="card hero-card">
+        <p class="eyebrow">Role mission</p>
+        <h2>Build trust, deliver practical value and establish a sustainable AI capability</h2>
+        <p>Mary’s first quarter is designed to create a strong foundation: understand the studio, build productive relationships, identify and prioritize the right opportunities, deliver one focused optimization, and shape the roadmap for the next six months.</p>
+        <div class="mission-grid">
+          <div class="mission-item"><strong>Understand the business</strong><span>Learn the people, workflows, pain points and ways of working across the studio.</span></div>
+          <div class="mission-item"><strong>Deliver early value</strong><span>Move one practical use case from discovery to a measurable first outcome.</span></div>
+          <div class="mission-item"><strong>Build the path forward</strong><span>Create a prioritized backlog and high-level roadmap for the next six months.</span></div>
+        </div>
+      </article>
+
+      <div class="side-stack">
+        <article class="card">
+          <div class="progress-top">
+            <div><p class="eyebrow">Overall progress</p><div class="big" id="progressValue">0%</div></div>
+            <span class="muted" id="dayCounter">Before start</span>
+          </div>
+          <div class="track"><div class="bar" id="progressBar"></div></div>
+        </article>
+
+        <article class="card">
+          <div class="week-grid">
+            <div class="checkin-box">
+              <p class="eyebrow">Our next check-in</p>
+              <label>Date</label><input type="date" data-field="nextCheckin">
+              <label>Topics to cover</label><textarea data-field="checkinTopics" placeholder="Key topics, decisions and support needed"></textarea>
+            </div>
+            <div class="week-box">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <p class="eyebrow" style="margin:0">Focus for the coming week</p>
+                <button class="small-button" id="addWeekTask">Add task</button>
+              </div>
+              <div id="weekTasks"></div>
+            </div>
+          </div>
+          <p class="eyebrow" style="margin-top:14px">Ongoing role operating model</p>
+          <div class="mission-grid">
+            <div class="mission-item"><strong>70%</strong><span>Hands-on delivery</span></div>
+            <div class="mission-item"><strong>20%</strong><span>Project management</span></div>
+            <div class="mission-item"><strong>10%</strong><span>Relationships & opportunity mapping</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="journey" class="panel journey">
+      <div class="phase-tabs">
+        <button class="phase-tab active" data-phase="0">Days 1–30</button>
+        <button class="phase-tab" data-phase="1">Days 31–60</button>
+        <button class="phase-tab" data-phase="2">Days 61–90</button>
+      </div>
+      <div id="phaseContent" class="phase-content"></div>
+    </section>
+
+    <section id="stakeholders" class="panel simple">
+      <div class="panel-head"><div><p class="eyebrow">Stakeholder tracker</p><h2>People Mary should meet</h2></div><div class="head-actions"><span class="chip"><span id="stakeholderDone">0</span> completed</span><button class="small-button" data-add="stakeholders">Add stakeholder</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Team</th><th>Name</th><th>Role</th><th>Status</th><th>Meeting date</th><th>Notes</th><th></th></tr></thead><tbody id="stakeholdersBody"></tbody></table></div>
+    </section>
+
+    <section id="opportunities" class="panel simple">
+      <div class="panel-head"><div><p class="eyebrow">Opportunity backlog</p><h2>Potential AI optimizations</h2></div><div class="head-actions"><span class="chip"><span id="opportunityCount">0</span> opportunities</span><button class="small-button" data-add="opportunities">Add opportunity</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Opportunity</th><th>Team</th><th>Priority</th><th>Status</th><th>Owner</th><th>Notes</th><th></th></tr></thead><tbody id="opportunitiesBody"></tbody></table></div>
+    </section>
+
+    <section id="wins" class="panel simple">
+      <div class="panel-head"><div><p class="eyebrow">Delivery tracker</p><h2>Quick wins</h2></div><div class="head-actions"><span class="chip"><span id="winsDone">0</span> delivered</span><button class="small-button" data-add="wins">Add quick win</button></div></div>
+      <div id="winsGrid" class="wins-grid"></div>
+    </section>
+
+    <section id="notes" class="panel notes">
+      <article class="card"><p class="eyebrow">Mary's notes</p><textarea data-field="maryNotes" placeholder="Observations, questions and reflections"></textarea></article>
+      <article class="card"><p class="eyebrow">Manager notes</p><textarea data-field="managerNotes" placeholder="Feedback, decisions and follow-ups"></textarea></article>
+    </section>
+  </main>
+</div>
+
+<script>
+const KEY="mary-first-90-v4";
+const defaults={
+ activeTab:"overview",activePhase:0,nextCheckin:"",checkinTopics:"",maryNotes:"",managerNotes:"",
+ weekTasks:[
+  {text:"Confirm priority stakeholder meetings",done:false},
+  {text:"Capture the top workflow questions for this week",done:false},
+  {text:"Agree on the next check-in focus",done:false}
+ ],
+ phases:[
+  {label:"Days 1–30",title:"Learn, connect and assess",objective:"Build trust, understand the studio and create a clear baseline of workflows, tools, capabilities, adoption barriers and potential AI opportunities.",
+   success:["Strong working relationships established with the main game and functional leaders","Core workflows, pain points and recurring manual work documented","Current AI tools, usage patterns and adoption barriers assessed","Initial opportunity backlog created with clear early hypotheses"],
+   deliverables:["Stakeholder map and meeting tracker","Initial workflow and pain-point map","AI maturity and adoption assessment","First version of the opportunity backlog"],notes:"",
+   tasks:[{text:"Meet leaders across Product, Analytics, Economy, Production, Engineering, Community and VIP",done:false},{text:"Observe and document key workflows and recurring manual work",done:false},{text:"Review available AI tools, access, constraints and current usage",done:false},{text:"Identify adoption barriers such as time, confidence, skills and unclear ownership",done:false},{text:"Create the first structured AI opportunity backlog",done:false}]},
+  {label:"Days 31–60",title:"Prioritize, validate and design",objective:"Deepen discovery, validate the backlog with stakeholders and move one focused opportunity into a practical and measurable implementation plan.",
+   success:["Backlog validated with the relevant stakeholders","Opportunities prioritized using impact, effort and readiness","One initial use case selected and clearly scoped","Success measures, dependencies and delivery plan agreed"],
+   deliverables:["Validated and prioritized opportunity backlog","Defined first use case and solution scope","Implementation plan with milestones and owners","Agreed success measures and adoption approach"],notes:"",
+   tasks:[{text:"Deep-dive into the highest-value workflows and validate assumptions",done:false},{text:"Prioritize opportunities by impact, effort, readiness and adoption potential",done:false},{text:"Select the first small-to-medium AI optimization",done:false},{text:"Define scope, owners, dependencies and measurable success criteria",done:false},{text:"Begin solution design and stakeholder validation",done:false}]},
+  {label:"Days 61–90",title:"Deliver and shape the roadmap",objective:"Deliver the first meaningful optimization, capture the learning and establish a credible six-month plan for continued delivery, adoption and cultural change.",
+   success:["First practical AI optimization delivered or launched as a validated pilot","Initial business value and user feedback measured","Prioritized six-month backlog completed","High-level roadmap aligned with the relevant leaders","Repeatable working approach for intake, prioritization, delivery and knowledge sharing defined"],
+   deliverables:["First delivered optimization or validated pilot","Impact and learnings summary","Prioritized six-month backlog","High-level roadmap covering delivery and organizational adoption","Draft operating model and knowledge-sharing cadence"],notes:"",
+   tasks:[{text:"Deliver or launch the first practical AI optimization",done:false},{text:"Collect feedback and measure initial impact",done:false},{text:"Document lessons learned and recommended next steps",done:false},{text:"Complete a prioritized backlog for the next six months",done:false},{text:"Create and align on a high-level roadmap",done:false},{text:"Define a repeatable process for future opportunities and knowledge sharing",done:false}]}
+ ],
+ stakeholders:[{team:"Product",name:"",role:"",status:"Not started",date:"",notes:""},{team:"Analytics",name:"",role:"",status:"Not started",date:"",notes:""},{team:"Economy",name:"",role:"",status:"Not started",date:"",notes:""},{team:"Production",name:"",role:"",status:"Not started",date:"",notes:""},{team:"Engineering",name:"",role:"",status:"Not started",date:"",notes:""},{team:"Community",name:"",role:"",status:"Not started",date:"",notes:""},{team:"VIP",name:"",role:"",status:"Not started",date:"",notes:""}],
+ opportunities:[],wins:[]
+};
+let state=structuredClone(defaults);
+try{const s=localStorage.getItem(KEY);if(s)state={...structuredClone(defaults),...JSON.parse(s)}}catch(e){}
+const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+
+function nav(){
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===state.activeTab));
+ document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===state.activeTab));
+}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;nav();save()});
+document.querySelectorAll(".phase-tab").forEach(b=>b.onclick=()=>{state.activePhase=+b.dataset.phase;renderPhase();save()});
+
+function renderPhase(){
+ document.querySelectorAll(".phase-tab").forEach(b=>b.classList.toggle("active",+b.dataset.phase===state.activePhase));
+ const p=state.phases[state.activePhase],root=document.getElementById("phaseContent");
+ root.innerHTML=`<article class="content-card"><p class="eyebrow">${p.label}</p><h2>${p.title}</h2><p class="objective">${p.objective}</p><p class="section-title">Success criteria</p><ul class="list">${p.success.map(x=>`<li>${x}</li>`).join("")}</ul><p class="section-title">Key deliverables</p><ul class="list">${p.deliverables.map(x=>`<li>${x}</li>`).join("")}</ul></article><article class="content-card"><p class="section-title">Key activities</p>${p.tasks.map((t,i)=>`<label class="task"><input type="checkbox" data-task="${i}" ${t.done?"checked":""}><span>${t.text}</span></label>`).join("")}<p class="section-title">Phase notes</p><textarea id="phaseNotes">${esc(p.notes)}</textarea></article>`;
+ root.querySelectorAll("[data-task]").forEach(c=>c.onchange=e=>{p.tasks[+e.target.dataset.task].done=e.target.checked;summary();save()});
+ root.querySelector("#phaseNotes").oninput=e=>{p.notes=e.target.value;save()};
+}
+
+function week(){
+ const root=document.getElementById("weekTasks");root.innerHTML="";
+ state.weekTasks.forEach((t,i)=>{
+  const row=document.createElement("div");row.className="week-task";
+  row.innerHTML=`<input type="checkbox" ${t.done?"checked":""}><input value="${esc(t.text)}"><button>×</button>`;
+  const [cb,inp,del]=row.children;
+  cb.onchange=e=>{t.done=e.target.checked;summary();save()};
+  inp.oninput=e=>{t.text=e.target.value;save()};
+  del.onclick=()=>{state.weekTasks.splice(i,1);week();summary();save()};
+  root.appendChild(row);
+ });
+}
+document.getElementById("addWeekTask").onclick=()=>{state.weekTasks.push({text:"",done:false});week();save()};
+
+function cellInput(v,fn,type="text"){const td=document.createElement("td"),i=document.createElement("input");i.type=type;i.value=v||"";i.oninput=e=>{fn(e.target.value);save()};td.appendChild(i);return td}
+function cellSelect(v,opts,fn){const td=document.createElement("td"),s=document.createElement("select");opts.forEach(o=>{const p=document.createElement("option");p.value=o;p.textContent=o;p.selected=o===v;s.appendChild(p)});s.onchange=e=>{fn(e.target.value);summary();save()};td.appendChild(s);return td}
+function cellDelete(coll,i,render){const td=document.createElement("td"),b=document.createElement("button");b.className="icon";b.textContent="×";b.onclick=()=>{state[coll].splice(i,1);render();summary();save()};td.appendChild(b);return td}
+function stakeholders(){const b=document.getElementById("stakeholdersBody");b.innerHTML="";state.stakeholders.forEach((r,i)=>{const tr=document.createElement("tr");tr.append(cellInput(r.team,v=>r.team=v),cellInput(r.name,v=>r.name=v),cellInput(r.role,v=>r.role=v),cellSelect(r.status,["Not started","Scheduled","Completed"],v=>r.status=v),cellInput(r.date,v=>r.date=v,"date"),cellInput(r.notes,v=>r.notes=v),cellDelete("stakeholders",i,stakeholders));b.appendChild(tr)})}
+function opportunities(){const b=document.getElementById("opportunitiesBody");b.innerHTML="";state.opportunities.forEach((r,i)=>{const tr=document.createElement("tr");tr.append(cellInput(r.title,v=>r.title=v),cellInput(r.team,v=>r.team=v),cellSelect(r.priority,["Low","Medium","High"],v=>r.priority=v),cellSelect(r.status,["Discovery","Validating","Planned","Delivered"],v=>r.status=v),cellInput(r.owner,v=>r.owner=v),cellInput(r.notes,v=>r.notes=v),cellDelete("opportunities",i,opportunities));b.appendChild(tr)})}
+function wins(){const g=document.getElementById("winsGrid");g.innerHTML="";if(!state.wins.length){g.innerHTML='<div class="win"><p class="muted">No quick wins added yet.</p></div>';return}state.wins.forEach((w,i)=>{const c=document.createElement("article");c.className="win";c.innerHTML=`<label>Initiative</label><input value="${esc(w.title)}"><label>Impact</label><textarea>${esc(w.impact)}</textarea><div class="win-actions"><select>${["Planned","In progress","Delivered"].map(s=>`<option ${s===w.status?"selected":""}>${s}</option>`).join("")}</select><button class="icon">×</button></div>`;const input=c.querySelector("input"),ta=c.querySelector("textarea"),sel=c.querySelector("select"),del=c.querySelector("button");input.oninput=e=>{w.title=e.target.value;save()};ta.oninput=e=>{w.impact=e.target.value;save()};sel.onchange=e=>{w.status=e.target.value;summary();save()};del.onclick=()=>{state.wins.splice(i,1);wins();summary();save()};g.appendChild(c)})}
+document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{if(b.dataset.add==="stakeholders"){state.stakeholders.push({team:"",name:"",role:"",status:"Not started",date:"",notes:""});stakeholders()}if(b.dataset.add==="opportunities"){state.opportunities.push({title:"",team:"",priority:"Medium",status:"Discovery",owner:"",notes:""});opportunities()}if(b.dataset.add==="wins"){state.wins.push({title:"",impact:"",status:"Planned"});wins()}summary();save()});
+
+document.querySelectorAll("[data-field]").forEach(el=>{const k=el.dataset.field;el.value=state[k]||"";el.oninput=e=>{state[k]=e.target.value;save()}});
+
+function summary(){
+ const tasks=state.phases.flatMap(p=>p.tasks),doneTasks=tasks.filter(t=>t.done).length;
+ const doneStake=state.stakeholders.filter(x=>x.status==="Completed").length;
+ const doneOpp=state.opportunities.filter(x=>x.status==="Delivered").length;
+ const doneWins=state.wins.filter(x=>x.status==="Delivered").length;
+ const doneWeek=state.weekTasks.filter(x=>x.done).length;
+ const total=tasks.length+Math.max(state.stakeholders.length,1)+Math.max(state.opportunities.length,1)+Math.max(state.wins.length,1)+Math.max(state.weekTasks.length,1);
+ const done=doneTasks+doneStake+doneOpp+doneWins+doneWeek;
+ const pct=Math.min(100,Math.round(done/total*100));
+ document.getElementById("progressValue").textContent=pct+"%";document.getElementById("progressBar").style.width=pct+"%";
+ document.getElementById("stakeholderDone").textContent=doneStake;document.getElementById("opportunityCount").textContent=state.opportunities.length;document.getElementById("winsDone").textContent=doneWins;
+ const start=new Date("2026-08-18T00:00:00"),today=new Date();today.setHours(0,0,0,0);const day=Math.floor((today-start)/86400000)+1;
+ document.getElementById("dayCounter").textContent=day<1?"Before start":day<=90?`Day ${day} of 90`:"90-day period complete";
+ document.getElementById("currentPhase").textContent=day<1?"Pre-onboarding":day<=30?"Learn, connect & assess":day<=60?"Prioritize, validate & design":day<=90?"Deliver & shape roadmap":"Quarter completed";
+}
+nav();renderPhase();week();stakeholders();opportunities();wins();summary();
+</script>
+</body>
+</html>
