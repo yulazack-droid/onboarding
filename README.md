@@ -11,8 +11,7 @@ Final review version before Firebase is connected.
 - 90 Days
 - People
 - Barcelona visit
-- Opportunities
-- Quick Wins
+- Initiatives (combined opportunities, quick wins and projects)
 - Notes
 
 Each of the 30-, 60- and 90-day screens includes separate success criteria that Mary and Yula can each mark independently.
@@ -49,3 +48,16 @@ The project is already Firebase-ready. After the final review:
 5. Create Firestore.
 6. Add `yulazack-droid.github.io` to Authorized domains.
 7. Restrict Firestore access to the exact Google accounts used by Mary and Yula.
+
+
+## Final review changes
+
+- The ongoing 70% / 20% / 10% operating model now appears immediately below Mary's header.
+- Opportunities and Quick Wins are combined into one **Initiatives** screen.
+- Each initiative includes:
+  - Estimated time
+  - Scope
+  - Type: Quick Win or Project
+  - Impact, priority and status
+
+This is the version intended for the final visual review before Firebase configuration is added.

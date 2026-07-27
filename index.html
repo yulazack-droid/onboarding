@@ -44,6 +44,19 @@
       </div>
     </header>
 
+    <article class="card operating-model">
+          <div>
+            <p class="eyebrow">Ongoing role operating model</p>
+            <h3>This allocation applies beyond the first 90 days</h3>
+          </div>
+          <div class="allocation">
+            <div><strong>70%</strong><span>Hands-on delivery</span></div>
+            <div><strong>20%</strong><span>Project management</span></div>
+            <div><strong>10%</strong><span>Relationship building & opportunity mapping</span></div>
+          </div>
+        </article>
+
+
     <nav class="tabs" aria-label="Workspace navigation">
       <button class="tab active" data-tab="overview">Overview</button>
       <button class="tab" data-tab="days30">30 Days</button>
@@ -51,8 +64,7 @@
       <button class="tab" data-tab="days90">90 Days</button>
       <button class="tab" data-tab="people">People</button>
       <button class="tab" data-tab="barcelona">Barcelona</button>
-      <button class="tab" data-tab="opportunities">Opportunities</button>
-      <button class="tab" data-tab="wins">Quick Wins</button>
+      <button class="tab" data-tab="opportunities">Initiatives</button>
       <button class="tab" data-tab="notes">Notes</button>
     </nav>
 
@@ -102,7 +114,7 @@
               <div class="progress-mini">
                 <span><strong id="peopleMetCount">0</strong> people met</span>
                 <span><strong id="opportunityCount">0</strong> opportunities</span>
-                <span><strong id="quickWinsDelivered">0</strong> wins delivered</span>
+                <span><strong id="initiativesDelivered">0</strong> initiatives delivered</span>
               </div>
             </article>
 
@@ -142,18 +154,6 @@
             <button id="addWeeklyTaskBtn" class="button secondary">Add task</button>
           </div>
           <div id="weeklyTasks" class="weekly-tasks"></div>
-        </article>
-
-        <article class="card operating-model">
-          <div>
-            <p class="eyebrow">Ongoing role operating model</p>
-            <h3>This allocation applies beyond the first 90 days</h3>
-          </div>
-          <div class="allocation">
-            <div><strong>70%</strong><span>Hands-on delivery</span></div>
-            <div><strong>20%</strong><span>Project management</span></div>
-            <div><strong>10%</strong><span>Relationship building & opportunity mapping</span></div>
-          </div>
         </article>
       </section>
 
@@ -398,21 +398,27 @@
       <section id="opportunities" class="panel table-panel">
         <div class="panel-header compact">
           <div>
-            <p class="eyebrow">Opportunities</p>
-            <h2>AI opportunity backlog</h2>
+            <p class="eyebrow">Initiatives</p>
+            <h2>AI opportunities, quick wins and projects</h2>
+            <p class="panel-description">
+              Track each opportunity in one place, including the estimated timeline and scope,
+              then classify it as a quick win or a broader project.
+            </p>
           </div>
-          <button id="addOpportunityBtn" class="button secondary">Add opportunity</button>
+          <button id="addOpportunityBtn" class="button secondary">Add initiative</button>
         </div>
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Opportunity</th>
+                <th>Initiative</th>
                 <th>Team / studio</th>
                 <th>Problem type</th>
+                <th>Estimated time</th>
+                <th>Scope</th>
+                <th>Type</th>
                 <th>Impact</th>
-                <th>Effort</th>
                 <th>Priority</th>
                 <th>Status</th>
                 <th>Notes</th>
@@ -424,16 +430,6 @@
         </div>
       </section>
 
-      <section id="wins" class="panel">
-        <div class="panel-header compact">
-          <div>
-            <p class="eyebrow">Quick Wins</p>
-            <h2>Early delivery tracker</h2>
-          </div>
-          <button id="addWinBtn" class="button secondary">Add quick win</button>
-        </div>
-        <div id="winsGrid" class="wins-grid"></div>
-      </section>
 
       <section id="notes" class="panel">
         <div class="notes-grid">

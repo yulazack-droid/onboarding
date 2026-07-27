@@ -473,3 +473,27 @@ td textarea{min-height:46px}
   .brand-asset{display:none}
   .success-row{grid-template-columns:1fr 68px 68px}
 }
+
+
+/* Final placement: the operating model sits directly below the employee header. */
+.hero + .operating-model{
+  margin-top:12px;
+  margin-bottom:12px;
+}
+.hero + .operating-model.card{
+  padding:13px 17px;
+  background:
+    linear-gradient(135deg,rgba(105,86,232,.06),rgba(27,183,177,.06)),
+    #fff;
+}
+.hero + .operating-model h3{
+  font-size:.9rem;
+}
+.hero + .operating-model .eyebrow{
+  margin-bottom:3px;
+}
+@media(max-width:1100px){
+  .hero + .operating-model{
+    grid-template-columns:1fr;
+  }
+}

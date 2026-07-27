@@ -223,8 +223,7 @@ const defaultState = {
   ],
   barcelonaMeetings: [],
 
-  opportunities: [],
-  wins: []
+  opportunities: []
 };
 
 let state = structuredClone(defaultState);
@@ -657,11 +656,33 @@ function renderOpportunities() {
     tr.append(
       createInputCell(opportunity.title, value => opportunity.title = value),
       createInputCell(opportunity.team, value => opportunity.team = value),
-      createSelectCell(opportunity.problemType, ["Manual effort", "Human error", "Capacity gap", "Knowledge access", "Other"], value => opportunity.problemType = value),
+      createSelectCell(
+        opportunity.problemType,
+        ["Manual effort", "Human error", "Capacity gap", "Knowledge access", "Other"],
+        value => opportunity.problemType = value
+      ),
+      createSelectCell(
+        opportunity.estimatedTime,
+        ["< 1 week", "1–2 weeks", "3–4 weeks", "1–2 months", "3+ months"],
+        value => opportunity.estimatedTime = value
+      ),
+      createSelectCell(
+        opportunity.scope,
+        ["Single workflow", "Single team", "Multiple teams", "Studio-wide", "Portfolio-wide"],
+        value => opportunity.scope = value
+      ),
+      createSelectCell(
+        opportunity.initiativeType,
+        ["Quick Win", "Project"],
+        value => opportunity.initiativeType = value
+      ),
       createSelectCell(opportunity.impact, ["Low", "Medium", "High"], value => opportunity.impact = value),
-      createSelectCell(opportunity.effort, ["Low", "Medium", "High"], value => opportunity.effort = value),
       createSelectCell(opportunity.priority, ["Low", "Medium", "High"], value => opportunity.priority = value),
-      createSelectCell(opportunity.status, ["Discovery", "Validating", "Planned", "In progress", "Delivered"], value => opportunity.status = value),
+      createSelectCell(
+        opportunity.status,
+        ["Discovery", "Validating", "Planned", "In progress", "Delivered"],
+        value => opportunity.status = value
+      ),
       createTextAreaCell(opportunity.notes, value => opportunity.notes = value),
       createDeleteCell("opportunities", index, renderOpportunities)
     );
@@ -669,62 +690,6 @@ function renderOpportunities() {
   });
 }
 
-function renderWins() {
-  const root = $("#winsGrid");
-  root.innerHTML = "";
-
-  if (!state.wins.length) {
-    root.innerHTML = `<article class="card"><p class="panel-description">No quick wins added yet.</p></article>`;
-    return;
-  }
-
-  state.wins.forEach((win, index) => {
-    const card = document.createElement("article");
-    card.className = "win-card";
-    card.innerHTML = `
-      <label>Initiative</label>
-      <input type="text" value="${escapeHtml(win.title)}">
-      <label>Expected / measured impact</label>
-      <textarea>${escapeHtml(win.impact)}</textarea>
-      <footer>
-        <select>
-          ${["Planned", "In progress", "Delivered"].map(status => `<option ${status === win.status ? "selected" : ""}>${status}</option>`).join("")}
-        </select>
-        <button class="icon-button">×</button>
-      </footer>
-    `;
-
-    const title = card.querySelector("input");
-    const impact = card.querySelector("textarea");
-    const status = card.querySelector("select");
-    const button = card.querySelector("button");
-
-    title.oninput = event => {
-      win.title = event.target.value;
-      scheduleSave();
-    };
-
-    impact.oninput = event => {
-      win.impact = event.target.value;
-      scheduleSave();
-    };
-
-    status.onchange = event => {
-      win.status = event.target.value;
-      updateSummary();
-      scheduleSave();
-    };
-
-    button.onclick = () => {
-      state.wins.splice(index, 1);
-      renderWins();
-      updateSummary();
-      scheduleSave();
-    };
-
-    root.appendChild(card);
-  });
-}
 
 function bindAddButtons() {
   $("#addWeeklyTaskBtn").onclick = () => {
@@ -765,20 +730,16 @@ function bindAddButtons() {
       title: "",
       team: "",
       problemType: "Manual effort",
+      estimatedTime: "1–2 weeks",
+      scope: "Single workflow",
+      initiativeType: "Quick Win",
       impact: "Medium",
-      effort: "Medium",
       priority: "Medium",
       status: "Discovery",
       notes: ""
     });
     renderOpportunities();
     updateSummary();
-    scheduleSave();
-  };
-
-  $("#addWinBtn").onclick = () => {
-    state.wins.push({ title: "", impact: "", status: "Planned" });
-    renderWins();
     scheduleSave();
   };
 }
@@ -794,7 +755,6 @@ function updateSummary() {
   const totalCriteria = criteria.length * 2;
   const peopleMet = state.people.filter(person => ["Completed", "Recurring"].includes(person.status)).length;
   const deliveredOpportunities = state.opportunities.filter(item => item.status === "Delivered").length;
-  const deliveredWins = state.wins.filter(item => item.status === "Delivered").length;
 
   const total =
     weekActions.length +
@@ -803,8 +763,7 @@ function updateSummary() {
     state.objectives90.length +
     totalCriteria +
     Math.max(state.people.length, 1) +
-    Math.max(state.opportunities.length, 1) +
-    Math.max(state.wins.length, 1);
+    Math.max(state.opportunities.length, 1);
 
   const complete =
     checkedWeekActions +
@@ -813,8 +772,7 @@ function updateSummary() {
     checked90 +
     checkedCriteria +
     peopleMet +
-    deliveredOpportunities +
-    deliveredWins;
+    deliveredOpportunities;
 
   const percentage = Math.min(100, Math.round((complete / total) * 100));
 
@@ -822,7 +780,7 @@ function updateSummary() {
   $("#overallProgressBar").style.width = `${percentage}%`;
   $("#peopleMetCount").textContent = peopleMet;
   $("#opportunityCount").textContent = state.opportunities.length;
-  $("#quickWinsDelivered").textContent = deliveredWins;
+  $("#initiativesDelivered").textContent = deliveredOpportunities;
 
   const start = new Date("2026-08-18T00:00:00");
   const today = new Date();
@@ -863,7 +821,6 @@ function renderAll() {
   renderEditableList("#barcelonaPrep", "barcelonaPrep");
   renderBarcelonaMeetings();
   renderOpportunities();
-  renderWins();
   bindStaticFields();
   updateSummary();
 }
