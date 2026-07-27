@@ -1,73 +1,51 @@
-# AI Transformation Onboarding Portal
 
-A GitHub Pages-ready onboarding dashboard for Mary Fisher, managed by Yula Zack.
+# Mary Fisher – First 90 Days
 
-## Files
+Final review version before Firebase is connected.
 
-- `index.html` – application structure
-- `styles.css` – visual design
-- `app.js` – onboarding logic, progress tracking, Firestore sync and Google login
-- `firebase-config.js` – paste your Firebase web app configuration here
+## Included screens
 
-## Uploading to GitHub
+- Overview
+- 30 Days, split into four weekly plans
+- 60 Days
+- 90 Days
+- People
+- Barcelona visit
+- Opportunities
+- Quick Wins
+- Notes
 
-Upload all four files to the root of the existing repository:
+Each of the 30-, 60- and 90-day screens includes separate success criteria that Mary and Yula can each mark independently.
+
+## Upload to GitHub
+
+Upload these four files directly to the repository root:
 
 - `index.html`
 - `styles.css`
 - `app.js`
 - `firebase-config.js`
 
-GitHub Pages is already configured to deploy from the `main` branch and `/ (root)`.
-After committing, wait about one minute and refresh the live site.
+Replace the current versions with these files.
 
-## Firebase setup
+## Current saving mode
 
-1. Create a Firebase project.
-2. Add a Web app from Project Overview.
-3. Copy the `firebaseConfig` object.
-4. Open `firebase-config.js` and replace every placeholder value.
-5. In Firebase Console, open **Authentication**:
-   - Click **Get started**
-   - Enable **Google** as a sign-in provider
-6. Open **Firestore Database**:
-   - Create the database
-   - Choose a production location
-7. In Authentication -> Settings -> Authorized domains, add:
-   - `yulazack-droid.github.io`
+Until Firebase is configured, all changes are saved locally in the browser.
 
-## Recommended Firestore security rules
+## Scopely branding
 
-Replace the placeholder emails with the exact Google account emails used by Yula and Mary.
+This version uses a Scopely-inspired purple, blue, aqua and pink visual system and a text-based brand treatment.
 
-```text
-rules_version = '2';
+It does not include proprietary game characters or official image assets. To add approved internal assets later, place the image files in an `assets` folder and update the header markup or background in `styles.css`.
 
-service cloud.firestore {
-  match /databases/{database}/documents {
-    function allowedUser() {
-      return request.auth != null &&
-        request.auth.token.email in [
-          "YULA_EMAIL@COMPANY.COM",
-          "MARY_EMAIL@COMPANY.COM"
-        ];
-    }
+## Firebase readiness
 
-    match /workspaces/{workspaceId} {
-      allow read, write: if allowedUser();
-    }
-  }
-}
-```
+The project is already Firebase-ready. After the final review:
 
-Publish the rules after editing them.
-
-## How saving works
-
-- Before Firebase is configured, the app runs in local mode and saves in the browser.
-- After Firebase is configured and the user signs in with an authorized Google account, the shared workspace is saved to Firestore.
-- Both users see the same shared data.
-
-## Important
-
-The Firebase web configuration is not treated as a password. Access control comes from Authentication and Firestore rules. Do not leave Firestore in unrestricted test mode.
+1. Create or open the Firebase project.
+2. Add a Web app.
+3. Paste the configuration into `firebase-config.js`.
+4. Enable Google Authentication.
+5. Create Firestore.
+6. Add `yulazack-droid.github.io` to Authorized domains.
+7. Restrict Firestore access to the exact Google accounts used by Mary and Yula.
