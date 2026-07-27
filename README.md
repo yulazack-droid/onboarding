@@ -1,5 +1,21 @@
-# Single-file stable build
 
-Upload only `index.html` to the repository root and replace the existing file.
+# Mary Fisher – First 90 Days Workspace
 
-This build embeds the CSS and JavaScript directly in the page, preventing mismatched or cached `styles.css` / `app.js` files. It still works in local browser-saving mode and remains Firebase-ready through the inline placeholder configuration.
+## Package 1: Core application
+
+This package is fully functional in local-browser mode and ready for GitHub Pages.
+
+### Final progress logic
+- The Overview progress is weekly and resets automatically each week.
+- It includes the current week's activities, incomplete carry-over tasks, and manually added tasks.
+- The 30-day progress combines all four first-month weeks and any manual tasks added during those weeks.
+- The 60-day and 90-day progress bars are based on their own objective checklists.
+- Success criteria do not affect progress percentages.
+
+### Upload
+Upload these files directly to the repository root:
+- index.html
+- styles.css
+- app.js
+
+The app saves data locally in the browser until the Firebase add-on is installed.
