@@ -19,3 +19,7 @@ Upload these files directly to the repository root:
 - app.js
 
 The app saves data locally in the browser until the Firebase add-on is installed.
+
+## Carry-over timing fix
+
+Outstanding tasks from previous weeks are shown only after the selected week has actually started. Browsing a future week in advance will not display carry-over items. Each carried item is labelled with its source week.
