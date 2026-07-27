@@ -1,7 +1,8 @@
 
 import { firebaseConfig, workspaceId } from "./firebase-config.js";
 
-const LOCAL_KEY = "mary-fisher-first-90-days-v3-final";
+const LOCAL_KEY = "mary-fisher-first-90-days-v4-delivered";
+const START_DATE = new Date("2026-08-11T00:00:00");
 const firebaseEnabled = !Object.values(firebaseConfig).some(v => String(v).includes("PASTE_"));
 
 const meetingPurposes = [
@@ -45,7 +46,7 @@ const defaultState = {
   weeks30: [
     {
       title: "Week 1 · Foundation and enablement",
-      dates: "Aug 18–22",
+      dates: "Aug 11–17",
       focus: "Become operational, understand the basic organizational landscape, and prepare the stakeholder and learning plan.",
       outcomes: [
         "All required access requests submitted and tracked",
@@ -67,7 +68,7 @@ const defaultState = {
     },
     {
       title: "Week 2 · Initial immersion and guided exploration",
-      dates: "Aug 23–29",
+      dates: "Aug 18–24",
       focus: "Start meeting selected stakeholders, learn how the first game teams operate, and explore the available tools and dashboards.",
       outcomes: [
         "Initial stakeholder conversations completed",
@@ -87,7 +88,7 @@ const defaultState = {
     },
     {
       title: "Week 3 · Broader immersion and Barcelona preparation",
-      dates: "Aug 30–Sep 5",
+      dates: "Aug 25–31",
       focus: "Broaden the learning across teams, continue stakeholder meetings, and build the Barcelona agenda together with Yula.",
       outcomes: [
         "Broader exposure to game and functional routines",
@@ -107,7 +108,7 @@ const defaultState = {
     },
     {
       title: "Week 4 · Barcelona immersion and first synthesis",
-      dates: "Sep 6–16",
+      dates: "Sep 1–9",
       focus: "Use the Barcelona visit for high-value introductions, then synthesize the first month of learning into a structured baseline.",
       outcomes: [
         "Barcelona introductions completed and follow-ups captured",
@@ -258,6 +259,34 @@ function loadLocal() {
 function saveLocal() {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
   $("#saveStatus").textContent = "Saved locally";
+}
+
+function getOnboardingDay() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.floor((today - START_DATE) / 86400000) + 1;
+}
+
+function getCurrentWeekIndex() {
+  const day = getOnboardingDay();
+  if (day < 1) return 0;
+  if (day <= 7) return 0;
+  if (day <= 14) return 1;
+  if (day <= 21) return 2;
+  if (day <= 30) return 3;
+  return 3;
+}
+
+function syncActiveWeekToDate() {
+  const day = getOnboardingDay();
+  if (day >= 1 && day <= 30) {
+    const currentWeek = getCurrentWeekIndex();
+    if (state.lastAutoWeek !== currentWeek) {
+      state.activeWeek = currentWeek;
+      state.lastAutoWeek = currentWeek;
+      saveLocal();
+    }
+  }
 }
 
 function scheduleSave() {
@@ -422,6 +451,33 @@ function renderWeekDetail() {
 
   const week = state.weeks30[state.activeWeek];
   const root = $("#weekDetail");
+  const carryovers = [];
+
+  for (let weekIndex = 0; weekIndex < state.activeWeek; weekIndex += 1) {
+    state.weeks30[weekIndex].actions.forEach((action, actionIndex) => {
+      if (!action.done) {
+        carryovers.push({
+          weekIndex,
+          actionIndex,
+          source: `Week ${weekIndex + 1}`,
+          text: action.text
+        });
+      }
+    });
+  }
+
+  const carryoverHtml = carryovers.length ? `
+    <div class="carryover-box">
+      <div class="section-label">Automatically carried over</div>
+      <p class="carryover-note">Incomplete items from earlier weeks remain here until completed.</p>
+      ${carryovers.map(item => `
+        <label class="action-row carryover-row">
+          <input type="checkbox" data-carry-week="${item.weekIndex}" data-carry-action="${item.actionIndex}">
+          <span><strong>${item.source}:</strong> ${item.text}</span>
+        </label>
+      `).join("")}
+    </div>
+  ` : "";
 
   root.innerHTML = `
     <article class="week-main">
@@ -435,7 +491,8 @@ function renderWeekDetail() {
     </article>
 
     <article class="week-actions">
-      <p class="eyebrow">Key activities</p>
+      ${carryoverHtml}
+      <p class="eyebrow">Week ${state.activeWeek + 1} activities</p>
       ${week.actions.map((action, index) => `
         <label class="action-row">
           <input type="checkbox" data-week-action="${index}" ${action.done ? "checked" : ""}>
@@ -453,6 +510,17 @@ function renderWeekDetail() {
   root.querySelectorAll("[data-week-action]").forEach(checkbox => {
     checkbox.onchange = event => {
       week.actions[Number(event.target.dataset.weekAction)].done = event.target.checked;
+      updateSummary();
+      scheduleSave();
+    };
+  });
+
+  root.querySelectorAll("[data-carry-week]").forEach(checkbox => {
+    checkbox.onchange = event => {
+      const sourceWeek = Number(event.target.dataset.carryWeek);
+      const sourceAction = Number(event.target.dataset.carryAction);
+      state.weeks30[sourceWeek].actions[sourceAction].done = event.target.checked;
+      renderWeekDetail();
       updateSummary();
       scheduleSave();
     };
@@ -744,48 +812,85 @@ function bindAddButtons() {
   };
 }
 
+function clampPercent(value) {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function weightedInitiativeProgress(status) {
+  return ({
+    "Discovery": 0,
+    "Validating": 0.25,
+    "Planned": 0.4,
+    "In progress": 0.7,
+    "Delivered": 1
+  })[status] || 0;
+}
+
+function setCategoryProgress(name, percentage) {
+  const value = clampPercent(percentage);
+  $(`#${name}Progress`).textContent = `${value}%`;
+  $(`#${name}ProgressBar`).style.width = `${value}%`;
+}
+
 function updateSummary() {
-  const weekActions = state.weeks30.flatMap(week => week.actions);
-  const checkedWeekActions = weekActions.filter(item => item.done).length;
-  const checkedWeeklyTasks = state.weeklyTasks.filter(item => item.done).length;
-  const checked60 = state.objectives60.filter(item => item.done).length;
-  const checked90 = state.objectives90.filter(item => item.done).length;
-  const criteria = [...state.success30, ...state.success60, ...state.success90];
-  const checkedCriteria = criteria.reduce((sum, item) => sum + Number(item.mary) + Number(item.yula), 0);
-  const totalCriteria = criteria.length * 2;
+  const allWeekActions = state.weeks30.flatMap(week => week.actions);
+  const completed = items => items.filter(item => item.done).length;
+  const ratio = (done, total) => total ? (done / total) * 100 : 0;
+
+  // Learning: fixed onboarding activities related to access, organization,
+  // business metrics, tools, dashboards and systems. Free-form rows never add progress.
+  const learningPattern = /access|tool|dashboard|system|studio structure|portfolio|business unit|leadership|business metric|looker|review the studio|map which tools/i;
+  const learningItems = allWeekActions.filter(item => learningPattern.test(item.text));
+  const learningPercent = ratio(completed(learningItems), learningItems.length);
+
+  // Relationships: fixed meeting/sync activities plus real completed or recurring
+  // people records. Merely typing a name or scheduling a meeting adds no completion.
+  const relationshipPattern = /meet|meeting|stakeholder|daily|dailies|sync|introduction|barcelona agenda|follow up on introductions/i;
+  const fixedRelationshipItems = allWeekActions.filter(item => relationshipPattern.test(item.text));
+  const namedPeople = state.people.filter(person => String(person.name || "").trim());
+  const peopleCompleted = namedPeople.filter(person => ["Completed", "Recurring"].includes(person.status)).length;
+  const fixedRelationshipDone = completed(fixedRelationshipItems);
+  const relationshipDenominator = fixedRelationshipItems.length + namedPeople.length;
+  const relationshipPercent = ratio(fixedRelationshipDone + peopleCompleted, relationshipDenominator);
+
+  // Discovery: fixed mapping and prioritization activities plus initiatives that
+  // have advanced beyond the initial Discovery state. Adding a blank row gives 0.
+  const discoveryPattern = /document|map|mapping|manual|human error|capacity|opportunity|backlog|explore|questions|patterns|synthesi|priorit/i;
+  const discoveryWeekItems = allWeekActions.filter(item => discoveryPattern.test(item.text));
+  const discoveryFixedItems = [...discoveryWeekItems, ...state.objectives60];
+  const initiativeRows = state.opportunities.filter(item => String(item.title || "").trim());
+  const initiativeDiscoveryScore = initiativeRows.reduce((sum, item) => sum + weightedInitiativeProgress(item.status), 0);
+  const discoveryDenominator = discoveryFixedItems.length + initiativeRows.length;
+  const discoveryPercent = ratio(completed(discoveryFixedItems) + initiativeDiscoveryScore, discoveryDenominator);
+
+  // Delivery: 90-day execution activities and actual initiative advancement.
+  // In-progress work receives partial credit; Delivered receives full credit.
+  const initiativeDeliveryScore = initiativeRows.reduce((sum, item) => {
+    if (item.status === "In progress") return sum + 0.5;
+    if (item.status === "Delivered") return sum + 1;
+    return sum;
+  }, 0);
+  const deliveryDenominator = state.objectives90.length + initiativeRows.length;
+  const deliveryPercent = ratio(completed(state.objectives90) + initiativeDeliveryScore, deliveryDenominator);
+
+  setCategoryProgress("learning", learningPercent);
+  setCategoryProgress("relationships", relationshipPercent);
+  setCategoryProgress("discovery", discoveryPercent);
+  setCategoryProgress("delivery", deliveryPercent);
+
+  // Overall progress is the balanced average of the four meaningful categories.
+  // It no longer changes merely because a person or initiative row was created.
+  const percentage = clampPercent((learningPercent + relationshipPercent + discoveryPercent + deliveryPercent) / 4);
   const peopleMet = state.people.filter(person => ["Completed", "Recurring"].includes(person.status)).length;
   const deliveredOpportunities = state.opportunities.filter(item => item.status === "Delivered").length;
-
-  const total =
-    weekActions.length +
-    state.weeklyTasks.length +
-    state.objectives60.length +
-    state.objectives90.length +
-    totalCriteria +
-    Math.max(state.people.length, 1) +
-    Math.max(state.opportunities.length, 1);
-
-  const complete =
-    checkedWeekActions +
-    checkedWeeklyTasks +
-    checked60 +
-    checked90 +
-    checkedCriteria +
-    peopleMet +
-    deliveredOpportunities;
-
-  const percentage = Math.min(100, Math.round((complete / total) * 100));
 
   $("#overallProgress").textContent = `${percentage}%`;
   $("#overallProgressBar").style.width = `${percentage}%`;
   $("#peopleMetCount").textContent = peopleMet;
-  $("#opportunityCount").textContent = state.opportunities.length;
+  $("#opportunityCount").textContent = state.opportunities.filter(item => String(item.title || "").trim()).length;
   $("#initiativesDelivered").textContent = deliveredOpportunities;
 
-  const start = new Date("2026-08-18T00:00:00");
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const day = Math.floor((today - start) / 86400000) + 1;
+  const day = getOnboardingDay();
 
   let phase = "Pre-onboarding";
   if (day >= 1 && day <= 30) phase = "30 Days";
@@ -826,6 +931,7 @@ function renderAll() {
 }
 
 loadLocal();
+syncActiveWeekToDate();
 bindTabs();
 bindAddButtons();
 renderAll();

@@ -497,3 +497,53 @@ td textarea{min-height:46px}
     grid-template-columns:1fr;
   }
 }
+
+
+/* Automatic carry-over of incomplete weekly activities */
+.carryover-box{
+  margin-bottom:16px;
+  padding:12px;
+  border:1px solid rgba(201,120,22,.30);
+  border-radius:13px;
+  background:linear-gradient(135deg,rgba(255,244,224,.95),rgba(255,250,241,.95));
+}
+.carryover-box .section-label{margin-top:0;color:var(--warning)}
+.carryover-note{margin:0 0 6px;color:var(--muted);font-size:.78rem}
+.carryover-row strong{color:var(--warning)}
+
+
+/* Progress by category */
+.category-progress{
+  display:grid;
+  gap:9px;
+  margin:14px 0 12px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--surface-soft);
+}
+.category-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:5px;
+  font-size:.76rem;
+  color:var(--muted);
+}
+.category-label strong{color:var(--text)}
+.category-track{
+  height:7px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#e6ebf3;
+}
+.category-bar{
+  width:0;
+  height:100%;
+  border-radius:999px;
+  transition:width .25s ease;
+}
+.category-row.learning .category-bar{background:linear-gradient(90deg,#6956e8,#9a7cf5)}
+.category-row.relationships .category-bar{background:linear-gradient(90deg,#2f7de1,#56a7f2)}
+.category-row.discovery .category-bar{background:linear-gradient(90deg,#1aa68f,#27c5aa)}
+.category-row.delivery .category-bar{background:linear-gradient(90deg,#df7b25,#f2a33e)}

@@ -61,3 +61,25 @@ The project is already Firebase-ready. After the final review:
   - Impact, priority and status
 
 This is the version intended for the final visual review before Firebase configuration is added.
+
+
+## Delivered corrections
+
+- Mary's start date is now **August 11, 2026**.
+- Phase dates and all Week 1–4 date ranges were recalculated.
+- When a new onboarding week begins, incomplete activities from prior weeks automatically appear in the current week under **Automatically carried over**.
+- Completing a carried-over item updates the original activity.
+- Overall progress now changes only when fixed plan activities, Barcelona preparation, or Mary/Yula success criteria are completed.
+- Adding names to People or creating an Initiative no longer increases the progress percentage.
+
+
+## Category progress
+
+The Overview now shows four separate progress measures:
+
+- Learning
+- Relationships
+- Discovery
+- Delivery
+
+Rows do not create progress by themselves. People count only when their status is Completed or Recurring. Initiatives only contribute after their status advances, with partial credit for In progress and full credit for Delivered.
