@@ -83,3 +83,11 @@ The Overview now shows four separate progress measures:
 - Delivery
 
 Rows do not create progress by themselves. People count only when their status is Completed or Recurring. Initiatives only contribute after their status advances, with partial credit for In progress and full credit for Delivered.
+
+
+## Final polish update
+
+- Progress categories now use spacious two-column cards.
+- The Overview automatically shows the current week's key activities and incomplete carry-over tasks.
+- Corrected dates are protected from older browser cache by a new local-storage version.
+- Every week includes Mary and Yula satisfaction ratings plus an end-of-week reflection.

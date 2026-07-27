@@ -1,7 +1,7 @@
 
 import { firebaseConfig, workspaceId } from "./firebase-config.js";
 
-const LOCAL_KEY = "mary-fisher-first-90-days-v4-delivered";
+const LOCAL_KEY = "mary-fisher-first-90-days-v5-final";
 const START_DATE = new Date("2026-08-11T00:00:00");
 const firebaseEnabled = !Object.values(firebaseConfig).some(v => String(v).includes("PASTE_"));
 
@@ -64,7 +64,10 @@ const defaultState = {
         { text: "Set a weekly 1:1 with Yula", done: false },
         { text: "Set a weekly sync with Shronger, Director Gen AI", done: false }
       ],
-      notes: ""
+      notes: "",
+      marySatisfaction: "",
+      yulaSatisfaction: "",
+      weekReflection: ""
     },
     {
       title: "Week 2 · Initial immersion and guided exploration",
@@ -84,7 +87,10 @@ const defaultState = {
         { text: "Learn the basic business metrics used by each relevant function", done: false },
         { text: "Document unclear processes, terminology and areas requiring follow-up", done: false }
       ],
-      notes: ""
+      notes: "",
+      marySatisfaction: "",
+      yulaSatisfaction: "",
+      weekReflection: ""
     },
     {
       title: "Week 3 · Broader immersion and Barcelona preparation",
@@ -104,7 +110,10 @@ const defaultState = {
         { text: "Build the Barcelona agenda and meeting schedule with Yula", done: false },
         { text: "Prepare context and questions for Barcelona introductions", done: false }
       ],
-      notes: ""
+      notes: "",
+      marySatisfaction: "",
+      yulaSatisfaction: "",
+      weekReflection: ""
     },
     {
       title: "Week 4 · Barcelona immersion and first synthesis",
@@ -411,35 +420,82 @@ function renderWeeklyTasks() {
   const root = $("#weeklyTasks");
   root.innerHTML = "";
 
-  state.weeklyTasks.forEach((task, index) => {
-    const row = document.createElement("div");
-    row.className = "weekly-task";
+  const currentWeekIndex = getCurrentWeekIndex();
+  const currentWeek = state.weeks30[currentWeekIndex];
+  const title = $("#overviewWeekTitle");
+  if (title) title.textContent = `Week ${currentWeekIndex + 1} key activities · ${currentWeek.dates}`;
+
+  const linkedTasks = [];
+
+  // Incomplete work from prior weeks is surfaced first and stays linked to its original task.
+  for (let weekIndex = 0; weekIndex < currentWeekIndex; weekIndex += 1) {
+    state.weeks30[weekIndex].actions.forEach((action, actionIndex) => {
+      if (!action.done) {
+        linkedTasks.push({
+          kind: "carryover",
+          weekIndex,
+          actionIndex,
+          label: `Carried over from Week ${weekIndex + 1}`,
+          text: action.text,
+          done: action.done
+        });
+      }
+    });
+  }
+
+  currentWeek.actions.forEach((action, actionIndex) => {
+    linkedTasks.push({
+      kind: "current",
+      weekIndex: currentWeekIndex,
+      actionIndex,
+      label: "Current week",
+      text: action.text,
+      done: action.done
+    });
+  });
+
+  linkedTasks.forEach(task => {
+    const row = document.createElement("label");
+    row.className = `weekly-task linked-week-task ${task.kind}`;
     row.innerHTML = `
       <input type="checkbox" ${task.done ? "checked" : ""}>
-      <input type="text" value="${escapeHtml(task.text)}">
+      <span><small>${task.label}</small>${task.text}</span>
+    `;
+    row.querySelector("input").onchange = event => {
+      state.weeks30[task.weekIndex].actions[task.actionIndex].done = event.target.checked;
+      renderWeeklyTasks();
+      renderWeekDetail();
+      updateSummary();
+      scheduleSave();
+    };
+    root.appendChild(row);
+  });
+
+  state.weeklyTasks.forEach((task, index) => {
+    const row = document.createElement("div");
+    row.className = "weekly-task custom-week-task";
+    row.innerHTML = `
+      <input type="checkbox" ${task.done ? "checked" : ""}>
+      <input type="text" value="${escapeHtml(task.text)}" aria-label="Extra weekly task">
       <button title="Delete">×</button>
     `;
 
     const [checkbox, input, button] = row.children;
-
     checkbox.onchange = event => {
       task.done = event.target.checked;
       updateSummary();
       scheduleSave();
     };
-
     input.oninput = event => {
       task.text = event.target.value;
       scheduleSave();
     };
-
     button.onclick = () => {
       state.weeklyTasks.splice(index, 1);
       renderWeeklyTasks();
       updateSummary();
       scheduleSave();
     };
-
     root.appendChild(row);
   });
 }
@@ -500,10 +556,58 @@ function renderWeekDetail() {
         </label>
       `).join("")}
     </article>
+
+    <article class="week-satisfaction">
+      <div>
+        <p class="eyebrow">How did the week go?</p>
+        <h3>End-of-week satisfaction</h3>
+      </div>
+      <div class="satisfaction-fields">
+        <div>
+          <label>Mary</label>
+          <select id="maryWeekSatisfaction">
+            <option value="">Select</option>
+            <option value="1" ${week.marySatisfaction === "1" ? "selected" : ""}>1 · Very difficult</option>
+            <option value="2" ${week.marySatisfaction === "2" ? "selected" : ""}>2</option>
+            <option value="3" ${week.marySatisfaction === "3" ? "selected" : ""}>3 · Mixed</option>
+            <option value="4" ${week.marySatisfaction === "4" ? "selected" : ""}>4</option>
+            <option value="5" ${week.marySatisfaction === "5" ? "selected" : ""}>5 · Excellent</option>
+          </select>
+        </div>
+        <div>
+          <label>Yula</label>
+          <select id="yulaWeekSatisfaction">
+            <option value="">Select</option>
+            <option value="1" ${week.yulaSatisfaction === "1" ? "selected" : ""}>1 · Needs attention</option>
+            <option value="2" ${week.yulaSatisfaction === "2" ? "selected" : ""}>2</option>
+            <option value="3" ${week.yulaSatisfaction === "3" ? "selected" : ""}>3 · On track</option>
+            <option value="4" ${week.yulaSatisfaction === "4" ? "selected" : ""}>4</option>
+            <option value="5" ${week.yulaSatisfaction === "5" ? "selected" : ""}>5 · Excellent</option>
+          </select>
+        </div>
+        <div class="week-reflection-field">
+          <label>What worked, what was challenging, and what should change next week?</label>
+          <textarea id="weekReflection">${escapeHtml(week.weekReflection || "")}</textarea>
+        </div>
+      </div>
+    </article>
   `;
 
   root.querySelector("#weekNotes").oninput = event => {
     week.notes = event.target.value;
+    scheduleSave();
+  };
+
+  root.querySelector("#maryWeekSatisfaction").onchange = event => {
+    week.marySatisfaction = event.target.value;
+    scheduleSave();
+  };
+  root.querySelector("#yulaWeekSatisfaction").onchange = event => {
+    week.yulaSatisfaction = event.target.value;
+    scheduleSave();
+  };
+  root.querySelector("#weekReflection").oninput = event => {
+    week.weekReflection = event.target.value;
     scheduleSave();
   };
 
