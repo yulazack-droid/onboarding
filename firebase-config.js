@@ -8,4 +8,14 @@ export const firebaseConfig = {
   measurementId: "G-JFJKB10KLZ"
 };
 
-export const workspaceId = "mary-fisher-first-90-days";
+// Stable internal identifier. Mary still sees her own name in the interface.
+export const workspaceId = "9dc23f8e-8b42-4a75-b7d2-91b3f1df46ad";
+
+export const initialWorkspaceMetadata = {
+  employeeName: "Mary Fisher",
+  roleTitle: "AI Transformation Lead",
+  managerName: "Yula Zack",
+  startDate: "2026-08-11",
+  status: "Active",
+  template: "AI Transformation Lead – First 90 Days"
+};

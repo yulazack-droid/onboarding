@@ -1,5 +1,5 @@
 const KEY='mary-first-90-days-production';
-const SCHEMA_VERSION=3;
+const SCHEMA_VERSION=4;
 const START=new Date('2026-08-11T00:00:00');
 const purposes=['Introduction','Business context','Workflow understanding','Tool walkthrough','KPI review','Process mapping','AI opportunity discovery','Roadmap alignment','Follow-up'];
 const meetingWeeks=['Week 1','Week 2','Week 3','Week 4','Week 5 · Barcelona (F2F)'];
@@ -42,7 +42,32 @@ try{
   }
 }catch(e){state=structuredClone(defaults)}
 state.schemaVersion=SCHEMA_VERSION;
-function save(){state.schemaVersion=SCHEMA_VERSION;state.updatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem(KEY+'-backup',JSON.stringify(state));$('#saveStatus').textContent='Saved locally'}
+let cloudNotificationsEnabled=true;
+function save(options={}){
+  state.schemaVersion=SCHEMA_VERSION;
+  state.updatedAt=new Date().toISOString();
+  localStorage.setItem(KEY,JSON.stringify(state));
+  localStorage.setItem(KEY+'-backup',JSON.stringify(state));
+  const status=$('#saveStatus');
+  if(status)status.textContent=options.statusText||'Saved locally';
+  if(cloudNotificationsEnabled&&options.notifyCloud!==false){
+    window.dispatchEvent(new CustomEvent('workspace-local-changed',{detail:{state:structuredClone(state)}}));
+  }
+}
+function getWorkspaceState(){return structuredClone(state)}
+function applyWorkspaceState(nextState,options={}){
+  if(!validWorkspace(nextState))throw new Error('Invalid workspace state');
+  cloudNotificationsEnabled=false;
+  try{
+    state=merge(structuredClone(defaults),nextState);
+    state.schemaVersion=SCHEMA_VERSION;
+    if(options.persistLocal!==false)save({notifyCloud:false,statusText:options.statusText||'Loaded from cloud'});
+    render();
+  }finally{
+    cloudNotificationsEnabled=true;
+  }
+}
+window.workspaceApp={getState:getWorkspaceState,applyState:applyWorkspaceState,saveLocal:()=>save({notifyCloud:false})};
 function today(){const t=new Date();t.setHours(0,0,0,0);return t}
 function dateOnly(s){return new Date(s+'T00:00:00')}
 function currentWeekIndex(){

@@ -23,3 +23,5 @@
 .auth-message{font-size:10px;color:rgba(255,255,255,.76);white-space:nowrap}
 .auth-message.error{color:#ffd6d6}
 @media (max-width:1100px){.hero-tools{flex-wrap:wrap}.auth-area{order:3;width:100%}.auth-message{white-space:normal}}
+
+.hero-save.cloud-error{color:#ffd6d6;font-weight:750}

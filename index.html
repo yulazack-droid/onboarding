@@ -5,18 +5,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mary Fisher | First 90 Days</title>
-  <link rel="stylesheet" href="styles.css?v=4.0.0" />
+  <link rel="stylesheet" href="styles.css?v=4.1.0" />
 </head>
 <body>
   <div class="app-shell">
     <header class="hero">
       <div>
         <p class="eyebrow light">First-quarter workspace</p>
-        <h1>Mary Fisher</h1>
-        <p class="hero-subtitle">AI Transformation Lead · Manager: Yula Zack</p>
+        <h1 id="employeeName">Mary Fisher</h1>
+        <p class="hero-subtitle" id="roleManager">AI Transformation Lead · Manager: Yula Zack</p>
       </div>
       <div class="hero-meta">
-        <div><span>Start date</span><strong>August 11, 2026</strong></div>
+        <div><span>Start date</span><strong id="startDateLabel">August 11, 2026</strong></div>
         <div><span>Current phase</span><strong id="currentPhase">Pre-onboarding</strong></div>
         <div><span>Current week</span><strong id="currentWeekLabel">Week 1</strong></div>
       </div>
@@ -146,9 +146,10 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
-    </main><footer class="app-footer">Version 3.0 · Production storage enabled</footer>
+    </main><footer class="app-footer">Version 4.2 · Full Firestore sync</footer>
   </div>
-  <script type="module" src="app.js?v=4.0.1"></script>
-  <script type="module" src="firebase-auth.js?v=4.0.1"></script>
+  <script type="module" src="app.js?v=4.2.0"></script>
+  <script type="module" src="firebase-auth.js?v=4.2.0"></script>
+  <script type="module" src="firestore-workspace.js?v=4.2.0"></script>
 </body>
 </html>
