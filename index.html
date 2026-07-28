@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mary Fisher | First 90 Days</title>
-  <link rel="stylesheet" href="styles.css?v=2.0.0" />
+  <link rel="stylesheet" href="styles.css?v=3.0.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -20,7 +20,7 @@
         <div><span>Current phase</span><strong id="currentPhase">Pre-onboarding</strong></div>
         <div><span>Current week</span><strong id="currentWeekLabel">Week 1</strong></div>
       </div>
-      <div class="hero-save" id="saveStatus">Saved locally</div>
+      <div class="hero-tools"><span class="hero-save" id="saveStatus">Saved locally</span><button id="exportWorkspace" class="button glass" type="button">Export</button><button id="importWorkspace" class="button glass" type="button">Import</button><input id="importFile" type="file" accept="application/json,.json" hidden></div>
     </header>
 
     <section class="operating-strip">
@@ -132,8 +132,8 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
-    </main>
+    </main><footer class="app-footer">Version 3.0 · Production storage enabled</footer>
   </div>
-  <script type="module" src="app.js?v=2.0.0"></script>
+  <script type="module" src="app.js?v=3.0.0"></script>
 </body>
 </html>
