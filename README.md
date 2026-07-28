@@ -23,3 +23,10 @@ The app saves data locally in the browser until the Firebase add-on is installed
 ## Carry-over timing fix
 
 Outstanding tasks from previous weeks are shown only after the selected week has actually started. Browsing a future week in advance will not display carry-over items. Each carried item is labelled with its source week.
+
+
+## v1.0.2
+
+- Added a **Meeting week** column to the People tracker.
+- Each stakeholder can be assigned to Week 1, Week 2, Week 3 or Week 4.
+- New stakeholders default to Week 2, matching the onboarding plan.
