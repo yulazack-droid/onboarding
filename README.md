@@ -1,38 +1,13 @@
+# Mary Fisher – First 90 Days Workspace (Final V2)
 
-# Mary Fisher – First 90 Days Workspace
+## Final scope
+- Overview with dynamic current-week tasks, carry-over, manual tasks, weekly progress and weekly 1:1 agenda.
+- 30 Days with five weeks, including Week 5 – Barcelona (F2F).
+- 60 Days and 90 Days with phase progress based on assigned weekly tasks.
+- People tracker with Meeting Week options Week 1–5 only.
+- Initiatives tracker.
+- Resources table for essential links.
+- No separate Barcelona or Notes tabs.
 
-## Package 1: Core application
-
-This package is fully functional in local-browser mode and ready for GitHub Pages.
-
-### Final progress logic
-- The Overview progress is weekly and resets automatically each week.
-- It includes the current week's activities, incomplete carry-over tasks, and manually added tasks.
-- The 30-day progress combines all four first-month weeks and any manual tasks added during those weeks.
-- The 60-day and 90-day progress bars are based on their own objective checklists.
-- Success criteria do not affect progress percentages.
-
-### Upload
-Upload these files directly to the repository root:
-- index.html
-- styles.css
-- app.js
-
-The app saves data locally in the browser until the Firebase add-on is installed.
-
-## Carry-over timing fix
-
-Outstanding tasks from previous weeks are shown only after the selected week has actually started. Browsing a future week in advance will not display carry-over items. Each carried item is labelled with its source week.
-
-
-## v1.0.2
-
-- Added a **Meeting week** column to the People tracker.
-- Each stakeholder can be assigned to Week 1, Week 2, Week 3 or Week 4.
-- New stakeholders default to Week 2, matching the onboarding plan.
-
-
-## v1.0.3 fix
-
-- Added cache-busting to `styles.css` and `app.js` so GitHub Pages loads the matching files.
-- The People table now reliably shows the `Meeting week` dropdown before `Purpose`.
+## Upload to GitHub Pages
+Replace the files in the repository root with `index.html`, `styles.css`, and `app.js`.

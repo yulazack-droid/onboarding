@@ -5,3 +5,5 @@
 @media(max-width:700px){.app-shell{width:min(100% - 16px,1580px)}.hero-meta{grid-template-columns:1fr}.success-row{grid-template-columns:1fr 68px 68px}}
 
 .source-week{display:inline-block;margin-right:8px;padding:2px 6px;border-radius:999px;background:#f3dfbd;color:#9b5a0b;font-size:.66rem;font-weight:800;vertical-align:middle}
+
+.week-tab-f2f{font-weight:850}.resource-open{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:9px;background:#e7f8f6;color:#087d79;text-decoration:none;font-weight:800;white-space:nowrap}.resource-open.disabled{opacity:.45;pointer-events:none}.resources-table{min-width:820px}.week-special{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:999px;background:#e7f8f6;color:#087d79;font-size:.7rem;font-weight:850}.phase-task-group{margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.phase-task-group h4{margin:0 0 5px}.phase-task-group p{margin:0 0 8px;color:var(--muted);font-size:.78rem}

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mary Fisher | First 90 Days</title>
-  <link rel="stylesheet" href="styles.css?v=1.0.3" />
+  <link rel="stylesheet" href="styles.css?v=2.0.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -41,9 +41,8 @@
       <button class="tab" data-tab="days60">60 Days</button>
       <button class="tab" data-tab="days90">90 Days</button>
       <button class="tab" data-tab="people">People</button>
-      <button class="tab" data-tab="barcelona">Barcelona</button>
       <button class="tab" data-tab="initiatives">Initiatives</button>
-      <button class="tab" data-tab="notes">Notes</button>
+      <button class="tab" data-tab="resources">Resources</button>
     </nav>
 
     <main>
@@ -89,7 +88,11 @@
       <section id="days30" class="panel">
         <div class="phase-hero"><div><p class="eyebrow light">Days 1–30</p><h2>Foundation, immersion and initial exploration</h2><p>August 11 – September 9, 2026</p></div><div class="phase-progress"><strong id="progress30Value">0%</strong><span id="progress30Count">0 / 0</span></div></div>
         <div class="week-tabs">
-          <button class="week-tab active" data-week="0">Week 1</button><button class="week-tab" data-week="1">Week 2</button><button class="week-tab" data-week="2">Week 3</button><button class="week-tab" data-week="3">Week 4</button>
+          <button class="week-tab active" data-week="0">Week 1</button>
+          <button class="week-tab" data-week="1">Week 2</button>
+          <button class="week-tab" data-week="2">Week 3</button>
+          <button class="week-tab" data-week="3">Week 4</button>
+          <button class="week-tab week-tab-f2f" data-week="4">Week 5 · Barcelona F2F</button>
         </div>
         <div id="weekDetail"></div>
         <div class="phase-grid">
@@ -120,21 +123,17 @@
         <div class="table-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>Studio</th><th>Priority</th><th>Meeting week</th><th>Purpose</th><th>Status</th><th>Follow-up</th><th>Key takeaways</th><th></th></tr></thead><tbody id="peopleBody"></tbody></table></div>
       </section>
 
-      <section id="barcelona" class="panel">
-        <div class="phase-hero"><div><p class="eyebrow light">Barcelona visit</p><h2>September 6–8, 2026</h2><p>Manager-supported introductions, context and alignment</p></div></div>
-        <div class="phase-grid"><article class="card"><p class="eyebrow">Visit objectives</p><div id="barcelonaObjectives"></div></article><article class="card"><p class="eyebrow">Preparation with Yula</p><div id="barcelonaPrep"></div></article></div>
-        <article class="card"><div class="section-header"><div><p class="eyebrow">Agenda</p><h3>Build the trip together</h3></div><button id="addBarcelonaMeeting" class="button secondary">Add meeting</button></div><div class="table-wrap embedded"><table><thead><tr><th>Date</th><th>Time</th><th>Person / group</th><th>Objective</th><th>Location</th><th>Preparation</th><th></th></tr></thead><tbody id="barcelonaBody"></tbody></table></div></article>
-        <article class="card"><label>Visit notes and follow-ups</label><textarea data-field="barcelonaNotes"></textarea></article>
-      </section>
-
       <section id="initiatives" class="panel table-panel">
         <div class="table-header"><div><p class="eyebrow light">Initiatives</p><h2>AI opportunities, quick wins and projects</h2></div><button id="addInitiative" class="button light">Add initiative</button></div>
         <div class="table-wrap"><table><thead><tr><th>Initiative</th><th>Team / studio</th><th>Problem type</th><th>Estimated time</th><th>Scope</th><th>Type</th><th>Impact</th><th>Priority</th><th>Status</th><th>Notes</th><th></th></tr></thead><tbody id="initiativesBody"></tbody></table></div>
       </section>
 
-      <section id="notes" class="panel"><div class="notes-grid"><article class="card"><p class="eyebrow">Mary's notes</p><textarea class="notes-area" data-field="maryNotes"></textarea></article><article class="card"><p class="eyebrow">Yula's notes</p><textarea class="notes-area" data-field="yulaNotes"></textarea></article></div></section>
+      <section id="resources" class="panel table-panel">
+        <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
+        <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
+      </section>
     </main>
   </div>
-  <script type="module" src="app.js?v=1.0.3"></script>
+  <script type="module" src="app.js?v=2.0.0"></script>
 </body>
 </html>
