@@ -1,13 +1,22 @@
-# Mary Fisher – First 90 Days Workspace (Final V2)
+# Mary First 90 Days — Firebase Authentication Step 1
 
-## Final scope
-- Overview with dynamic current-week tasks, carry-over, manual tasks, weekly progress and weekly 1:1 agenda.
-- 30 Days with five weeks, including Week 5 – Barcelona (F2F).
-- 60 Days and 90 Days with phase progress based on assigned weekly tasks.
-- People tracker with Meeting Week options Week 1–5 only.
-- Initiatives tracker.
-- Resources table for essential links.
-- No separate Barcelona or Notes tabs.
+Version 4.0 adds Google sign-in without changing workspace storage.
 
 ## Upload to GitHub Pages
-Replace the files in the repository root with `index.html`, `styles.css`, and `app.js`.
+Replace or add these files in the repository root:
+- index.html
+- styles.css
+- app.js
+- firebase-config.js
+- firebase-auth.js
+
+Do not delete browser Local Storage. Workspace data still saves locally in this step.
+
+## Test
+1. Wait for GitHub Pages to deploy.
+2. Open the site and hard-refresh with Ctrl+F5.
+3. Click **Sign in with Google**.
+4. Confirm that your name and email appear in the header.
+5. Sign out and sign in again.
+
+Firestore saving is intentionally not enabled in this version.
