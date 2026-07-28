@@ -45,7 +45,15 @@ state.schemaVersion=SCHEMA_VERSION;
 function save(){state.schemaVersion=SCHEMA_VERSION;state.updatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem(KEY+'-backup',JSON.stringify(state));$('#saveStatus').textContent='Saved locally'}
 function today(){const t=new Date();t.setHours(0,0,0,0);return t}
 function dateOnly(s){return new Date(s+'T00:00:00')}
-function currentWeekIndex(){const t=today();if(t<dateOnly(state.weeks[0].start))return 0;for(let i=0;i<state.weeks.length;i++){if(t>=dateOnly(state.weeks[i].start)&&t<=dateOnly(state.weeks[i].end))return i}return state.weeks.length-1}
+function currentWeekIndex(){
+  const t=today();
+  const schedule=defaults.weeks;
+  if(t<dateOnly(schedule[0].start))return 0;
+  for(let i=0;i<schedule.length;i++){
+    if(t>=dateOnly(schedule[i].start)&&t<=dateOnly(schedule[i].end))return i;
+  }
+  return schedule.length-1;
+}
 function phase(){const i=currentWeekIndex();return state.weeks[i].phase==='30'?'30 Days':state.weeks[i].phase==='60'?'60 Days':'90 Days'}
 function nav(){$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.activeTab));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===state.activeTab))}
 $$('.tab').forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;nav();save()});$$('.week-tab').forEach(b=>b.onclick=()=>{state.activeWeek=+b.dataset.week;renderWeek();save()});
