@@ -30,3 +30,9 @@ Outstanding tasks from previous weeks are shown only after the selected week has
 - Added a **Meeting week** column to the People tracker.
 - Each stakeholder can be assigned to Week 1, Week 2, Week 3 or Week 4.
 - New stakeholders default to Week 2, matching the onboarding plan.
+
+
+## v1.0.3 fix
+
+- Added cache-busting to `styles.css` and `app.js` so GitHub Pages loads the matching files.
+- The People table now reliably shows the `Meeting week` dropdown before `Purpose`.
