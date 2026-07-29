@@ -104,3 +104,80 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 @media (max-width: 600px) {
   .login-card { padding: 34px 22px; }
 }
+
+
+/* v4.4.1 welcome content belongs on Overview, not the login gate */
+.welcome-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 24px 26px;
+  border: 1px solid rgba(104,85,232,.14);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f6f3ff 58%, #eefaf8 100%);
+  box-shadow: 0 12px 30px rgba(35,28,80,.07);
+}
+.welcome-card h2 { margin: 3px 0 8px; font-size: clamp(1.7rem, 3vw, 2.35rem); }
+.welcome-card .muted { margin: 0; max-width: 760px; }
+.welcome-day {
+  flex: 0 0 auto;
+  padding: 11px 16px;
+  border-radius: 999px;
+  color: #5142b4;
+  font-weight: 800;
+  background: #f0edff;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .welcome-card { align-items: flex-start; flex-direction: column; }
+  .welcome-day { white-space: normal; }
+}
+
+
+/* v4.4.2 compact login */
+.login-gate {
+  min-height: 100vh;
+  padding: 28px 18px;
+  display: grid;
+  place-items: center;
+}
+.login-card {
+  width: min(100%, 390px);
+  padding: 26px 28px;
+  border-radius: 20px;
+  text-align: center;
+}
+.login-card .login-mark {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 14px;
+  border-radius: 14px;
+  font-size: 15px;
+}
+.login-card .eyebrow { margin-bottom: 6px; }
+.login-card h1 {
+  margin: 0 0 8px;
+  font-size: clamp(25px, 5vw, 32px);
+  line-height: 1.12;
+}
+.login-card .login-intro {
+  margin: 0 auto 18px;
+  max-width: 310px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.login-primary {
+  width: 100%;
+  min-height: 44px;
+}
+.login-card .auth-message {
+  display: block;
+  min-height: 18px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+@media (max-width: 520px) {
+  .login-card { padding: 22px 20px; border-radius: 17px; }
+}

@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import {
-  browserSessionPersistence,
+  browserLocalPersistence,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -13,7 +13,7 @@ import { firebaseConfig } from "./firebase-config.js";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account", hd: "scopely.com" });
+provider.setCustomParameters({ hd: "scopely.com" });
 
 const signInButton = document.getElementById("signInButton");
 const signOutButton = document.getElementById("signOutButton");
@@ -26,7 +26,7 @@ const gateSignInButton = document.getElementById("gateSignInButton");
 const gateAuthMessage = document.getElementById("gateAuthMessage");
 const loginGate = document.getElementById("loginGate");
 const appShell = document.getElementById("appShell");
-const loginDayMessage = document.getElementById("loginDayMessage");
+const overviewDayMessage = document.getElementById("overviewDayMessage");
 
 let accessGranted = false;
 let currentUser = null;
@@ -36,7 +36,7 @@ function isScopelyUser(user) {
 }
 
 function setJourneyMessage() {
-  if (!loginDayMessage) return;
+  if (!overviewDayMessage) return;
   const start = new Date("2026-08-11T00:00:00");
   const today = new Date();
   start.setHours(0, 0, 0, 0);
@@ -44,9 +44,9 @@ function setJourneyMessage() {
   const difference = Math.round((today - start) / 86400000);
   if (difference < 0) {
     const days = Math.abs(difference);
-    loginDayMessage.textContent = `Your first day is in ${days} day${days === 1 ? "" : "s"}.`;
+    overviewDayMessage.textContent = `Your first day is in ${days} day${days === 1 ? "" : "s"}.`;
   } else {
-    loginDayMessage.textContent = `Today is day ${difference + 1} of your journey here.`;
+    overviewDayMessage.textContent = `Today is day ${difference + 1} of your journey here.`;
   }
 }
 
@@ -131,7 +131,7 @@ function showSignedOut() {
 async function handleSignIn() {
   if (signInButton) signInButton.disabled = true;
   if (gateSignInButton) gateSignInButton.disabled = true;
-  setAuthMessage("Connecting to Google…");
+  setAuthMessage(currentUser ? "Opening workspace…" : "Connecting to Google…");
 
   try {
     // If Firebase already has a valid session, the explicit Continue click opens the app
@@ -145,7 +145,7 @@ async function handleSignIn() {
       return;
     }
 
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
     const result = await signInWithPopup(auth, provider);
     currentUser = result.user;
 

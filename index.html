@@ -8,16 +8,17 @@
   <style>
     #appShell[hidden], #loginGate[hidden] { display: none !important; }
   </style>
-  <link rel="stylesheet" href="styles.css?v=4.4.0" />
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://accounts.google.com" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=4.4.2" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite">
     <div class="login-card">
       <div class="login-mark" aria-hidden="true">AI</div>
       <p class="eyebrow">LGP AI workspace</p>
-      <h1>Welcome to Scopely, Mary</h1>
-      <p class="login-intro">Your AI transformation journey starts here. This workspace will guide your first 90 days, key relationships and early priorities.</p>
-      <p id="loginDayMessage" class="login-day"></p>
+      <h1>Sign in to continue</h1>
+      <p class="login-intro">Use your Scopely Google account to access the workspace.</p>
       <button id="gateSignInButton" class="button primary login-primary" type="button">Sign in with Google</button>
       <span id="gateAuthMessage" class="auth-message"></span>
     </div>
@@ -74,6 +75,15 @@
 
     <main>
       <section id="overview" class="panel active">
+        <article class="welcome-card">
+          <div>
+            <p class="eyebrow">Welcome to Scopely</p>
+            <h2>Welcome, Mary</h2>
+            <p class="muted">This workspace is here to support your first 90 days, help you stay focused on the right relationships and priorities, and make your progress visible along the way.</p>
+          </div>
+          <div id="overviewDayMessage" class="welcome-day"></div>
+        </article>
+
         <article class="mission-card">
           <div>
             <p class="eyebrow">Role mission</p>
@@ -159,10 +169,10 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
-    </main><footer class="app-footer">Version 4.4 · Required login and viewer mode</footer>
+    </main><footer class="app-footer">Version 4.4.2 · Compact login</footer>
   </div>
-  <script type="module" src="app.js?v=4.4.0"></script>
-  <script type="module" src="firebase-auth.js?v=4.4.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.4.0"></script>
+  <script type="module" src="app.js?v=4.4.2"></script>
+  <script type="module" src="firebase-auth.js?v=4.4.2"></script>
+  <script type="module" src="firestore-workspace.js?v=4.4.2"></script>
 </body>
 </html>
