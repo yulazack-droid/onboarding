@@ -8,8 +8,14 @@ export const firebaseConfig = {
   measurementId: "G-JFJKB10KLZ"
 };
 
-// Stable internal identifier. Mary still sees her own name in the interface.
-export const workspaceId = "9dc23f8e-8b42-4a75-b7d2-91b3f1df46ad";
+// Temporary compatibility identifier for the existing Mary Journey. New Journey
+// routing will read the workspace ID from the URL in a later sprint.
+export const maryWorkspaceId = "9dc23f8e-8b42-4a75-b7d2-91b3f1df46ad";
+export const workspaceId = maryWorkspaceId;
+
+// Sprint 1: the Hub is intentionally limited to one administrator.
+// Firestore rules enforce this server-side; this value is only used for UI state.
+export const hubAdminEmail = "yula.zack@scopely.com";
 
 export const initialWorkspaceMetadata = {
   employeeName: "Mary Fisher",

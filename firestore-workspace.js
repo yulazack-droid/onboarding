@@ -86,11 +86,9 @@ async function uploadFullWorkspace(user, reason = "save") {
   delete workspaceData.activeTab;
   delete workspaceData.activeWeek;
   setCloudStatus(reason === "migration" ? "Uploading existing workspace…" : "Saving to cloud…");
+  // Editors update only Journey content. Identity and access metadata must not
+  // be overwritten by whichever editor saved most recently.
   await setDoc(workspaceRef, {
-    ...initialWorkspaceMetadata,
-    ownerUid: user.uid,
-    ownerEmail: user.email || "",
-    schemaVersion: 2,
     workspaceData,
     updatedAt: serverTimestamp()
   }, { merge: true });

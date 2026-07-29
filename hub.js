@@ -57,6 +57,9 @@ function showGate(message = "") {
 function showHub(user) {
   els.loginGate.hidden = true;
   els.hubShell.hidden = false;
+  // Pilot mode: every authenticated Scopely user may view the full Hub UI.
+  // The Create Journey button remains informational until Sprint 2.
+  els.startJourneyButton.hidden = false;
   els.userName.textContent = user.displayName || "Scopely user";
   els.userEmail.textContent = user.email || "";
   if (user.photoURL) {
@@ -148,7 +151,7 @@ async function loadJourneys() {
     console.error("Unable to load onboarding journeys", error);
     els.journeyCount.textContent = "0";
     els.journeyState.textContent = error?.code === "permission-denied"
-      ? "Your account does not currently have permission to view journeys."
+      ? "Your account does not currently have permission to view pilot Journeys."
       : "Journeys could not be loaded. Please refresh and try again.";
     els.journeyState.classList.add("error");
   }
