@@ -111,35 +111,6 @@ function del(coll,i,render){
   td.appendChild(b);
   return td;
 }
-function exportWorkspace(){
-  const blob=new Blob([JSON.stringify({...state,schemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;
-  a.download='mary-first-90-days-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-function importWorkspace(file){
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try{
-      const parsed=JSON.parse(reader.result);
-      if(!validWorkspace(parsed))throw new Error('Invalid workspace file');
-      state=merge(structuredClone(defaults),parsed);
-      save();
-      render();
-      alert('Workspace imported successfully.');
-    }catch(e){alert('Import failed: '+e.message)}
-  };
-  reader.readAsText(file);
-}
-$('#exportWorkspace').onclick=exportWorkspace;
-$('#importWorkspace').onclick=()=>$('#importFile').click();
-$('#importFile').onchange=e=>{importWorkspace(e.target.files[0]);e.target.value=''};
-
 function people(){const b=$('#peopleBody');b.innerHTML='';state.people.forEach((p,i)=>{const tr=document.createElement('tr');tr.append(inp(p.name,v=>p.name=v),inp(p.role,v=>p.role=v),inp(p.studio,v=>p.studio=v),sel(p.priority,['Critical','High','Medium','Low'],v=>p.priority=v),sel(p.meetingWeek||'Week 2',meetingWeeks,v=>p.meetingWeek=v),sel(p.purpose,purposes,v=>p.purpose=v),sel(p.status,['Not scheduled','Scheduled','Completed','Recurring'],v=>p.status=v),sel(p.followUp,['No','Recommended','Required','Completed','Weekly','Monthly'],v=>p.followUp=v),area(p.takeaways,v=>p.takeaways=v),del('people',i,people));b.appendChild(tr)})}
 function initiatives(){const b=$('#initiativesBody');b.innerHTML='';state.initiatives.forEach((x,i)=>{const tr=document.createElement('tr');tr.append(inp(x.title,v=>x.title=v),inp(x.team,v=>x.team=v),sel(x.problemType,['Manual effort','Human error','Capacity gap','Knowledge access','Other'],v=>x.problemType=v),sel(x.estimatedTime,['< 1 week','1–2 weeks','3–4 weeks','1–2 months','3+ months'],v=>x.estimatedTime=v),sel(x.scope,['Single workflow','Single team','Multiple teams','Studio-wide','Portfolio-wide'],v=>x.scope=v),sel(x.type,['Quick Win','Project'],v=>x.type=v),sel(x.impact,['Low','Medium','High'],v=>x.impact=v),sel(x.priority,['Low','Medium','High'],v=>x.priority=v),sel(x.status,['Idea','Discovery','Prioritized','In Progress','Delivered'],v=>x.status=v),area(x.notes,v=>x.notes=v),del('initiatives',i,initiatives));b.appendChild(tr)})}
 function resources(){const b=$('#resourcesBody');b.innerHTML='';state.resources.forEach((x,i)=>{const tr=document.createElement('tr');const open=document.createElement('td'),a=document.createElement('a');a.className='resource-open'+(x.link?'':' disabled');a.textContent='Open';a.target='_blank';a.rel='noopener noreferrer';a.href=x.link||'#';open.appendChild(a);tr.append(inp(x.name,v=>x.name=v),area(x.description,v=>x.description=v),inp(x.link,v=>{x.link=v;resources()}),open,del('resources',i,resources));b.appendChild(tr)})}

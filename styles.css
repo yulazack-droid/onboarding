@@ -38,3 +38,69 @@
 .access-banner.viewer { background: #fff7e8; border-color: #f1d39a; color: #8a5b00; }
 body.read-only-mode input, body.read-only-mode textarea, body.read-only-mode select { pointer-events: none; background: #f6f7f9 !important; color: #667085; }
 body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-only-mode #addInitiative, body.read-only-mode #addResource, body.read-only-mode .icon, body.read-only-mode [data-rate] { display: none !important; }
+
+/* v4.4 friendlier mandatory landing page */
+.login-gate {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(104,85,232,.16), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgba(26,181,175,.18), transparent 30%),
+    linear-gradient(145deg, #f7f5ff 0%, #edf9f7 100%);
+}
+.login-card {
+  width: min(620px, 100%);
+  padding: 44px 48px;
+  border: 1px solid rgba(104,85,232,.10);
+}
+.login-mark {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  border-radius: 18px;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: -.04em;
+  background: linear-gradient(135deg, var(--purple), var(--aqua));
+  box-shadow: 0 12px 28px rgba(104,85,232,.25);
+}
+.login-card h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+.login-intro {
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.login-day {
+  display: inline-block;
+  margin: 20px auto 4px !important;
+  padding: 9px 14px;
+  border-radius: 999px;
+  color: #5142b4 !important;
+  font-weight: 800;
+  background: #f0edff;
+}
+.login-primary {
+  display: block;
+  width: min(340px, 100%);
+  margin: 22px auto 0 !important;
+  padding: 13px 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  box-shadow: 0 10px 22px rgba(104,85,232,.20);
+}
+.login-card .auth-message {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  white-space: normal;
+  line-height: 1.4;
+}
+.login-card .auth-message.error { color: var(--danger); }
+@media (max-width: 600px) {
+  .login-card { padding: 34px 22px; }
+}

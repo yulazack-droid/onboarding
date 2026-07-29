@@ -6,8 +6,7 @@ import {
   serverTimestamp,
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-import { app, auth } from "./firebase-auth.js";
+import { app } from "./firebase-auth.js";
 import { initialWorkspaceMetadata, workspaceId } from "./firebase-config.js";
 
 const db = getFirestore(app);
@@ -138,7 +137,7 @@ async function loadOrCreateWorkspace(user) {
 
   const cloud = snapshot.data();
   const editable = user.uid === cloud.ownerUid || isMary(user);
-  setAccessMode(editable, editable ? "Editor access · your changes are saved to the shared workspace" : "View-only access — You can explore this workspace, but only Yula Zack and Mary Fisher can make changes.");
+  setAccessMode(editable, editable ? "Editor access" : "View-only access");
   renderMetadata(metadataFields(cloud));
   if (cloud.workspaceData) {
     applyingRemoteState = true;
@@ -181,7 +180,8 @@ function startRealtimeSync() {
 window.addEventListener("workspace-local-changed", scheduleCloudSave);
 renderMetadata(initialWorkspaceMetadata);
 
-onAuthStateChanged(auth, async user => {
+window.addEventListener("workspace-auth-changed", async event => {
+  const user = event.detail?.accessGranted ? event.detail.user : null;
   activeUser = user;
   clearTimeout(saveTimer);
   unsubscribeSnapshot?.();
@@ -192,7 +192,7 @@ onAuthStateChanged(auth, async user => {
     window.workspaceApp?.setReadOnly?.(true);
     if (accessBanner) accessBanner.hidden = true;
     renderMetadata(initialWorkspaceMetadata);
-    setCloudStatus("Saved locally · sign in for cloud");
+    setCloudStatus("Sign in to access the workspace");
     return;
   }
 

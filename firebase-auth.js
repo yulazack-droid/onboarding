@@ -13,7 +13,7 @@ import { firebaseConfig } from "./firebase-config.js";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
+provider.setCustomParameters({ prompt: "select_account", hd: "scopely.com" });
 
 const signInButton = document.getElementById("signInButton");
 const signOutButton = document.getElementById("signOutButton");
@@ -26,10 +26,29 @@ const gateSignInButton = document.getElementById("gateSignInButton");
 const gateAuthMessage = document.getElementById("gateAuthMessage");
 const loginGate = document.getElementById("loginGate");
 const appShell = document.getElementById("appShell");
+const loginDayMessage = document.getElementById("loginDayMessage");
 
-// The workspace remains hidden until the user actively signs in on this page load.
 let accessGranted = false;
 let currentUser = null;
+
+function isScopelyUser(user) {
+  return Boolean(user?.email && user.email.toLowerCase().endsWith("@scopely.com"));
+}
+
+function setJourneyMessage() {
+  if (!loginDayMessage) return;
+  const start = new Date("2026-08-11T00:00:00");
+  const today = new Date();
+  start.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+  const difference = Math.round((today - start) / 86400000);
+  if (difference < 0) {
+    const days = Math.abs(difference);
+    loginDayMessage.textContent = `Your first day is in ${days} day${days === 1 ? "" : "s"}.`;
+  } else {
+    loginDayMessage.textContent = `Today is day ${difference + 1} of your journey here.`;
+  }
+}
 
 function setAuthMessage(message, isError = false) {
   if (authMessage) {
@@ -42,37 +61,28 @@ function setAuthMessage(message, isError = false) {
   }
 }
 
+function dispatchAuth(user, granted) {
+  window.dispatchEvent(new CustomEvent("workspace-auth-changed", {
+    detail: {
+      user: user && granted ? {
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      } : null,
+      accessGranted: Boolean(granted)
+    }
+  }));
+}
+
 function lockWorkspace() {
+  accessGranted = false;
   if (loginGate) loginGate.hidden = false;
   if (appShell) {
     appShell.hidden = true;
     appShell.classList.add("auth-hidden");
     appShell.setAttribute("aria-hidden", "true");
   }
-}
-
-function unlockWorkspace(user) {
-  accessGranted = true;
-  if (loginGate) loginGate.hidden = true;
-  if (appShell) {
-    appShell.hidden = false;
-    appShell.classList.remove("auth-hidden");
-    appShell.setAttribute("aria-hidden", "false");
-  }
-  showSignedInUser(user);
-}
-
-function showSignedOut() {
-  lockWorkspace();
-  if (signInButton) signInButton.hidden = false;
-  if (signedInUser) signedInUser.hidden = true;
-  if (userName) userName.textContent = "";
-  if (userEmail) userEmail.textContent = "";
-  if (userAvatar) {
-    userAvatar.hidden = true;
-    userAvatar.removeAttribute("src");
-  }
-  setAuthMessage("Sign in with your Scopely Google account to continue.");
 }
 
 function showSignedInUser(user) {
@@ -88,27 +98,81 @@ function showSignedInUser(user) {
     userAvatar.hidden = true;
     userAvatar.removeAttribute("src");
   }
+}
+
+function unlockWorkspace(user) {
+  accessGranted = true;
+  if (loginGate) loginGate.hidden = true;
+  if (appShell) {
+    appShell.hidden = false;
+    appShell.classList.remove("auth-hidden");
+    appShell.setAttribute("aria-hidden", "false");
+  }
+  showSignedInUser(user);
   setAuthMessage("Connected to Firebase");
+  dispatchAuth(user, true);
+}
+
+function showSignedOut() {
+  lockWorkspace();
+  if (signInButton) signInButton.hidden = false;
+  if (signedInUser) signedInUser.hidden = true;
+  if (userName) userName.textContent = "";
+  if (userEmail) userEmail.textContent = "";
+  if (userAvatar) {
+    userAvatar.hidden = true;
+    userAvatar.removeAttribute("src");
+  }
+  if (gateSignInButton) gateSignInButton.textContent = "Sign in with Google";
+  setAuthMessage("Use your Scopely Google account to continue.");
+  dispatchAuth(null, false);
 }
 
 async function handleSignIn() {
   if (signInButton) signInButton.disabled = true;
   if (gateSignInButton) gateSignInButton.disabled = true;
-  setAuthMessage("Opening Google sign-in…");
+  setAuthMessage("Connecting to Google…");
+
   try {
+    // If Firebase already has a valid session, the explicit Continue click opens the app
+    // without forcing a second popup. A new browser/session still receives the Google popup.
+    if (currentUser) {
+      if (!isScopelyUser(currentUser)) {
+        await signOut(auth);
+        throw new Error("Please sign in with a Scopely account.");
+      }
+      unlockWorkspace(currentUser);
+      return;
+    }
+
     await setPersistence(auth, browserSessionPersistence);
     const result = await signInWithPopup(auth, provider);
     currentUser = result.user;
-    unlockWorkspace(result.user);
+
+    if (!isScopelyUser(currentUser)) {
+      await signOut(auth);
+      currentUser = null;
+      throw new Error("Please sign in with a Scopely account.");
+    }
+
+    unlockWorkspace(currentUser);
   } catch (error) {
     console.error("Firebase sign-in failed", error);
-    const friendlyMessage = error?.code === "auth/popup-closed-by-user"
-      ? "Sign-in window was closed before completion."
-      : error?.code === "auth/popup-blocked"
-        ? "The browser blocked the sign-in window. Allow pop-ups and try again."
-        : `Sign-in failed: ${error?.message || "Unknown error"}`;
+    let friendlyMessage;
+    if (error?.code === "auth/popup-closed-by-user") {
+      friendlyMessage = "The sign-in window was closed. Please try again.";
+    } else if (error?.code === "auth/popup-blocked") {
+      friendlyMessage = "Your browser blocked the sign-in window. Allow pop-ups for this site and try again.";
+    } else if (error?.code === "auth/cancelled-popup-request") {
+      friendlyMessage = "Another sign-in attempt was already open. Please try once more.";
+    } else if (error?.code === "auth/unauthorized-domain") {
+      friendlyMessage = "This website is not yet authorized in Firebase Authentication.";
+    } else {
+      friendlyMessage = error?.message || "Sign-in failed. Please try again.";
+    }
     lockWorkspace();
     setAuthMessage(friendlyMessage, true);
+    dispatchAuth(null, false);
   } finally {
     if (signInButton) signInButton.disabled = false;
     if (gateSignInButton) gateSignInButton.disabled = false;
@@ -120,6 +184,7 @@ async function handleSignOut() {
   setAuthMessage("Signing out…");
   try {
     accessGranted = false;
+    currentUser = null;
     await signOut(auth);
     showSignedOut();
   } catch (error) {
@@ -134,31 +199,29 @@ signInButton?.addEventListener("click", handleSignIn);
 gateSignInButton?.addEventListener("click", handleSignIn);
 signOutButton?.addEventListener("click", handleSignOut);
 
-// Hide the application immediately, before Firebase resolves any saved session.
+setJourneyMessage();
 lockWorkspace();
 
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
 
-  // A remembered Firebase session does not bypass the login gate. The user must
-  // actively use the Google sign-in button on each fresh page load.
-  if (!user || !accessGranted) {
+  if (!user) {
     showSignedOut();
-  } else {
-    unlockWorkspace(user);
+    return;
   }
 
-  window.dispatchEvent(new CustomEvent("workspace-auth-changed", {
-    detail: {
-      user: user ? {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL
-      } : null,
-      accessGranted
-    }
-  }));
+  if (!isScopelyUser(user)) {
+    showSignedOut();
+    setAuthMessage("Please sign in with a Scopely account.", true);
+    return;
+  }
+
+  // The app still requires an explicit click on the landing page. If a valid
+  // session exists, that click becomes a reliable Continue action with no popup.
+  lockWorkspace();
+  if (gateSignInButton) gateSignInButton.textContent = `Continue as ${user.email}`;
+  setAuthMessage("Your Scopely session is ready. Continue to the workspace.");
+  dispatchAuth(null, false);
 });
 
 export { app, auth };
