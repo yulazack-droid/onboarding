@@ -130,7 +130,7 @@ async function loadOrCreateWorkspace(user) {
       workspaceData
     });
     lastUploadedUpdatedAt = workspaceData.updatedAt || null;
-    setAccessMode(true, "Editor access · changes sync to cloud");
+    setAccessMode(true, "Editor access · your changes are saved to the shared workspace");
     renderMetadata(initialWorkspaceMetadata);
     setCloudStatus("Workspace uploaded to cloud");
     return;
@@ -138,7 +138,7 @@ async function loadOrCreateWorkspace(user) {
 
   const cloud = snapshot.data();
   const editable = user.uid === cloud.ownerUid || isMary(user);
-  setAccessMode(editable, editable ? "Editor access · changes sync to cloud" : "View-only access · changes are disabled");
+  setAccessMode(editable, editable ? "Editor access · your changes are saved to the shared workspace" : "View-only access — You can explore this workspace, but only Yula Zack and Mary Fisher can make changes.");
   renderMetadata(metadataFields(cloud));
   if (cloud.workspaceData) {
     applyingRemoteState = true;

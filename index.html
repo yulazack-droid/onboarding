@@ -5,7 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mary Fisher | First 90 Days</title>
-  <link rel="stylesheet" href="styles.css?v=4.3.0" />
+  <style>
+    #appShell[hidden], #loginGate[hidden] { display: none !important; }
+  </style>
+  <link rel="stylesheet" href="styles.css?v=4.3.1" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite">
@@ -17,7 +20,7 @@
       <span id="gateAuthMessage" class="auth-message"></span>
     </div>
   </section>
-  <div id="appShell" class="app-shell auth-hidden">
+  <div id="appShell" class="app-shell auth-hidden" hidden aria-hidden="true">
     <header class="hero">
       <div>
         <p class="eyebrow light">First-quarter workspace</p>
@@ -157,10 +160,10 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
-    </main><footer class="app-footer">Version 4.3 · Required login and viewer mode</footer>
+    </main><footer class="app-footer">Version 4.3.1 · Required login and viewer mode</footer>
   </div>
-  <script type="module" src="app.js?v=4.3.0"></script>
-  <script type="module" src="firebase-auth.js?v=4.3.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.3.0"></script>
+  <script type="module" src="app.js?v=4.3.1"></script>
+  <script type="module" src="firebase-auth.js?v=4.3.1"></script>
+  <script type="module" src="firestore-workspace.js?v=4.3.1"></script>
 </body>
 </html>
