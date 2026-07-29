@@ -22,14 +22,20 @@ const userName = document.getElementById("userName");
 const userEmail = document.getElementById("userEmail");
 const userAvatar = document.getElementById("userAvatar");
 const authMessage = document.getElementById("authMessage");
+const gateSignInButton = document.getElementById("gateSignInButton");
+const gateAuthMessage = document.getElementById("gateAuthMessage");
+const loginGate = document.getElementById("loginGate");
+const appShell = document.getElementById("appShell");
 
 function setAuthMessage(message, isError = false) {
-  authMessage.textContent = message;
-  authMessage.classList.toggle("error", isError);
+  if (authMessage) { authMessage.textContent = message; authMessage.classList.toggle("error", isError); }
+  if (gateAuthMessage) { gateAuthMessage.textContent = message; gateAuthMessage.classList.toggle("error", isError); }
 }
 
 function showSignedOut() {
   signInButton.hidden = false;
+  if (loginGate) loginGate.hidden = false;
+  if (appShell) appShell.classList.add("auth-hidden");
   signedInUser.hidden = true;
   userName.textContent = "";
   userEmail.textContent = "";
@@ -40,6 +46,8 @@ function showSignedOut() {
 
 function showSignedIn(user) {
   signInButton.hidden = true;
+  if (loginGate) loginGate.hidden = true;
+  if (appShell) appShell.classList.remove("auth-hidden");
   signedInUser.hidden = false;
   userName.textContent = user.displayName || "Signed-in user";
   userEmail.textContent = user.email || "";
@@ -56,6 +64,7 @@ function showSignedIn(user) {
 
 async function handleSignIn() {
   signInButton.disabled = true;
+  if (gateSignInButton) gateSignInButton.disabled = true;
   setAuthMessage("Opening Google sign-in…");
   try {
     await setPersistence(auth, browserLocalPersistence);
@@ -70,6 +79,7 @@ async function handleSignIn() {
     setAuthMessage(friendlyMessage, true);
   } finally {
     signInButton.disabled = false;
+    if (gateSignInButton) gateSignInButton.disabled = false;
   }
 }
 
@@ -87,6 +97,7 @@ async function handleSignOut() {
 }
 
 signInButton?.addEventListener("click", handleSignIn);
+gateSignInButton?.addEventListener("click", handleSignIn);
 signOutButton?.addEventListener("click", handleSignOut);
 
 onAuthStateChanged(auth, (user) => {

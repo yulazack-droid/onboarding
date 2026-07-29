@@ -26,7 +26,7 @@ success60:['A repeatable portfolio discovery and mapping approach is in use','Re
 deliverables90:['First delivered AI optimization or validated pilot','Impact, feedback and lessons-learned summary','Prioritized six-month backlog','High-level roadmap for solutions, adoption and culture','Draft operating model for future AI initiatives','Knowledge-sharing and enablement cadence'],
 success90:['A practical AI optimization or validated pilot has been delivered','Initial value, feedback and adoption have been measured','The six-month backlog is prioritized and credible','The high-level roadmap is aligned with relevant leaders','A repeatable working model for continued AI transformation is defined'].map(text=>({text,mary:false,yula:false})),
 people:[{"name":"Shrungar Dadarkar","role":"Director, Generative AI","studio":"Central","priority":"Critical","meetingWeek":"Week 2","purpose":"Roadmap alignment","status":"Not scheduled","followUp":"Weekly","takeaways":""},{"name":"Akshay Krishna Dhumal","role":"GenAI Project Manager","studio":"Central","priority":"High","meetingWeek":"Week 2","purpose":"Introduction","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Ketan Velip","role":"Lead Engineer","studio":"Central","priority":"High","meetingWeek":"Week 2","purpose":"Workflow understanding","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Giancarlo Lucchese","role":"Director, QA Automation Engineering","studio":"Central","priority":"Medium","meetingWeek":"Week 3","purpose":"AI opportunity discovery","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Gabriele Simonetti","role":"Senior Manager of AI Solutions","studio":"Central","priority":"Medium","meetingWeek":"Week 2","purpose":"Introduction","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Caso Santiago","role":"AI Architect","studio":"MGO","priority":"Medium","meetingWeek":"Week 3","purpose":"Workflow understanding","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Alberto Fernandez Martinez","role":"VP, Live Technology","studio":"MGO","priority":"Low","meetingWeek":"Week 3","purpose":"Business context","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Sricharan Prasad","role":"Senior Manager Production","studio":"Bingo Bash","priority":"Medium","meetingWeek":"Week 3","purpose":"Workflow understanding","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Sandeep Sekhar","role":"Sr. Director, Art","studio":"Bingo Bash","priority":"Medium","meetingWeek":"Week 3","purpose":"Workflow understanding","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Chris Berghauser","role":"Senior Director of Community & Player Experience","studio":"Central","priority":"Medium","meetingWeek":"Week 3","purpose":"Business context","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Kristina Hamilton","role":"VP, Marketing Operations","studio":"Central","priority":"Medium","meetingWeek":"Week 3","purpose":"Business context","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Steve Huff","role":"President, Games","studio":"Central","priority":"Medium","meetingWeek":"Week 5 \u00b7 Barcelona (F2F)","purpose":"Introduction","status":"Not scheduled","followUp":"No","takeaways":""},{"name":"Samuel Amzallag","role":"Associate Lead Producer","studio":"Stumble Guys","priority":"Medium","meetingWeek":"Week 5 \u00b7 Barcelona (F2F)","purpose":"Workflow understanding","status":"Not scheduled","followUp":"No","takeaways":""}],initiatives:[],resources:[]};
-let state=structuredClone(defaults);const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let state=structuredClone(defaults);let readOnlyMode=false;const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 function merge(base,saved){if(Array.isArray(base))return Array.isArray(saved)?saved:base;if(base&&typeof base==='object'){const r={...base};Object.keys(saved||{}).forEach(k=>r[k]=k in base?merge(base[k],saved[k]):saved[k]);return r}return saved===undefined?base:saved}
 function validWorkspace(v){return v&&typeof v==='object'&&(Array.isArray(v.people)||Array.isArray(v.weeks)||Array.isArray(v.initiatives))}
 function candidateScore(v){if(!validWorkspace(v))return -1;const p=(v.people||[]).filter(x=>x&&String(x.name||'').trim()).length;const i=(v.initiatives||[]).filter(x=>x&&String(x.title||'').trim()).length;const c=(v.weeks||[]).flatMap(w=>w.actions||[]).filter(a=>a.done).length;return p*1000+i*100+c}
@@ -44,6 +44,7 @@ try{
 state.schemaVersion=SCHEMA_VERSION;
 let cloudNotificationsEnabled=true;
 function save(options={}){
+  if(readOnlyMode && options.force!==true)return;
   state.schemaVersion=SCHEMA_VERSION;
   state.updatedAt=new Date().toISOString();
   localStorage.setItem(KEY,JSON.stringify(state));
@@ -57,9 +58,13 @@ function save(options={}){
 function getWorkspaceState(){return structuredClone(state)}
 function applyWorkspaceState(nextState,options={}){
   if(!validWorkspace(nextState))throw new Error('Invalid workspace state');
+  const localActiveTab=state.activeTab;
+  const localActiveWeek=state.activeWeek;
   cloudNotificationsEnabled=false;
   try{
     state=merge(structuredClone(defaults),nextState);
+    state.activeTab=localActiveTab||state.activeTab||'overview';
+    state.activeWeek=Number.isInteger(localActiveWeek)?localActiveWeek:(state.activeWeek||0);
     state.schemaVersion=SCHEMA_VERSION;
     if(options.persistLocal!==false)save({notifyCloud:false,statusText:options.statusText||'Loaded from cloud'});
     render();
@@ -67,7 +72,8 @@ function applyWorkspaceState(nextState,options={}){
     cloudNotificationsEnabled=true;
   }
 }
-window.workspaceApp={getState:getWorkspaceState,applyState:applyWorkspaceState,saveLocal:()=>save({notifyCloud:false})};
+function setReadOnly(value){readOnlyMode=Boolean(value);document.body.classList.toggle('read-only-mode',readOnlyMode);}
+window.workspaceApp={getState:getWorkspaceState,applyState:applyWorkspaceState,saveLocal:()=>save({notifyCloud:false,force:true}),setReadOnly,isReadOnly:()=>readOnlyMode};
 function today(){const t=new Date();t.setHours(0,0,0,0);return t}
 function dateOnly(s){return new Date(s+'T00:00:00')}
 function currentWeekIndex(){
@@ -81,7 +87,7 @@ function currentWeekIndex(){
 }
 function phase(){const i=currentWeekIndex();return state.weeks[i].phase==='30'?'30 Days':state.weeks[i].phase==='60'?'60 Days':'90 Days'}
 function nav(){$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.activeTab));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===state.activeTab))}
-$$('.tab').forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;nav();save()});$$('.week-tab').forEach(b=>b.onclick=()=>{state.activeWeek=+b.dataset.week;renderWeek();save()});
+$$('.tab').forEach(b=>b.onclick=()=>{state.activeTab=b.dataset.tab;nav();localStorage.setItem(KEY,JSON.stringify(state))});$$('.week-tab').forEach(b=>b.onclick=()=>{state.activeWeek=+b.dataset.week;renderWeek();localStorage.setItem(KEY,JSON.stringify(state))});
 function bindFields(){$$('[data-field]').forEach(f=>{const k=f.dataset.field;f.value=state[k]||'';f.oninput=e=>{state[k]=e.target.value;save()}})}
 function manualFor(i){state.manualTasks[i]=state.manualTasks[i]||[];return state.manualTasks[i]}
 function overviewItems(){const w=currentWeekIndex(),items=[];for(let i=0;i<w;i++)state.weeks[i].actions.forEach((a,j)=>{if(!a.done)items.push({kind:'week',w:i,j,item:a,carry:true})});state.weeks[w].actions.forEach((a,j)=>items.push({kind:'week',w,j,item:a,carry:false}));manualFor(w).forEach((a,j)=>items.push({kind:'manual',w,j,item:a,carry:false}));return items}

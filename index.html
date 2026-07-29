@@ -5,10 +5,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mary Fisher | First 90 Days</title>
-  <link rel="stylesheet" href="styles.css?v=4.1.0" />
+  <link rel="stylesheet" href="styles.css?v=4.3.0" />
 </head>
 <body>
-  <div class="app-shell">
+  <section id="loginGate" class="login-gate" aria-live="polite">
+    <div class="login-card">
+      <p class="eyebrow">LGP AI workspace</p>
+      <h1>Mary Fisher · First 90 Days</h1>
+      <p>Sign in with your Scopely Google account to access the workspace.</p>
+      <button id="gateSignInButton" class="button primary" type="button">Sign in with Google</button>
+      <span id="gateAuthMessage" class="auth-message"></span>
+    </div>
+  </section>
+  <div id="appShell" class="app-shell auth-hidden">
     <header class="hero">
       <div>
         <p class="eyebrow light">First-quarter workspace</p>
@@ -58,6 +67,8 @@
       <button class="tab" data-tab="initiatives">Initiatives</button>
       <button class="tab" data-tab="resources">Resources</button>
     </nav>
+
+    <div id="accessBanner" class="access-banner" hidden></div>
 
     <main>
       <section id="overview" class="panel active">
@@ -146,10 +157,10 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
-    </main><footer class="app-footer">Version 4.2.1 · Firestore foundation</footer>
+    </main><footer class="app-footer">Version 4.3 · Required login and viewer mode</footer>
   </div>
-  <script type="module" src="app.js?v=4.2.1"></script>
-  <script type="module" src="firebase-auth.js?v=4.2.1"></script>
-  <script type="module" src="firestore-workspace.js?v=4.2.1"></script>
+  <script type="module" src="app.js?v=4.3.0"></script>
+  <script type="module" src="firebase-auth.js?v=4.3.0"></script>
+  <script type="module" src="firestore-workspace.js?v=4.3.0"></script>
 </body>
 </html>

@@ -25,3 +25,16 @@
 @media (max-width:1100px){.hero-tools{flex-wrap:wrap}.auth-area{order:3;width:100%}.auth-message{white-space:normal}}
 
 .hero-save.cloud-error{color:#ffd6d6;font-weight:750}
+
+/* v4.3 authentication gate and viewer mode */
+.auth-hidden { display: none !important; }
+.login-gate { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: linear-gradient(145deg, #f2efff 0%, #eef8f7 100%); }
+.login-gate[hidden] { display: none !important; }
+.login-card { width: min(520px, 100%); padding: 38px; border-radius: 24px; background: #fff; box-shadow: 0 24px 70px rgba(35, 28, 80, .14); text-align: center; }
+.login-card h1 { margin: 8px 0 12px; }
+.login-card p { color: var(--muted); }
+.login-card .button { margin-top: 12px; }
+.access-banner { margin: 14px 0; padding: 11px 16px; border-radius: 12px; background: #edf8f5; border: 1px solid #b9e2d7; color: #17664f; font-weight: 700; }
+.access-banner.viewer { background: #fff7e8; border-color: #f1d39a; color: #8a5b00; }
+body.read-only-mode input, body.read-only-mode textarea, body.read-only-mode select { pointer-events: none; background: #f6f7f9 !important; color: #667085; }
+body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-only-mode #addInitiative, body.read-only-mode #addResource, body.read-only-mode .icon, body.read-only-mode [data-rate] { display: none !important; }

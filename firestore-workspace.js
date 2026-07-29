@@ -16,12 +16,28 @@ const employeeName = document.getElementById("employeeName");
 const roleManager = document.getElementById("roleManager");
 const startDateLabel = document.getElementById("startDateLabel");
 const saveStatus = document.getElementById("saveStatus");
+const accessBanner = document.getElementById("accessBanner");
 
 let activeUser = null;
 let unsubscribeSnapshot = null;
 let saveTimer = null;
 let applyingRemoteState = false;
 let lastUploadedUpdatedAt = null;
+let canEdit = false;
+
+function setAccessMode(editable, message) {
+  canEdit = Boolean(editable);
+  window.workspaceApp?.setReadOnly?.(!canEdit);
+  if (accessBanner) {
+    accessBanner.hidden = false;
+    accessBanner.textContent = message;
+    accessBanner.classList.toggle("viewer", !canEdit);
+  }
+}
+
+function isMary(user) {
+  return (user?.email || "").toLowerCase() === "mary.tikva@scopely.com";
+}
 
 function formatDate(value) {
   if (!value) return "";
@@ -66,8 +82,10 @@ function metadataFields(data = {}) {
 }
 
 async function uploadFullWorkspace(user, reason = "save") {
-  if (!user || !appReady() || applyingRemoteState) return;
+  if (!user || !appReady() || applyingRemoteState || !canEdit) return;
   const workspaceData = window.workspaceApp.getState();
+  delete workspaceData.activeTab;
+  delete workspaceData.activeWeek;
   setCloudStatus(reason === "migration" ? "Uploading existing workspace…" : "Saving to cloud…");
   await setDoc(workspaceRef, {
     ...initialWorkspaceMetadata,
@@ -82,7 +100,7 @@ async function uploadFullWorkspace(user, reason = "save") {
 }
 
 function scheduleCloudSave() {
-  if (!activeUser || applyingRemoteState) return;
+  if (!activeUser || applyingRemoteState || !canEdit) return;
   clearTimeout(saveTimer);
   setCloudStatus("Saving to cloud…");
   saveTimer = setTimeout(async () => {
@@ -112,12 +130,15 @@ async function loadOrCreateWorkspace(user) {
       workspaceData
     });
     lastUploadedUpdatedAt = workspaceData.updatedAt || null;
+    setAccessMode(true, "Editor access · changes sync to cloud");
     renderMetadata(initialWorkspaceMetadata);
     setCloudStatus("Workspace uploaded to cloud");
     return;
   }
 
   const cloud = snapshot.data();
+  const editable = user.uid === cloud.ownerUid || isMary(user);
+  setAccessMode(editable, editable ? "Editor access · changes sync to cloud" : "View-only access · changes are disabled");
   renderMetadata(metadataFields(cloud));
   if (cloud.workspaceData) {
     applyingRemoteState = true;
@@ -167,6 +188,9 @@ onAuthStateChanged(auth, async user => {
   unsubscribeSnapshot = null;
 
   if (!user) {
+    canEdit = false;
+    window.workspaceApp?.setReadOnly?.(true);
+    if (accessBanner) accessBanner.hidden = true;
     renderMetadata(initialWorkspaceMetadata);
     setCloudStatus("Saved locally · sign in for cloud");
     return;
