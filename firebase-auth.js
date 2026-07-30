@@ -30,6 +30,7 @@ const overviewDayMessage = document.getElementById("overviewDayMessage");
 
 let accessGranted = false;
 let currentUser = null;
+let authResolved = false;
 
 function isScopelyUser(user) {
   return Boolean(user?.email && user.email.toLowerCase().endsWith("@scopely.com"));
@@ -77,7 +78,7 @@ function dispatchAuth(user, granted) {
 
 function lockWorkspace() {
   accessGranted = false;
-  if (loginGate) loginGate.hidden = false;
+  if (loginGate) loginGate.hidden = !authResolved;
   if (appShell) {
     appShell.hidden = true;
     appShell.classList.add("auth-hidden");
@@ -203,6 +204,7 @@ setJourneyMessage();
 lockWorkspace();
 
 onAuthStateChanged(auth, (user) => {
+  authResolved = true;
   currentUser = user;
 
   if (!user) {
