@@ -151,6 +151,8 @@ async function loadTemplatePreview() {
   document.body.classList.add("template-preview-mode");
   const assign = document.getElementById("assignTemplateButton");
   if (assign) { assign.href = `assign.html?template=${encodeURIComponent(templatePreviewId)}`; assign.hidden = false; }
+  const backToHub = document.getElementById("backToHubButton");
+  if (backToHub) backToHub.hidden = false;
   renderMetadata({ employeeName: "Role template", roleTitle: template.templateName, managerName: "Not assigned", startDate: "", roleMission: template.roleMission, roleMissionDescription: template.description });
   setAccessMode(false, "Template preview · no employee is assigned yet");
   applyingRemoteState = true;
