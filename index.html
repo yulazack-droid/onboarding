@@ -7,6 +7,8 @@
   <title>Onboarding Journey | First 90 Days</title>
   <style>
     #appShell[hidden], #loginGate[hidden] { display: none !important; }
+    body.template-preview-mode .week-reflection,
+    body.template-preview-mode .card.dual { display: none !important; }
   </style>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://accounts.google.com" crossorigin>
@@ -37,6 +39,7 @@
       </div>
       <div class="hero-tools">
         <span class="hero-save" id="saveStatus">Saved locally</span>
+        <a id="assignTemplateButton" class="button primary" href="#" hidden>Assign Journey</a>
         <div class="auth-area" id="authArea" aria-live="polite">
           <button id="signInButton" class="button glass auth-button" type="button">Sign in with Google</button>
           <div id="signedInUser" class="signed-in-user" hidden>

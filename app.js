@@ -1,10 +1,14 @@
 const LEGACY_MARY_KEY='mary-first-90-days-production';
 const MARY_WORKSPACE_ID='9dc23f8e-8b42-4a75-b7d2-91b3f1df46ad';
 const requestedWorkspaceId=new URLSearchParams(window.location.search).get('workspace')?.trim();
+const templatePreviewId=new URLSearchParams(window.location.search).get('template')?.trim();
+const isTemplatePreview=Boolean(templatePreviewId&&!requestedWorkspaceId);
 const ACTIVE_WORKSPACE_ID=requestedWorkspaceId||MARY_WORKSPACE_ID;
 // Keep Mary's existing browser cache intact while giving future Journeys an
 // isolated cache key.
-const KEY=ACTIVE_WORKSPACE_ID===MARY_WORKSPACE_ID
+const KEY=isTemplatePreview
+  ? `template-preview-${templatePreviewId}`
+  : ACTIVE_WORKSPACE_ID===MARY_WORKSPACE_ID
   ? LEGACY_MARY_KEY
   : `journey-${ACTIVE_WORKSPACE_ID}`;
 const SCHEMA_VERSION=4;
@@ -38,7 +42,7 @@ let state=structuredClone(defaults);let readOnlyMode=false;const $=s=>document.q
 function merge(base,saved){if(Array.isArray(base))return Array.isArray(saved)?saved:base;if(base&&typeof base==='object'){const r={...base};Object.keys(saved||{}).forEach(k=>r[k]=k in base?merge(base[k],saved[k]):saved[k]);return r}return saved===undefined?base:saved}
 function validWorkspace(v){return v&&typeof v==='object'&&(Array.isArray(v.people)||Array.isArray(v.weeks)||Array.isArray(v.initiatives))}
 function candidateScore(v){if(!validWorkspace(v))return -1;const p=(v.people||[]).filter(x=>x&&String(x.name||'').trim()).length;const i=(v.initiatives||[]).filter(x=>x&&String(x.title||'').trim()).length;const c=(v.weeks||[]).flatMap(w=>w.actions||[]).filter(a=>a.done).length;return p*1000+i*100+c}
-function migrateLegacy(){if(ACTIVE_WORKSPACE_ID!==MARY_WORKSPACE_ID)return null;let best=null,bestKey='',score=-1;for(let n=0;n<localStorage.length;n++){const k=localStorage.key(n);if(!k||k===KEY||!/(mary|aiTransformation)/i.test(k))continue;try{const v=JSON.parse(localStorage.getItem(k));const s=candidateScore(v);if(s>score){best=v;bestKey=k;score=s}}catch(e){}}if(!best)return null;const migrated=merge(structuredClone(defaults),best);migrated.schemaVersion=SCHEMA_VERSION;migrated.migratedFrom=bestKey;localStorage.setItem(KEY,JSON.stringify(migrated));return migrated}
+function migrateLegacy(){if(isTemplatePreview||ACTIVE_WORKSPACE_ID!==MARY_WORKSPACE_ID)return null;let best=null,bestKey='',score=-1;for(let n=0;n<localStorage.length;n++){const k=localStorage.key(n);if(!k||k===KEY||!/(mary|aiTransformation)/i.test(k))continue;try{const v=JSON.parse(localStorage.getItem(k));const s=candidateScore(v);if(s>score){best=v;bestKey=k;score=s}}catch(e){}}if(!best)return null;const migrated=merge(structuredClone(defaults),best);migrated.schemaVersion=SCHEMA_VERSION;migrated.migratedFrom=bestKey;localStorage.setItem(KEY,JSON.stringify(migrated));return migrated}
 try{
   const existing=localStorage.getItem(KEY);
   state=existing?merge(structuredClone(defaults),JSON.parse(existing)):(migrateLegacy()||structuredClone(defaults));

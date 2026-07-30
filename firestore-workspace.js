@@ -11,8 +11,10 @@ import { initialWorkspaceMetadata, maryWorkspaceId } from "./firebase-config.js"
 
 const db = getFirestore(app);
 const requestedWorkspaceId = new URLSearchParams(window.location.search).get("workspace")?.trim();
+const templatePreviewId = new URLSearchParams(window.location.search).get("template")?.trim();
+const isTemplatePreview = Boolean(templatePreviewId && !requestedWorkspaceId);
 const workspaceId = requestedWorkspaceId || maryWorkspaceId;
-const isMaryJourney = workspaceId === maryWorkspaceId;
+const isMaryJourney = workspaceId === maryWorkspaceId && !isTemplatePreview;
 const defaultMetadata = isMaryJourney ? initialWorkspaceMetadata : {
   employeeName: "Onboarding Journey",
   roleTitle: "Role Journey",
@@ -114,6 +116,47 @@ function metadataFields(data = {}) {
     ...metadata
   } = data;
   return metadata;
+}
+
+function previewDateRange(index) {
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  start.setDate(start.getDate() + index * 7);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
+  const iso = date => date.toISOString().slice(0, 10);
+  return { start: iso(start), end: iso(end), dates: `Week ${index + 1}` };
+}
+
+function templateWorkspaceData(template) {
+  const weeks = (template.weeks || []).map((week, index) => ({
+    phase: index < 5 ? "30" : index < 9 ? "60" : "90",
+    title: `Week ${index + 1} · ${week.title}`,
+    ...previewDateRange(index),
+    focus: week.focus,
+    outcomes: week.outcomes?.length ? week.outcomes : [`Complete the expected ${week.title} milestones.`],
+    actions: (week.activities || []).map(text => ({ text, done: false })),
+    notes: "", marySatisfaction: 0, yulaSatisfaction: 0, reflection: ""
+  }));
+  const deliverables = phase => template.phaseDeliverables?.[phase] || [];
+  const success = phase => [{ text: template.phaseSuccessCriteria?.[phase] || "Complete the role-specific phase criteria.", mary: false, yula: false }];
+  return { schemaVersion: 4, activeTab: "overview", activeWeek: 0, weeklyAgenda: "", maryReflection30: "", yulaAssessment30: "", maryReflection60: "", yulaAssessment60: "", maryReflection90: "", yulaAssessment90: "", roadmapNow: "", roadmapNext: "", roadmapLater: "", manualTasks: {}, weeks, deliverables30: deliverables("30"), success30: success("30"), deliverables60: deliverables("60"), success60: success("60"), deliverables90: deliverables("90"), success90: success("90"), people: [], initiatives: (template.initiativesOrLearningAreas || []).map(title => ({ title, team: "", problemType: "Other", estimatedTime: "1–2 weeks", scope: "Single workflow", type: "Project", impact: "Medium", priority: "Medium", status: "Idea", notes: "Suggested from the role template" })), resources: (template.suggestedResources || []).map(name => ({ name, description: `Suggested ${template.templateName} resource`, link: "" })) };
+}
+
+async function loadTemplatePreview() {
+  await waitForApp();
+  const response = await fetch(`templates/${encodeURIComponent(templatePreviewId)}.json`);
+  if (!response.ok) throw new Error("Template not found");
+  const template = await response.json();
+  document.body.classList.add("template-preview-mode");
+  const assign = document.getElementById("assignTemplateButton");
+  if (assign) { assign.href = `assign.html?template=${encodeURIComponent(templatePreviewId)}`; assign.hidden = false; }
+  renderMetadata({ employeeName: "Role template", roleTitle: template.templateName, managerName: "Not assigned", startDate: "", roleMission: template.roleMission, roleMissionDescription: template.description });
+  setAccessMode(false, "Template preview · no employee is assigned yet");
+  applyingRemoteState = true;
+  try { window.workspaceApp.applyState(templateWorkspaceData(template), { persistLocal: false, statusText: "Template preview" }); }
+  finally { applyingRemoteState = false; }
+  setCloudStatus("Template preview · nothing is saved");
 }
 
 async function uploadFullWorkspace(user, reason = "save") {
@@ -219,6 +262,16 @@ window.addEventListener("workspace-auth-changed", async event => {
     if (accessBanner) accessBanner.hidden = true;
     renderMetadata(defaultMetadata);
     setCloudStatus("Sign in to access the workspace");
+    return;
+  }
+
+  if (isTemplatePreview) {
+    try {
+      await loadTemplatePreview();
+    } catch (error) {
+      console.error("Template preview failed", error);
+      setCloudStatus("Template preview could not be loaded", true);
+    }
     return;
   }
 
