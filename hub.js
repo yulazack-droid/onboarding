@@ -41,6 +41,7 @@ const els = {
   journeyCount: document.getElementById("journeyCount"),
   startJourneyButton: document.getElementById("startJourneyButton"),
   journeyDialog: document.getElementById("journeyDialog"),
+  closeJourneyDialog: document.getElementById("closeJourneyDialog"),
   createJourneyForm: document.getElementById("createJourneyForm"),
   createJourneyButton: document.getElementById("createJourneyButton"),
   createJourneyStatus: document.getElementById("createJourneyStatus")
@@ -208,6 +209,7 @@ els.signOutButton.addEventListener("click", async () => {
   try { await signOut(auth); } finally { els.signOutButton.disabled = false; }
 });
 els.startJourneyButton.addEventListener("click", () => els.journeyDialog.showModal());
+els.closeJourneyDialog.addEventListener("click", () => els.journeyDialog.close());
 els.createJourneyForm.addEventListener("submit", async event => {
   event.preventDefault();
   const form = new FormData(els.createJourneyForm);
