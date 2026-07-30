@@ -45,10 +45,21 @@ const els = {
   createJourneyForm: document.getElementById("createJourneyForm"),
   createJourneyButton: document.getElementById("createJourneyButton"),
   createJourneyStatus: document.getElementById("createJourneyStatus"),
-  templateSelect: document.querySelector("select[name=templateId]")
+  templateSelect: document.querySelector("select[name=templateId]"),
+  templatePreviewDialog: document.getElementById("templatePreviewDialog"),
+  closeTemplatePreview: document.getElementById("closeTemplatePreview"),
+  templatePreviewTitle: document.getElementById("templatePreviewTitle"),
+  templatePreviewDescription: document.getElementById("templatePreviewDescription"),
+  templatePreviewHighlights: document.getElementById("templatePreviewHighlights"),
+  usePreviewedTemplate: document.getElementById("usePreviewedTemplate")
 };
 
 let currentUser = null;
+let previewedTemplateId = null;
+const templatePreviews = {
+  "ai-transformation-lead": { title: "AI Transformation Lead", description: "A 90-day Journey for discovery, stakeholder alignment, practical delivery and a sustainable AI roadmap.", highlights: ["Access, organizational context and stakeholder map", "Portfolio opportunity mapping and backlog validation", "First AI optimization, impact review and six-month roadmap"] },
+  "data-analyst": { title: "Data Analyst", description: "A 90-day Journey for business context, data fluency, stakeholder partnership and independent analytical delivery.", highlights: ["Data tools, governance, KPI and data-landscape orientation", "Analysis backlog, dashboard validation and decision support", "Independent analysis, operating routines and analytics roadmap"] }
+};
 
 function isScopelyUser(user) {
   return Boolean(user?.email && user.email.toLowerCase().endsWith("@scopely.com"));
@@ -219,7 +230,19 @@ function openCreateJourney(templateId) {
 els.startJourneyButton.addEventListener("click", () => openCreateJourney());
 els.closeJourneyDialog.addEventListener("click", () => els.journeyDialog.close());
 document.querySelectorAll(".template-use").forEach(button => {
-  button.addEventListener("click", () => openCreateJourney(button.closest("[data-template-id]").dataset.templateId));
+  button.addEventListener("click", () => {
+    previewedTemplateId = button.closest("[data-template-id]").dataset.templateId;
+    const preview = templatePreviews[previewedTemplateId];
+    els.templatePreviewTitle.textContent = preview.title;
+    els.templatePreviewDescription.textContent = preview.description;
+    els.templatePreviewHighlights.innerHTML = preview.highlights.map(item => `<div>${escapeHtml(item)}</div>`).join("");
+    els.templatePreviewDialog.showModal();
+  });
+});
+els.closeTemplatePreview.addEventListener("click", () => els.templatePreviewDialog.close());
+els.usePreviewedTemplate.addEventListener("click", () => {
+  els.templatePreviewDialog.close();
+  openCreateJourney(previewedTemplateId);
 });
 els.createJourneyForm.addEventListener("submit", async event => {
   event.preventDefault();
