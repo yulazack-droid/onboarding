@@ -153,7 +153,7 @@ async function loadTemplatePreview() {
   if (assign) { assign.href = `assign.html?template=${encodeURIComponent(templatePreviewId)}`; assign.hidden = false; }
   const backToHub = document.getElementById("backToHubButton");
   if (backToHub) backToHub.hidden = false;
-  renderMetadata({ employeeName: "Role template", roleTitle: template.templateName, managerName: "Not assigned", startDate: "", roleMission: template.roleMission, roleMissionDescription: template.description });
+  renderMetadata({ employeeName: template.templateName, roleTitle: template.templateName, managerName: "Hiring manager", startDate: "", roleMission: template.roleMission, roleMissionDescription: template.description });
   setAccessMode(false, "Template preview · no employee is assigned yet");
   applyingRemoteState = true;
   try { window.workspaceApp.applyState(templateWorkspaceData(template), { persistLocal: false, statusText: "Template preview" }); }
