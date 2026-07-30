@@ -12,6 +12,11 @@ service cloud.firestore {
         && request.auth.token.email in workspace.data.editors;
     }
 
+    function isJourneyOwner(workspace) {
+      return isSignedInScopelyUser()
+        && request.auth.uid == workspace.data.ownerUid;
+    }
+
     function isTemplateAdmin() {
       return isSignedInScopelyUser()
         && request.auth.token.email == 'yula.zack@scopely.com';
@@ -22,20 +27,39 @@ service cloud.firestore {
       // This must be tightened before Journeys contain non-pilot employee data.
       allow get, list: if isSignedInScopelyUser();
 
-      allow create: if isTemplateAdmin();
-      allow delete: if false;
+      // A manager may create a Journey from their own custom template; official
+      // template creation remains limited to the pilot administrator in the UI.
+      allow create: if isTemplateAdmin() || (isSignedInScopelyUser()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email);
+      allow delete: if isTemplateAdmin() || isJourneyOwner(resource);
 
       // The manager and employee listed in editors may change Journey content,
       // but cannot change ownership, access, or other metadata.
-      allow update: if isJourneyEditor(resource)
+      allow update: if isTemplateAdmin() || isJourneyOwner(resource) || (isJourneyEditor(resource)
         && request.resource.data.diff(resource.data).affectedKeys()
-          .hasOnly(['workspaceData', 'updatedAt']);
+          .hasOnly(['workspaceData', 'updatedAt']));
     }
 
     match /templates/{templateId} {
       // Pilot: all verified Scopely users can review available templates.
       allow get, list: if isSignedInScopelyUser();
       allow create, update, delete: if isTemplateAdmin();
+    }
+
+    // A manager-custom template is always a separate document. The creator is
+    // the only editor in this phase; official templates are never changed here.
+    match /managerTemplates/{templateId} {
+      allow get, list: if isSignedInScopelyUser()
+        && resource.data.ownerUserId == request.auth.uid;
+      allow create: if isSignedInScopelyUser()
+        && request.resource.data.ownerUserId == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email
+        && request.resource.data.templateType == 'manager_custom';
+      allow update, delete: if isSignedInScopelyUser()
+        && resource.data.ownerUserId == request.auth.uid
+        && request.resource.data.ownerUserId == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email;
     }
   }
 }

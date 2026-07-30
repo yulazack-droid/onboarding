@@ -40,6 +40,8 @@
       <div class="hero-tools">
         <span class="hero-save" id="saveStatus">Saved locally</span>
         <a id="backToHubButton" class="button glass compact" href="hub.html" hidden>Back to Hub</a>
+        <button id="editTemplateButton" class="button glass compact" type="button" hidden>Edit Template</button>
+        <button id="saveTemplateButton" class="button light compact" type="button" hidden>Save Changes</button>
         <a id="assignTemplateButton" class="button primary" href="#" hidden>Assign Journey</a>
         <div class="auth-area" id="authArea" aria-live="polite">
           <button id="signInButton" class="button glass auth-button" type="button">Sign in with Google</button>
@@ -175,8 +177,20 @@
       </section>
     </main><footer class="app-footer">Version 4.4.2 · Compact login</footer>
   </div>
-  <script type="module" src="app.js?v=4.5.0"></script>
+  <dialog id="customizeTemplateDialog" class="template-dialog">
+    <form id="customizeTemplateForm" class="template-dialog-card" method="dialog">
+      <p class="eyebrow">Customize This Template</p>
+      <h2>Create your own editable version</h2>
+      <p class="muted">The official template will stay unchanged. Your copy will be saved under My Templates.</p>
+      <label>Template name<input id="customTemplateName" name="name" required /></label>
+      <label>Team / Game<input id="customTemplateTeam" name="teamName" placeholder="e.g. Monopoly GO" /></label>
+      <label>Description<textarea id="customTemplateDescription" name="description" placeholder="How this plan is adapted for your team"></textarea></label>
+      <p id="customTemplateStatus" class="auth-message" role="status"></p>
+      <div class="dialog-actions"><button id="cancelCustomizeTemplate" class="button secondary" type="button">Cancel</button><button id="createEditableCopy" class="button primary" type="submit">Create Editable Copy</button></div>
+    </form>
+  </dialog>
+  <script type="module" src="app.js?v=4.6.0"></script>
   <script type="module" src="firebase-auth.js?v=4.5.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.5.0"></script>
+  <script type="module" src="firestore-workspace.js?v=4.6.0"></script>
 </body>
 </html>
