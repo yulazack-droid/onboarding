@@ -216,12 +216,9 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  // The app still requires an explicit click on the landing page. If a valid
-  // session exists, that click becomes a reliable Continue action with no popup.
-  lockWorkspace();
-  if (gateSignInButton) gateSignInButton.textContent = `Continue as ${user.email}`;
-  setAuthMessage("Your Scopely session is ready. Continue to the workspace.");
-  dispatchAuth(null, false);
+  // A persisted, verified Scopely session should restore the Journey directly
+  // after refresh. New sessions still use the Google sign-in gate.
+  unlockWorkspace(user);
 });
 
 export { app, auth };

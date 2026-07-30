@@ -7,9 +7,11 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { app } from "./firebase-auth.js";
-import { initialWorkspaceMetadata, workspaceId } from "./firebase-config.js";
+import { initialWorkspaceMetadata, maryWorkspaceId } from "./firebase-config.js";
 
 const db = getFirestore(app);
+const requestedWorkspaceId = new URLSearchParams(window.location.search).get("workspace")?.trim();
+const workspaceId = requestedWorkspaceId || maryWorkspaceId;
 const workspaceRef = doc(db, "workspaces", workspaceId);
 const employeeName = document.getElementById("employeeName");
 const roleManager = document.getElementById("roleManager");
@@ -32,10 +34,6 @@ function setAccessMode(editable, message) {
     accessBanner.textContent = message;
     accessBanner.classList.toggle("viewer", !canEdit);
   }
-}
-
-function isMary(user) {
-  return (user?.email || "").toLowerCase() === "mary.tikva@scopely.com";
 }
 
 function formatDate(value) {
@@ -110,31 +108,23 @@ function scheduleCloudSave() {
   }, 650);
 }
 
-async function loadOrCreateWorkspace(user) {
+async function loadWorkspace(user) {
   await waitForApp();
   setCloudStatus("Connecting to cloud…");
   const snapshot = await getDoc(workspaceRef);
 
   if (!snapshot.exists()) {
-    const workspaceData = window.workspaceApp.getState();
-    await setDoc(workspaceRef, {
-      ...initialWorkspaceMetadata,
-      ownerUid: user.uid,
-      ownerEmail: user.email || "",
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-      schemaVersion: 2,
-      workspaceData
-    });
-    lastUploadedUpdatedAt = workspaceData.updatedAt || null;
-    setAccessMode(true, "Editor access · your changes are saved to the shared workspace");
-    renderMetadata(initialWorkspaceMetadata);
-    setCloudStatus("Workspace uploaded to cloud");
-    return;
+    const error = new Error("Journey not found");
+    error.code = "journey-not-found";
+    throw error;
   }
 
   const cloud = snapshot.data();
-  const editable = user.uid === cloud.ownerUid || isMary(user);
+  const userEmail = (user.email || "").toLowerCase();
+  const editors = Array.isArray(cloud.editors)
+    ? cloud.editors.map(email => String(email).toLowerCase())
+    : [];
+  const editable = editors.includes(userEmail);
   setAccessMode(editable, editable ? "Editor access" : "View-only access");
   renderMetadata(metadataFields(cloud));
   if (cloud.workspaceData) {
@@ -195,11 +185,13 @@ window.addEventListener("workspace-auth-changed", async event => {
   }
 
   try {
-    await loadOrCreateWorkspace(user);
+    await loadWorkspace(user);
     startRealtimeSync();
   } catch (error) {
     console.error("Firestore workspace connection failed", error);
-    const message = error?.code === "permission-denied"
+    const message = error?.code === "journey-not-found"
+      ? "Journey not found"
+      : error?.code === "permission-denied"
       ? "Cloud blocked by Firestore rules"
       : "Cloud unavailable · local backup kept";
     setCloudStatus(message, true);
