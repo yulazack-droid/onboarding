@@ -287,4 +287,6 @@ onAuthStateChanged(auth, async user => {
   currentUser = user;
   showHub(user);
   await loadJourneys();
+  const templateFromUrl = new URLSearchParams(window.location.search).get("template");
+  if (templateFromUrl && templatePreviews[templateFromUrl]) openCreateJourney(templateFromUrl);
 });

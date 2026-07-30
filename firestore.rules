@@ -33,7 +33,9 @@ service cloud.firestore {
     }
 
     match /templates/{templateId} {
-      allow get, list, create, update, delete: if isTemplateAdmin();
+      // Pilot: all verified Scopely users can review available templates.
+      allow get, list: if isSignedInScopelyUser();
+      allow create, update, delete: if isTemplateAdmin();
     }
   }
 }
