@@ -12,7 +12,7 @@
   </style>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://accounts.google.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=4.4.2" />
+  <link rel="stylesheet" href="styles.css?v=4.7.0" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite" hidden>
@@ -175,6 +175,7 @@
         <div class="table-header"><div><p class="eyebrow light">Resources</p><h2>Essential links</h2></div><button id="addResource" class="button light">Add link</button></div>
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
+      <div id="customTabPanels"></div>
     </main><footer class="app-footer">Version 4.4.2 · Compact login</footer>
   </div>
   <dialog id="customizeTemplateDialog" class="template-dialog">
@@ -189,8 +190,17 @@
       <div class="dialog-actions"><button id="cancelCustomizeTemplate" class="button secondary" type="button">Cancel</button><button id="createEditableCopy" class="button primary" type="submit">Create Editable Copy</button></div>
     </form>
   </dialog>
-  <script type="module" src="app.js?v=4.6.0"></script>
+  <dialog id="customTabDialog" class="template-dialog">
+    <form id="customTabForm" class="template-dialog-card" method="dialog">
+      <p class="eyebrow">Add New Tab</p>
+      <h2>Create a custom section</h2>
+      <label>Tab name<input id="customTabName" required placeholder="e.g. Game Knowledge" /></label>
+      <label>Content type<select id="customTabType"><option value="rich_text">Free-form content</option><option value="task_list">Task list</option><option value="meetings">Meetings</option><option value="people">People and stakeholders</option><option value="resources">Resources and links</option><option value="deliverables">Deliverables</option><option value="success_criteria">Success criteria</option><option value="checklist">Checklist</option><option value="reflection_questions">Questions and reflection</option><option value="mixed_content">Mixed content</option></select></label>
+      <div class="dialog-actions"><button id="cancelCustomTab" class="button secondary" type="button">Cancel</button><button class="button primary" type="submit">Add Tab</button></div>
+    </form>
+  </dialog>
+  <script type="module" src="app.js?v=4.7.0"></script>
   <script type="module" src="firebase-auth.js?v=4.5.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.6.0"></script>
+  <script type="module" src="firestore-workspace.js?v=4.7.0"></script>
 </body>
 </html>
