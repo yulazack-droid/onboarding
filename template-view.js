@@ -27,7 +27,7 @@ async function load() {
   list("#learningAreas", template.initiativesOrLearningAreas);
   const weeks = template.weeks || [];
   $("#weekCount").textContent = `${weeks.length} weeks`;
-  $("#timeline").innerHTML = weeks.map((week, index) => `<article class="week"><p class="eyebrow">Week ${index + 1}</p><h3>${esc(week.title || week[0])}</h3><p>${esc(week.focus || week[1])}</p><p class="week-label">Expected outcomes</p><ul>${(week.outcomes || []).map(outcome => `<li>${esc(outcome)}</li>`).join("")}</ul><p class="week-label">Key activities</p><ul>${(week.activities || []).map(activity => `<li>${esc(activity)}</li>`).join("")}</ul></article>`).join("");
+  $("#timeline").innerHTML = weeks.map((week, index) => { const outcomes = week.outcomes?.length ? week.outcomes : [`Complete the expected ${week.title || `Week ${index + 1}`} milestones.`]; return `<article class="week"><p class="eyebrow">Week ${index + 1}</p><h3>${esc(week.title || week[0])}</h3><p>${esc(week.focus || week[1])}</p><p class="week-label">Expected outcomes</p><ul>${outcomes.map(outcome => `<li>${esc(outcome)}</li>`).join("")}</ul><p class="week-label">Key activities</p><ul>${(week.activities || []).map(activity => `<li>${esc(activity)}</li>`).join("")}</ul></article>`; }).join("");
   $("#phaseDetails").innerHTML = ["30", "60", "90"].map(day => `<article><p class="eyebrow">Days ${day === "30" ? "1–30" : day === "60" ? "31–60" : "61–90"}</p><h3>Deliverables</h3><ul>${(template.phaseDeliverables?.[day] || []).map(item => `<li>${esc(item)}</li>`).join("")}</ul><h3>Success criteria</h3><p>${esc(template.phaseSuccessCriteria?.[day] || "")}</p></article>`).join("");
   $("#useTemplate").onclick = () => location.assign(`assign.html?template=${encodeURIComponent(id)}`);
 }
