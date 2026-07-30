@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LGP Template Setup</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:#f7f7fb;color:#252339}.shell{max-width:680px;margin:72px auto;padding:24px}.card{background:#fff;border:1px solid #e6e3ef;border-radius:18px;padding:28px;box-shadow:0 12px 30px rgba(30,25,65,.08)}h1{margin:0 0 10px}.eyebrow{color:#6654cc;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.muted{line-height:1.55;color:#656275}.button{border:0;border-radius:10px;padding:11px 15px;background:#6755cf;color:#fff;font:inherit;font-weight:750;cursor:pointer}.button.secondary{background:#ece9fb;color:#5140af}.status{margin-top:18px;line-height:1.45}.status.error{color:#b42318}.actions{display:flex;gap:10px;align-items:center;margin-top:22px}code{background:#f1eff8;padding:2px 5px;border-radius:5px}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section id="loginGate" class="card">
+      <p class="eyebrow">LGP Onboarding Hub</p>
+      <h1>Template setup</h1>
+      <p class="muted">Sign in with Yula's Scopely account to seed the first approved template.</p>
+      <button id="signInButton" class="button" type="button">Sign in with Google</button>
+    </section>
+    <section id="appShell" class="card" hidden>
+      <p class="eyebrow">Template v1</p>
+      <h1>AI Transformation Lead</h1>
+      <p class="muted">This creates <code>templates/ai-transformation-lead</code> from a snapshot of Mary's current Journey. It never changes Mary's Journey, and it will not overwrite an existing template.</p>
+      <div class="actions"><button id="seedButton" class="button" type="button">Create AI Template v1</button><button id="seedDataAnalystButton" class="button" type="button">Create Data Analyst Template v1</button><button id="signOutButton" class="button secondary" type="button">Sign out</button></div>
+    </section>
+    <p id="status" class="status" role="status"></p>
+  </main>
+  <script type="module" src="template-seed.js"></script>
+</body>
+</html>

@@ -12,19 +12,28 @@ service cloud.firestore {
         && request.auth.token.email in workspace.data.editors;
     }
 
+    function isTemplateAdmin() {
+      return isSignedInScopelyUser()
+        && request.auth.token.email == 'yula.zack@scopely.com';
+    }
+
     match /workspaces/{workspaceId} {
       // Pilot mode: every verified Scopely user can view and list Journeys.
       // This must be tightened before Journeys contain non-pilot employee data.
       allow get, list: if isSignedInScopelyUser();
 
-      // Sprint 1 does not create or delete Journeys from the browser.
-      allow create, delete: if false;
+      allow create: if isTemplateAdmin();
+      allow delete: if false;
 
       // The manager and employee listed in editors may change Journey content,
       // but cannot change ownership, access, or other metadata.
       allow update: if isJourneyEditor(resource)
         && request.resource.data.diff(resource.data).affectedKeys()
           .hasOnly(['workspaceData', 'updatedAt']);
+    }
+
+    match /templates/{templateId} {
+      allow get, list, create, update, delete: if isTemplateAdmin();
     }
   }
 }

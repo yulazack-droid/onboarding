@@ -9,11 +9,15 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import {
+  addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
   orderBy,
-  query
+  query,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -36,8 +40,13 @@ const els = {
   journeyState: document.getElementById("journeyState"),
   journeyCount: document.getElementById("journeyCount"),
   startJourneyButton: document.getElementById("startJourneyButton"),
-  journeyDialog: document.getElementById("journeyDialog")
+  journeyDialog: document.getElementById("journeyDialog"),
+  createJourneyForm: document.getElementById("createJourneyForm"),
+  createJourneyButton: document.getElementById("createJourneyButton"),
+  createJourneyStatus: document.getElementById("createJourneyStatus")
 };
+
+let currentUser = null;
 
 function isScopelyUser(user) {
   return Boolean(user?.email && user.email.toLowerCase().endsWith("@scopely.com"));
@@ -85,6 +94,19 @@ function initials(name = "Journey") {
 function journeyLink(workspaceId) {
   const fixedMaryId = "9dc23f8e-8b42-4a75-b7d2-91b3f1df46ad";
   return workspaceId === fixedMaryId ? "index.html" : `index.html?workspace=${encodeURIComponent(workspaceId)}`;
+}
+
+function materializeTimeline(templateData, startDate) {
+  const data = structuredClone(templateData);
+  const origin = new Date(`${startDate}T00:00:00`);
+  data.weeks = (data.weeks || []).map((week, index) => {
+    const start = new Date(origin);
+    start.setDate(origin.getDate() + index * 7);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    return { ...week, start: start.toISOString().slice(0, 10), end: end.toISOString().slice(0, 10), dates: `Week ${index + 1}` };
+  });
+  return data;
 }
 
 function renderJourneys(journeys) {
@@ -186,6 +208,35 @@ els.signOutButton.addEventListener("click", async () => {
   try { await signOut(auth); } finally { els.signOutButton.disabled = false; }
 });
 els.startJourneyButton.addEventListener("click", () => els.journeyDialog.showModal());
+els.createJourneyForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const form = new FormData(els.createJourneyForm);
+  const employee = { name: form.get("employeeName").trim(), email: form.get("employeeEmail").trim().toLowerCase() };
+  const manager = { name: form.get("managerName").trim(), email: form.get("managerEmail").trim().toLowerCase() };
+  els.createJourneyButton.disabled = true;
+  els.createJourneyStatus.textContent = "Creating Journey…";
+  try {
+    const templateId = form.get("templateId");
+    const snapshot = await getDoc(doc(db, "templates", templateId));
+    if (!snapshot.exists()) throw new Error("This template has not been seeded yet.");
+    const template = snapshot.data();
+    const ref = await addDoc(collection(db, "workspaces"), {
+      employeeName: employee.name, employee, managerName: manager.name, manager,
+      roleTitle: template.name, template: template.name, templateId, templateVersion: template.version,
+      startDate: form.get("startDate"), status: "Active", editors: [...new Set([employee.email, manager.email])],
+      ownerUid: currentUser.uid, ownerEmail: currentUser.email || "", schemaVersion: 3,
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp(),
+      createdBy: { uid: currentUser.uid, email: currentUser.email || "" },
+      workspaceData: materializeTimeline(template.templateData, form.get("startDate"))
+    });
+    window.location.assign(journeyLink(ref.id));
+  } catch (error) {
+    console.error("Create Journey failed", error);
+    els.createJourneyStatus.textContent = error?.message || "Journey creation failed.";
+    els.createJourneyStatus.classList.add("error");
+    els.createJourneyButton.disabled = false;
+  }
+});
 
 onAuthStateChanged(auth, async user => {
   if (!user) {
@@ -197,6 +248,7 @@ onAuthStateChanged(auth, async user => {
     showGate("Please use your Scopely Google account.");
     return;
   }
+  currentUser = user;
   showHub(user);
   await loadJourneys();
 });

@@ -86,7 +86,7 @@ function today(){const t=new Date();t.setHours(0,0,0,0);return t}
 function dateOnly(s){return new Date(s+'T00:00:00')}
 function currentWeekIndex(){
   const t=today();
-  const schedule=defaults.weeks;
+  const schedule=state.weeks;
   if(t<dateOnly(schedule[0].start))return 0;
   for(let i=0;i<schedule.length;i++){
     if(t>=dateOnly(schedule[i].start)&&t<=dateOnly(schedule[i].end))return i;

@@ -82,15 +82,22 @@
   </div>
 
   <dialog id="journeyDialog" class="dialog">
-    <form method="dialog" class="dialog-card">
+    <form id="createJourneyForm" class="dialog-card">
       <button class="dialog-close" value="cancel" aria-label="Close">×</button>
       <span class="dialog-icon" aria-hidden="true">✦</span>
-      <h2>Journey creation is next</h2>
-      <p>The Hub is now connected to your existing journeys. The next sprint will connect this action to role templates and create a new Firestore workspace.</p>
-      <button class="button primary" value="cancel">Got it</button>
+      <h2>Start a New Journey</h2>
+      <p>Create an independent snapshot from an approved role template.</p>
+      <label>Employee name<input name="employeeName" required /></label>
+      <label>Employee email <small>Pilot-only until the Directory integration is approved.</small><input name="employeeEmail" type="email" required /></label>
+      <label>Manager name<input name="managerName" required /></label>
+      <label>Manager email<input name="managerEmail" type="email" required /></label>
+      <label>Role template<select name="templateId" required><option value="ai-transformation-lead">AI Transformation Lead</option><option value="data-analyst">Data Analyst</option></select></label>
+      <label>Start date<input name="startDate" type="date" required /></label>
+      <p id="createJourneyStatus" class="login-message" role="status"></p>
+      <button id="createJourneyButton" class="button primary" type="submit">Create Journey</button>
     </form>
   </dialog>
 
-  <script type="module" src="hub.js?v=5.0.1"></script>
+  <script type="module" src="hub.js?v=5.2.0"></script>
 </body>
 </html>
