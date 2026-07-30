@@ -43,7 +43,7 @@
         </div>
         <button id="startJourneyButton" class="start-card" type="button" aria-describedby="startJourneyHelp">
           <span class="start-icon" aria-hidden="true">+</span>
-          <span><strong>Start a New Journey</strong><small id="startJourneyHelp">Create a personalized onboarding experience from a role template.</small></span>
+          <span><strong>Set up a New Journey</strong><small id="startJourneyHelp">Review the setup before creating a personalized onboarding experience.</small></span>
           <span class="start-arrow" aria-hidden="true">→</span>
         </button>
       </section>
@@ -64,11 +64,11 @@
         <div class="template-grid">
           <article class="template-card ready" data-template-id="ai-transformation-lead">
             <div class="template-icon" aria-hidden="true">AI</div>
-            <div><span class="status ready-status">Ready</span><h3>AI Transformation Lead</h3><p>Discovery, stakeholder alignment, practical delivery and a sustainable AI roadmap.</p><button class="template-use" type="button">Start a Journey</button></div>
+            <div><span class="status ready-status">Ready</span><h3>AI Transformation Lead</h3><p>Discovery, stakeholder alignment, practical delivery and a sustainable AI roadmap.</p><button class="template-use" type="button">View &amp; use template</button></div>
           </article>
           <article class="template-card ready" data-template-id="data-analyst">
             <div class="template-icon" aria-hidden="true">DA</div>
-            <div><span class="status ready-status">Ready</span><h3>Data Analyst</h3><p>Business context, data access, dashboards, analytical workflows and stakeholder partnership.</p><button class="template-use" type="button">Start a Journey</button></div>
+            <div><span class="status ready-status">Ready</span><h3>Data Analyst</h3><p>Business context, data access, dashboards, analytical workflows and stakeholder partnership.</p><button class="template-use" type="button">View &amp; use template</button></div>
           </article>
           <article class="template-card muted-card">
             <div class="template-icon" aria-hidden="true">MM</div>
@@ -85,8 +85,8 @@
     <form id="createJourneyForm" class="dialog-card">
       <button id="closeJourneyDialog" class="dialog-close" type="button" aria-label="Close">×</button>
       <span class="dialog-icon" aria-hidden="true">✦</span>
-      <h2>Start a New Journey</h2>
-      <p>First choose the role template, then personalize the Journey for the employee.</p>
+      <h2>Journey setup</h2>
+      <p>Review the role and employee details. Nothing is created until you select Create Journey.</p>
       <label>Role template<select name="templateId" required><option value="" selected disabled>Choose a role template</option><option value="ai-transformation-lead">AI Transformation Lead</option><option value="data-analyst">Data Analyst</option></select></label>
       <label>Employee name<input name="employeeName" required /></label>
       <label>Employee email <small>Pilot-only until the Directory integration is approved.</small><input name="employeeEmail" type="email" required /></label>
@@ -98,6 +98,6 @@
     </form>
   </dialog>
 
-  <script type="module" src="hub.js?v=5.4.0"></script>
+  <script type="module" src="hub.js?v=5.5.0"></script>
 </body>
 </html>
