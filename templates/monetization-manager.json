@@ -1,0 +1,26 @@
+{
+  "templateId": "monetization-manager",
+  "templateName": "Monetization Manager",
+  "templateVersion": 1,
+  "category": "Monetization",
+  "description": "A structured onboarding journey for monetization leaders supporting live game revenue, offers, events, economy and player value.",
+  "durationDays": 90,
+  "status": "Active",
+  "roleMission": "Grow sustainable player value through thoughtful monetization, healthy game economies and evidence-based experimentation.",
+  "operatingModel": ["Understand the player journey, game economy, offers, LiveOps cadence and commercial measures.", "Partner with Product, Economy, Analytics and LiveOps to design and validate initiatives.", "Use performance evidence and player guardrails to prioritize the next monetization opportunities."],
+  "weeks": [
+    {"title":"Foundation and access","focus":"Become operational and understand the organization and monetization environment.","activities":["Secure dashboards, economy tools and offer-management access","Review ownership across Product, Economy, LiveOps and Monetization"]},
+    {"title":"Game, players and business model","focus":"Understand the player journey, game loops and core commercial model.","activities":["Play the game and document the player journey","Review revenue, conversion, payer and LTV metrics"]},
+    {"title":"Economy, offers and LiveOps","focus":"Understand how the economy and commercial content work together.","activities":["Review currencies, sources, sinks and progression gates","Map offers, events, segmentation and pricing practices"]},
+    {"title":"Performance and decision making","focus":"Understand how monetization performance is analyzed and decisions are made.","activities":["Review revenue and offer-performance dashboards","Map commercial planning decisions and recent tests"]},
+    {"title":"First-month assessment","focus":"Consolidate learning into an initial assessment and opportunity backlog.","activities":["Summarize the monetization portfolio and opportunity themes","Select one focused opportunity for validation"]},
+    {"title":"Opportunity deep dive","focus":"Analyze one high-potential monetization opportunity.","activities":["Define the business problem and target player audience","Review baseline performance, risks and dependencies"]},
+    {"title":"Initiative design","focus":"Turn the opportunity into a testable monetization concept.","activities":["Define audience, mechanics, KPI and player-experience guardrails","Confirm economy, technical and LiveOps feasibility"]},
+    {"title":"Cross-functional planning","focus":"Prepare the initiative for implementation.","activities":["Align scope, owners, dependencies and measurement plan","Document launch, QA and risk-mitigation actions"]},
+    {"title":"Launch readiness or pilot","focus":"Launch the first initiative or complete launch readiness.","activities":["Complete configuration, targeting and validation","Confirm monitoring and decision criteria"]},
+    {"title":"Performance monitoring","focus":"Assess the initial commercial and player impact.","activities":["Monitor revenue, conversion, payer behavior and engagement","Check economy and player-experience guardrails"]},
+    {"title":"Optimization and learning","focus":"Turn results into decisions and improvements.","activities":["Analyze uplift, cannibalization and implications","Recommend scale, iteration or follow-up tests"]},
+    {"title":"Six-month roadmap","focus":"Prioritize the next set of monetization opportunities.","activities":["Consolidate offer, feature, LiveOps and economy opportunities","Prioritize by impact, effort, readiness and player value"]},
+    {"title":"Operating model and review","focus":"Establish sustainable monetization ownership and cross-functional routines.","activities":["Confirm planning and performance-review cadences","Complete the 90-day review and next-period priorities"]}
+  ]
+}

@@ -12,6 +12,14 @@ import { initialWorkspaceMetadata, maryWorkspaceId } from "./firebase-config.js"
 const db = getFirestore(app);
 const requestedWorkspaceId = new URLSearchParams(window.location.search).get("workspace")?.trim();
 const workspaceId = requestedWorkspaceId || maryWorkspaceId;
+const isMaryJourney = workspaceId === maryWorkspaceId;
+const defaultMetadata = isMaryJourney ? initialWorkspaceMetadata : {
+  employeeName: "Onboarding Journey",
+  roleTitle: "Role Journey",
+  managerName: "Not assigned",
+  startDate: "",
+  status: "Draft"
+};
 const workspaceRef = doc(db, "workspaces", workspaceId);
 const employeeName = document.getElementById("employeeName");
 const roleManager = document.getElementById("roleManager");
@@ -43,11 +51,41 @@ function formatDate(value) {
 }
 
 function renderMetadata(metadata) {
-  const data = { ...initialWorkspaceMetadata, ...(metadata || {}) };
+  const data = { ...defaultMetadata, ...(metadata || {}) };
   employeeName.textContent = data.employeeName;
   roleManager.textContent = `${data.roleTitle} · Manager: ${data.managerName}`;
   startDateLabel.textContent = formatDate(data.startDate);
   document.title = `${data.employeeName} | First 90 Days`;
+  const employee = data.employeeName || "Employee";
+  const manager = data.managerName || "Manager";
+  const text = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value; };
+  text("welcomeName", `Welcome, ${employee}`);
+  [30, 60, 90].forEach(day => {
+    text(`employeeReflection${day}Label`, `${employee}'s ${day}-day reflection`);
+    text(`managerAssessment${day}Label`, `${manager}'s ${day}-day assessment`);
+  });
+  if (data.roleMission) text("roleMissionTitle", data.roleMission);
+  if (data.roleMissionDescription) text("roleMissionDescription", data.roleMissionDescription);
+  if (!isMaryJourney) {
+    const phaseTitles = [
+      ["Foundation and role immersion", "Build context, access, relationships and the first working rhythm."],
+      ["Role-specific application", "Turn early learning into practical work, partnership and measurable progress."],
+      ["Independent delivery and path forward", "Deliver, learn and establish the priorities for the next period."]
+    ];
+    document.querySelectorAll(".phase-hero").forEach((hero, index) => {
+      const [title, description] = phaseTitles[index] || [];
+      const heading = hero.querySelector("h2");
+      const copy = hero.querySelector("p:not(.eyebrow)");
+      if (heading) heading.textContent = title;
+      if (copy) copy.textContent = description;
+    });
+    const frameworkLabel = document.querySelector(".framework .eyebrow");
+    if (frameworkLabel) frameworkLabel.textContent = "Opportunity exploration framework";
+    const initiativesHeading = document.querySelector("#initiatives h2");
+    if (initiativesHeading) initiativesHeading.textContent = "Opportunities and projects";
+  }
+  window.journeyProfile = { employeeName: employee, managerName: manager };
+  window.workspaceApp?.render?.();
 }
 
 function setCloudStatus(message, isError = false) {
@@ -166,7 +204,7 @@ function startRealtimeSync() {
 }
 
 window.addEventListener("workspace-local-changed", scheduleCloudSave);
-renderMetadata(initialWorkspaceMetadata);
+renderMetadata(defaultMetadata);
 
 window.addEventListener("workspace-auth-changed", async event => {
   const user = event.detail?.accessGranted ? event.detail.user : null;
@@ -179,7 +217,7 @@ window.addEventListener("workspace-auth-changed", async event => {
     canEdit = false;
     window.workspaceApp?.setReadOnly?.(true);
     if (accessBanner) accessBanner.hidden = true;
-    renderMetadata(initialWorkspaceMetadata);
+    renderMetadata(defaultMetadata);
     setCloudStatus("Sign in to access the workspace");
     return;
   }

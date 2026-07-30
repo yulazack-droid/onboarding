@@ -1,0 +1,26 @@
+{
+  "templateId": "ai-transformation-lead",
+  "templateName": "AI Transformation Lead",
+  "templateVersion": 1,
+  "category": "AI Transformation",
+  "description": "A structured 90-day journey to understand the portfolio, build trusted partnerships, deliver one practical AI optimization and establish a sustainable operating model.",
+  "durationDays": 90,
+  "status": "Active",
+  "roleMission": "Build trust, deliver practical value and establish a sustainable AI capability across the portfolio.",
+  "operatingModel": ["Understand organizations, workflows, tools, dashboards and business context.", "Explore manual effort, human-error risk and capacity gaps with stakeholders.", "Deliver one practical, measurable optimization and create a credible path forward."],
+  "weeks": [
+    {"title":"Foundation and enablement","focus":"Become operational and prepare the learning and stakeholder plan.","activities":["Secure access to AI tools, collaboration systems, analytics and shared resources","Review the studio, portfolio, business-unit and leadership structure"]},
+    {"title":"Initial immersion","focus":"Observe how the first game teams operate and begin guided exploration.","activities":["Join selected team routines and meet priority stakeholders","Explore dashboards, systems and the metrics used by initial teams"]},
+    {"title":"Broader immersion","focus":"Broaden learning and prepare high-value stakeholder conversations.","activities":["Continue stakeholder introductions and document workflow context","Map the tools, dashboards and measures used across functions"]},
+    {"title":"Discovery consolidation","focus":"Consolidate open questions and identify themes worth deeper exploration.","activities":["Document manual effort, error exposure and capacity constraints","Create a structured list of questions, assumptions and follow-ups"]},
+    {"title":"First-month synthesis","focus":"Turn discovery into an initial opportunity backlog.","activities":["Summarize organization, workflows, tools and business context","Create an initial AI opportunity backlog for stakeholder validation"]},
+    {"title":"Portfolio mapping approach","focus":"Define a repeatable portfolio discovery and mapping method.","activities":["Create a consistent method for mapping workflow maturity and tool usage","Set recurring routines with the most relevant stakeholders"]},
+    {"title":"Workflow opportunity mapping","focus":"Map the strongest operational themes where AI can create value.","activities":["Identify time-consuming work, rework and human-error exposure","Identify capacity gaps suitable for automation support"]},
+    {"title":"Backlog validation","focus":"Validate hypotheses and prioritize opportunities with stakeholders.","activities":["Validate problem statements, expected value and readiness","Prioritize the backlog by impact, effort and dependencies"]},
+    {"title":"First solution definition","focus":"Select and scope a focused optimization.","activities":["Define scope, owners, dependencies and measurable success criteria","Create an initial delivery and adoption plan"]},
+    {"title":"Build and launch","focus":"Move the first optimization or pilot into delivery.","activities":["Build and launch the selected practical AI optimization","Communicate the intended workflow and support model"]},
+    {"title":"Measure and learn","focus":"Measure value, feedback and adoption.","activities":["Collect evidence of business value and user feedback","Document lessons and adjust the delivery approach"]},
+    {"title":"Six-month backlog","focus":"Turn validated discovery into a credible next-stage plan.","activities":["Complete and prioritize the six-month opportunity backlog","Align assumptions and dependencies with relevant leaders"]},
+    {"title":"Roadmap and operating model","focus":"Establish the path for continued AI transformation.","activities":["Align a high-level roadmap for delivery, adoption and culture","Define repeatable intake, prioritization, delivery and knowledge-sharing routines"]}
+  ]
+}

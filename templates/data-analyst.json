@@ -1,0 +1,26 @@
+{
+  "templateId": "data-analyst",
+  "templateName": "Data Analyst",
+  "templateVersion": 1,
+  "category": "Analytics",
+  "description": "A structured onboarding journey for analysts supporting live game teams, business functions and data-driven decision-making.",
+  "durationDays": 90,
+  "status": "Active",
+  "roleMission": "Turn reliable data into clear, timely insight that helps game teams make better decisions.",
+  "operatingModel": ["Build a deep understanding of the game, player journey, metrics and data landscape.", "Partner with stakeholders to turn business questions into sound analytical work.", "Deliver reusable analysis, documentation and a prioritized analytics roadmap."],
+  "weeks": [
+    {"title":"Foundation and access","focus":"Become operational and understand the organizational and analytical environment.","activities":["Secure warehouse, BI, repository and documentation access","Review data governance, ownership and game systems"]},
+    {"title":"Game, players and KPIs","focus":"Understand the game, player journey, business model and core KPIs.","activities":["Review game loops, player segments and LiveOps cadence","Map revenue, retention and engagement KPI definitions"]},
+    {"title":"Data landscape","focus":"Learn where data comes from, how it is transformed and how analysis is delivered.","activities":["Map sources, pipelines and semantic layers","Document dashboard ownership and data-quality limitations"]},
+    {"title":"Stakeholders and decision making","focus":"Understand how Product, Economy, Monetization and LiveOps make decisions.","activities":["Meet priority analytics and business partners","Map decision forums and analytical demand"]},
+    {"title":"Analytical map and first question","focus":"Turn initial learning into a structured analytical map and development plan.","activities":["Create the stakeholder and analytical-demand map","Define a focused first business question"]},
+    {"title":"First analytical deep dive","focus":"Conduct a structured analysis of a meaningful business question.","activities":["Translate the question into an analytical approach","Validate datasets, definitions and assumptions"]},
+    {"title":"Insight generation","focus":"Turn analysis into clear, actionable insights.","activities":["Identify trends, segments, drivers and anomalies","Review recommendations with stakeholders"]},
+    {"title":"Workflow improvement","focus":"Improve one recurring analytical or reporting workflow.","activities":["Baseline a manual report, query or dashboard workflow","Design a more efficient and reliable approach"]},
+    {"title":"Deliver and document","focus":"Deliver the first analytical output and establish reusable documentation.","activities":["Present the analysis and recommendations","Publish methodology, definitions and follow-up work"]},
+    {"title":"Independent ownership","focus":"Take ownership of a recurring analytical area or business problem.","activities":["Own a recurring analysis or decision-support workflow","Establish a stakeholder cadence"]},
+    {"title":"Measurement and impact","focus":"Measure whether the first deliverables created value.","activities":["Collect stakeholder feedback and usage evidence","Assess time, quality or decision-making impact"]},
+    {"title":"Analytical roadmap","focus":"Build a prioritized backlog for the following six months.","activities":["Prioritize analysis, dashboard and data-quality opportunities","Align dependencies and value with stakeholders"]},
+    {"title":"Operating model and review","focus":"Confirm role ownership, working rhythms and the path forward.","activities":["Confirm intake, prioritization and delivery expectations","Complete the 90-day review and capability plan"]}
+  ]
+}

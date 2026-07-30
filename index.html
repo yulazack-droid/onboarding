@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mary Fisher | First 90 Days</title>
+  <title>Onboarding Journey | First 90 Days</title>
   <style>
     #appShell[hidden], #loginGate[hidden] { display: none !important; }
   </style>
@@ -27,7 +27,7 @@
     <header class="hero">
       <div>
         <p class="eyebrow light">First-quarter workspace</p>
-        <h1 id="employeeName">Mary Fisher</h1>
+        <h1 id="employeeName">Onboarding Journey</h1>
         <p class="hero-subtitle" id="roleManager">AI Transformation Lead · Manager: Yula Zack</p>
       </div>
       <div class="hero-meta">
@@ -78,7 +78,7 @@
         <article class="welcome-card">
           <div>
             <p class="eyebrow">Welcome to Scopely</p>
-            <h2>Welcome, Mary</h2>
+            <h2 id="welcomeName">Welcome</h2>
             <p class="muted">This workspace is here to support your first 90 days, help you stay focused on the right relationships and priorities, and make your progress visible along the way.</p>
           </div>
           <div id="overviewDayMessage" class="welcome-day"></div>
@@ -87,8 +87,8 @@
         <article class="mission-card">
           <div>
             <p class="eyebrow">Role mission</p>
-            <h2>Build trust, deliver practical value and establish a sustainable AI capability</h2>
-            <p class="muted">Understand the studio, build productive relationships, identify and prioritize the right opportunities, deliver one focused optimization, and shape the next six months.</p>
+            <h2 id="roleMissionTitle">Build trust, deliver practical value and establish a sustainable capability</h2>
+            <p id="roleMissionDescription" class="muted">Understand the organization, build productive relationships, identify the right opportunities and shape the path forward.</p>
           </div>
           <div class="mission-pillars">
             <div><span>01</span><strong>Understand</strong><p>Organization, workflows, tools, dashboards and business context.</p></div>
@@ -136,7 +136,7 @@
           <article class="card"><p class="eyebrow">30-day deliverables</p><ul id="deliverables30" class="standard-list"></ul></article>
           <article class="card"><p class="eyebrow">30-day success criteria</p><div id="success30"></div></article>
         </div>
-        <article class="card dual"><div><label>Mary's 30-day reflection</label><textarea data-field="maryReflection30"></textarea></div><div><label>Yula's 30-day assessment</label><textarea data-field="yulaAssessment30"></textarea></div></article>
+        <article class="card dual"><div><label id="employeeReflection30Label">Employee 30-day reflection</label><textarea data-field="maryReflection30"></textarea></div><div><label id="managerAssessment30Label">Manager 30-day assessment</label><textarea data-field="yulaAssessment30"></textarea></div></article>
       </section>
 
       <section id="days60" class="panel">
@@ -144,7 +144,7 @@
         <div class="phase-grid"><article class="card"><p class="eyebrow">Objectives</p><div id="objectives60"></div></article><article class="card"><p class="eyebrow">Deliverables</p><ul id="deliverables60" class="standard-list"></ul></article></div>
         <article class="card framework"><p class="eyebrow">Portfolio exploration framework</p><div class="framework-grid"><div><strong>Manual effort</strong><span>Tasks consuming the most recurring time</span></div><div><strong>Human error</strong><span>Processes creating mistakes, rework or risk</span></div><div><strong>Capacity gaps</strong><span>Work constrained by insufficient bandwidth</span></div><div><strong>Adoption readiness</strong><span>Solutions that fit existing workflows</span></div></div></article>
         <article class="card"><p class="eyebrow">60-day success criteria</p><div id="success60"></div></article>
-        <article class="card dual"><div><label>Mary's 60-day reflection</label><textarea data-field="maryReflection60"></textarea></div><div><label>Yula's 60-day assessment</label><textarea data-field="yulaAssessment60"></textarea></div></article>
+        <article class="card dual"><div><label id="employeeReflection60Label">Employee 60-day reflection</label><textarea data-field="maryReflection60"></textarea></div><div><label id="managerAssessment60Label">Manager 60-day assessment</label><textarea data-field="yulaAssessment60"></textarea></div></article>
       </section>
 
       <section id="days90" class="panel">
@@ -152,7 +152,7 @@
         <div class="phase-grid"><article class="card"><p class="eyebrow">Objectives</p><div id="objectives90"></div></article><article class="card"><p class="eyebrow">Deliverables</p><ul id="deliverables90" class="standard-list"></ul></article></div>
         <article class="card"><p class="eyebrow">Six-month roadmap</p><div class="roadmap-grid"><div><label>Now</label><textarea data-field="roadmapNow"></textarea></div><div><label>Next</label><textarea data-field="roadmapNext"></textarea></div><div><label>Later</label><textarea data-field="roadmapLater"></textarea></div></div></article>
         <article class="card"><p class="eyebrow">90-day success criteria</p><div id="success90"></div></article>
-        <article class="card dual"><div><label>Mary's 90-day reflection</label><textarea data-field="maryReflection90"></textarea></div><div><label>Yula's 90-day assessment</label><textarea data-field="yulaAssessment90"></textarea></div></article>
+        <article class="card dual"><div><label id="employeeReflection90Label">Employee 90-day reflection</label><textarea data-field="maryReflection90"></textarea></div><div><label id="managerAssessment90Label">Manager 90-day assessment</label><textarea data-field="yulaAssessment90"></textarea></div></article>
       </section>
 
       <section id="people" class="panel table-panel">
