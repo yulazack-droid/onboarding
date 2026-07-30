@@ -210,7 +210,7 @@ els.signOutButton.addEventListener("click", async () => {
   try { await signOut(auth); } finally { els.signOutButton.disabled = false; }
 });
 function openCreateJourney(templateId) {
-  if (templateId) els.templateSelect.value = templateId;
+  els.templateSelect.value = templateId || "";
   els.createJourneyStatus.textContent = "";
   els.createJourneyStatus.classList.remove("error");
   els.journeyDialog.showModal();
@@ -218,14 +218,8 @@ function openCreateJourney(templateId) {
 
 els.startJourneyButton.addEventListener("click", () => openCreateJourney());
 els.closeJourneyDialog.addEventListener("click", () => els.journeyDialog.close());
-document.querySelectorAll(".template-choice").forEach(card => {
-  const open = () => openCreateJourney(card.dataset.templateId);
-  card.addEventListener("click", event => {
-    if (event.target.closest(".template-use") || event.target === card || card.contains(event.target)) open();
-  });
-  card.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); }
-  });
+document.querySelectorAll(".template-use").forEach(button => {
+  button.addEventListener("click", () => openCreateJourney(button.closest("[data-template-id]").dataset.templateId));
 });
 els.createJourneyForm.addEventListener("submit", async event => {
   event.preventDefault();
