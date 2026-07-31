@@ -204,3 +204,16 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 @media (max-width: 520px) {
   .login-card { padding: 22px 20px; border-radius: 17px; }
 }
+
+/* Header balance: compact metadata, roomy actions and clear action priority. */
+@media (min-width: 1251px) {
+  .hero { grid-template-columns: minmax(410px, 610px) auto minmax(610px, 1fr); }
+  .hero-meta { justify-self: start; margin-left: 0; }
+}
+.hero-tools { min-width: 610px; justify-content: flex-start; }
+.hero-tools .back-to-hub-button { order: 1; }
+.hero-tools .assign-journey-button { order: 2; }
+.hero-tools .template-more-actions { order: 3; margin-left: auto; }
+@media (max-width: 700px) {
+  .hero-tools { min-width: 0; }
+}

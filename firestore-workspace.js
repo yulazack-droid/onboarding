@@ -19,7 +19,7 @@ const isMaryJourney = workspaceId === maryWorkspaceId && !isTemplatePreview && !
 const defaultMetadata = isMaryJourney ? initialWorkspaceMetadata : { employeeName: "Onboarding Journey", roleTitle: "Role Journey", managerName: "Not assigned", startDate: "", status: "Draft" };
 const el = id => document.getElementById(id);
 const employeeName = el("employeeName"), roleManager = el("roleManager"), startDateLabel = el("startDateLabel"), saveStatus = el("saveStatus"), accessBanner = el("accessBanner");
-let activeUser = null, unsubscribeSnapshot = null, saveTimer = null, applyingRemoteState = false, lastUploadedUpdatedAt = null, canEdit = false, activeManagerTemplate = null;
+let activeUser = null, unsubscribeSnapshot = null, saveTimer = null, applyingRemoteState = false, lastUploadedUpdatedAt = null, canEdit = false, canDeleteWorkspace = false, activeManagerTemplate = null;
 
 function formatDate(value) { if (!value) return ""; const date = new Date(`${value}T00:00:00`); return Number.isNaN(date) ? "" : new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(date); }
 function setCloudStatus(message, isError = false) { if (saveStatus) { saveStatus.textContent = message; saveStatus.classList.toggle("cloud-error", isError); } }
@@ -55,12 +55,22 @@ function setupTemplateActions({ systemTemplate, managerTemplate } = {}) {
   if (reset) reset.onclick = resetManagerTemplate;
   if (remove) remove.onclick = deleteManagerTemplate;
 }
+async function deleteCurrentWorkspace() {
+  if (!canDeleteWorkspace || !confirm("Delete this Journey? This cannot be undone.")) return;
+  try { await deleteDoc(workspaceRef); window.location.assign("hub.html"); }
+  catch (error) { console.error(error); setCloudStatus("Journey could not be deleted", true); }
+}
 function setupWorkspaceActions() {
-  const assign = el("assignTemplateButton"), back = el("backToHubButton"), edit = el("editTemplateButton"), more = el("templateMoreActions");
+  const assign = el("assignTemplateButton"), back = el("backToHubButton"), edit = el("editTemplateButton"), more = el("templateMoreActions"), moreButton = el("moreTemplateActionsButton"), menu = el("templateActionsMenu"), duplicate = el("duplicateTemplateButton"), reset = el("resetTemplateButton"), remove = el("deleteTemplateButton");
   if (back) { back.hidden = false; back.href = "hub.html"; }
   if (assign) assign.hidden = true;
   if (edit) edit.hidden = true;
-  if (more) more.hidden = true;
+  if (more) more.hidden = !canDeleteWorkspace;
+  if (menu) menu.hidden = true;
+  if (duplicate) duplicate.hidden = true;
+  if (reset) reset.hidden = true;
+  if (remove) { remove.hidden = false; remove.textContent = "Delete Journey"; remove.onclick = deleteCurrentWorkspace; }
+  if (moreButton) moreButton.onclick = () => { if (!menu) return; menu.hidden = !menu.hidden; moreButton.setAttribute("aria-expanded", String(!menu.hidden)); };
 }
 async function loadSystemTemplate() { const response = await fetch(`templates/${encodeURIComponent(systemTemplateId)}.json`); if (!response.ok) throw new Error("Template not found"); return response.json(); }
 async function loadTemplatePreview() { await waitForApp(); const template = await loadSystemTemplate(); document.body.classList.add("template-preview-mode"); renderMetadata({ employeeName: template.templateName, roleTitle: template.templateName, managerName: "Hiring manager", roleMission: template.roleMission, roleMissionDescription: template.description }); setAccessMode(false, "Official template · review before you customize"); applyState(templateWorkspaceData(template), "Official template preview"); setupTemplateActions({ systemTemplate: template }); setCloudStatus("Official template · nothing is saved"); }
@@ -79,7 +89,7 @@ async function openCustomizeDialog(template) {
 }
 async function uploadFullWorkspace(user, reason = "save") { if (!user || !appReady() || applyingRemoteState || !canEdit) return; const workspaceData = window.workspaceApp.getState(); delete workspaceData.activeTab; delete workspaceData.activeWeek; setCloudStatus(reason === "migration" ? "Uploading existing workspace…" : "Saving to cloud…"); await setDoc(workspaceRef, { workspaceData, updatedAt: serverTimestamp() }, { merge: true }); lastUploadedUpdatedAt = workspaceData.updatedAt || null; setCloudStatus("All changes saved to cloud"); }
 function scheduleCloudSave() { if (isManagerTemplate) { if (!activeUser || !canEdit || applyingRemoteState) return; clearTimeout(saveTimer); setCloudStatus("Saving template…"); saveTimer = setTimeout(() => saveManagerTemplate(), 700); return; } if (!activeUser || applyingRemoteState || !canEdit) return; clearTimeout(saveTimer); setCloudStatus("Saving to cloud…"); saveTimer = setTimeout(async () => { try { await uploadFullWorkspace(activeUser); } catch (error) { console.error(error); setCloudStatus("Cloud save failed · local backup kept", true); } }, 650); }
-async function loadWorkspace(user) { await waitForApp(); setCloudStatus("Connecting to cloud…"); const snapshot = await getDoc(workspaceRef); if (!snapshot.exists()) throw new Error("Journey not found"); const cloud = snapshot.data(), email = (user.email || "").toLowerCase(), editable = (cloud.editors || []).map(value => String(value).toLowerCase()).includes(email) || cloud.ownerUid === user.uid; setAccessMode(editable, editable ? "All changes save automatically" : "View-only access"); setupWorkspaceActions(); renderMetadata(metadataFields(cloud)); if (cloud.workspaceData) { applyState(cloud.workspaceData, "Workspace loaded from cloud"); lastUploadedUpdatedAt = cloud.workspaceData.updatedAt || null; setCloudStatus(editable ? "All changes save automatically" : "Workspace loaded from cloud"); } else await uploadFullWorkspace(user, "migration"); }
+async function loadWorkspace(user) { await waitForApp(); setCloudStatus("Connecting to cloud…"); const snapshot = await getDoc(workspaceRef); if (!snapshot.exists()) throw new Error("Journey not found"); const cloud = snapshot.data(), email = (user.email || "").toLowerCase(), editable = (cloud.editors || []).map(value => String(value).toLowerCase()).includes(email) || cloud.ownerUid === user.uid; canDeleteWorkspace = cloud.ownerUid === user.uid; setAccessMode(editable, editable ? "All changes save automatically" : "View-only access"); setupWorkspaceActions(); renderMetadata(metadataFields(cloud)); if (cloud.workspaceData) { applyState(cloud.workspaceData, "Workspace loaded from cloud"); lastUploadedUpdatedAt = cloud.workspaceData.updatedAt || null; setCloudStatus(editable ? "All changes save automatically" : "Workspace loaded from cloud"); } else await uploadFullWorkspace(user, "migration"); }
 function startRealtimeSync() { unsubscribeSnapshot?.(); unsubscribeSnapshot = onSnapshot(workspaceRef, snapshot => { if (!snapshot.exists() || !appReady()) return; const cloud = snapshot.data(); renderMetadata(metadataFields(cloud)); if (!cloud.workspaceData || applyingRemoteState) return; applyState(cloud.workspaceData, "Synced from cloud"); setCloudStatus("Synced from cloud"); }, () => setCloudStatus("Realtime sync unavailable · local backup kept", true)); }
 window.addEventListener("workspace-local-changed", scheduleCloudSave); renderMetadata(defaultMetadata);
 window.addEventListener("workspace-auth-changed", async event => { const user = event.detail?.accessGranted ? event.detail.user : null; activeUser = user; clearTimeout(saveTimer); unsubscribeSnapshot?.(); unsubscribeSnapshot = null; if (!user) { canEdit = false; window.workspaceApp?.setReadOnly?.(true); if (accessBanner) accessBanner.hidden = true; renderMetadata(defaultMetadata); return; } try { if (isTemplatePreview) await loadTemplatePreview(); else if (isManagerTemplate) await loadManagerTemplate(); else { await loadWorkspace(user); startRealtimeSync(); } } catch (error) { console.error("Workspace connection failed", error); setCloudStatus(error?.code === "permission-denied" ? "Cloud blocked by Firestore rules" : error.message || "Cloud unavailable", true); } });
