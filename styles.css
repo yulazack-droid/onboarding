@@ -307,3 +307,23 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 .template-mode .operating-strip{margin-top:var(--editor-section-gap);padding:var(--editor-card-padding);}
 @media (max-width:1100px){.template-mode .hero{grid-template-areas:"title metadata" "actions actions";grid-template-columns:minmax(0,1fr) minmax(280px,auto);gap:12px 20px;}.template-mode .hero-tools{justify-content:flex-start;flex-wrap:wrap;}.template-mode #templateMetadata{justify-content:flex-end;}.template-mode .tabs{margin-top:10px;}}
 @media (max-width:700px){.template-mode .hero{grid-template-areas:"title" "metadata" "actions";grid-template-columns:1fr;padding:20px;gap:10px;}.template-mode .hero h1{font-size:clamp(28px,8vw,32px);white-space:normal;}.template-mode #templateMetadata{flex-wrap:wrap;overflow:visible;}.template-mode #templateMetadata strong{white-space:normal;}.template-mode .hero-tools{flex-wrap:wrap;}.template-mode .tabs{min-height:54px;margin-top:8px;}.template-mode .tab{min-height:42px;}.template-mode .mission-card{grid-template-columns:1fr;padding:18px;}.template-mode .mission-pillars{grid-template-columns:1fr;}}
+
+/* Header action bar v6.2: one baseline and one control system. */
+.hero{--header-control-height:44px;--header-icon-size:19px;--header-control-gap:12px;--header-control-radius:12px;--header-button-padding-x:18px;}
+.hero .hero-tools{gap:var(--header-control-gap);}
+.hero .hero-tools>.button,.hero .template-more-actions>.more-actions-button,.hero .auth-area,.hero .signed-in-user{min-height:var(--header-control-height);height:var(--header-control-height);border-radius:var(--header-control-radius);}
+.hero .hero-tools>.button{display:inline-flex;align-items:center;justify-content:center;padding:0 var(--header-button-padding-x);}
+.hero .template-more-actions{display:flex;align-items:center;}
+.hero .template-more-actions>.more-actions-button{width:var(--header-control-height);min-width:var(--header-control-height);padding:0;font-size:var(--header-icon-size);line-height:1;}
+.hero .back-to-hub-button{display:inline-flex!important;align-items:center;min-height:var(--header-control-height);padding:0 8px!important;color:var(--muted)!important;white-space:nowrap;}
+.hero .auth-area{display:flex;align-items:center;gap:0;order:4;width:auto!important;}
+.hero .signed-in-user{display:flex;align-items:center;gap:8px;padding:5px 9px 5px 5px;}
+.hero .user-avatar{width:30px;height:30px;}
+.hero .user-copy{justify-content:center;line-height:1.1;}
+.hero .user-copy strong{font-size:12px;}.hero .user-copy span{font-size:10px;}.hero .user-copy .hero-save{margin-top:2px;font-size:9px;}
+.template-mode .hero-tools{gap:var(--header-control-gap);}
+.template-mode .hero-tools .assign-journey-button{height:var(--header-control-height);padding:0 var(--header-button-padding-x)!important;}
+.template-mode .hero-tools #saveTemplateButton{height:var(--header-control-height);padding:0 var(--header-button-padding-x);background:#fff;border:1px solid #d8ccff;color:var(--purple);box-shadow:none;}
+.template-mode .hero-tools .back-to-hub-button{order:1!important;}.template-mode .hero-tools #saveTemplateButton{order:2;}.template-mode .hero-tools .assign-journey-button{order:3!important;}.template-mode .hero-tools .template-more-actions{order:4!important;margin-left:0!important;}.template-mode .hero-tools .auth-area{order:5;}
+@media(max-width:1100px){.template-mode .hero-tools .auth-area{margin-left:auto;}.template-mode .hero-tools{gap:10px;}}
+@media(max-width:700px){.hero .hero-tools>.button,.hero .template-more-actions>.more-actions-button,.hero .auth-area,.hero .signed-in-user{min-height:44px;height:44px;}.template-mode .hero-tools .auth-area{margin-left:0;}.template-mode .user-copy{display:none;}.template-mode .signed-in-user{width:44px;padding:6px;justify-content:center;}.template-mode .user-avatar{width:30px;height:30px;}}
