@@ -12,7 +12,7 @@
   </style>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://accounts.google.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=4.8.1" />
+  <link rel="stylesheet" href="styles.css?v=5.0.0" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite" hidden>
@@ -42,6 +42,9 @@
         <a id="backToHubButton" class="button glass compact" href="hub.html" hidden>Back to Hub</a>
         <button id="editTemplateButton" class="button glass compact" type="button" hidden>Edit Template</button>
         <button id="saveTemplateButton" class="button light compact" type="button" hidden>Save Changes</button>
+        <button id="duplicateTemplateButton" class="button glass compact" type="button" hidden>Duplicate</button>
+        <button id="resetTemplateButton" class="button glass compact" type="button" hidden>Reset</button>
+        <button id="deleteTemplateButton" class="button glass compact danger-template-button" type="button" hidden>Delete</button>
         <a id="assignTemplateButton" class="button primary assign-journey-button" href="#" hidden>Assign Journey <span aria-hidden="true">→</span></a>
         <div class="auth-area" id="authArea" aria-live="polite">
           <button id="signInButton" class="button glass auth-button" type="button">Sign in with Google</button>
@@ -60,11 +63,7 @@
         <p id="operatingModelLabel" class="eyebrow">Ongoing role operating model</p>
         <strong id="operatingModelTitle">Applies beyond the first 90 days</strong>
       </div>
-      <div class="allocation">
-        <div><strong id="allocation0Percent">70%</strong><span id="allocation0Label">Hands-on delivery</span></div>
-        <div><strong id="allocation1Percent">20%</strong><span id="allocation1Label">Project management</span></div>
-        <div><strong id="allocation2Percent">10%</strong><span id="allocation2Label">Stakeholder engagement & opportunity mapping</span></div>
-      </div>
+      <div id="allocationList" class="allocation"></div>
     </section>
 
     <nav class="tabs">
@@ -199,8 +198,8 @@
       <div class="dialog-actions"><button id="cancelCustomTab" class="button secondary" type="button">Cancel</button><button class="button primary" type="submit">Add Tab</button></div>
     </form>
   </dialog>
-  <script type="module" src="app.js?v=4.8.1"></script>
+  <script type="module" src="app.js?v=5.0.0"></script>
   <script type="module" src="firebase-auth.js?v=4.5.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.8.0"></script>
+  <script type="module" src="firestore-workspace.js?v=4.9.0"></script>
 </body>
 </html>
