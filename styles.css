@@ -258,3 +258,21 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 .back-to-hub-button{order:-1!important;padding:4px 0!important;border:0!important;background:transparent!important;color:var(--muted)!important;box-shadow:none!important;font-weight:750!important}.back-to-hub-button:hover{color:var(--purple)!important;text-decoration:underline;background:transparent!important}.hero-tools{gap:12px}.hero-tools .assign-journey-button{order:2!important}.hero-tools .template-more-actions{order:3!important;margin-left:0!important}.hero-meta{align-items:stretch}.hero-meta>div{min-width:136px}.app-footer[hidden]{display:none!important}@media(max-width:1100px){.hero{grid-template-columns:1fr auto}.hero-meta{grid-column:1/-1;justify-self:start}.hero-tools{grid-column:1/-1;justify-content:flex-start}}@media(max-width:700px){.hero-meta{grid-template-columns:1fr;overflow:visible}.hero-tools{gap:10px}.back-to-hub-button{width:100%;text-align:left}.hero-tools .assign-journey-button{order:2!important}}
 .template-loading main,.template-loading .operating-strip{visibility:hidden}.template-load-error main,.template-load-error .operating-strip{display:none}.template-load-error .access-banner{display:block!important}
 #journeyMetadata[hidden],#templateMetadata[hidden],#templateTeamCard[hidden]{display:none!important}.template-mode .progress-card,.template-mode .phase-progress,.template-mode #overviewDayMessage{display:none!important}
+
+/* Template header proportions v5.8: a compact hierarchy that protects space for metadata and actions. */
+.template-mode{--template-title-size:clamp(30px,3vw,48px);--welcome-title-size:clamp(30px,2.5vw,36px);--header-padding:clamp(28px,2.4vw,36px);--header-gap:clamp(20px,2vw,28px)}
+.template-mode .hero{grid-template-columns:minmax(280px,38%) minmax(360px,1fr) minmax(300px,auto);gap:var(--header-gap);align-items:center;min-height:180px;padding:var(--header-padding);}
+.template-mode .hero-title-block{min-width:0;max-width:100%;}
+.template-mode .hero .eyebrow.light{margin-bottom:7px;font-size:clamp(12px,.9vw,14px);letter-spacing:.1em;}
+.template-mode .hero h1{font-size:var(--template-title-size);line-height:1.08;letter-spacing:-.04em;overflow-wrap:anywhere;}
+.template-mode .hero-subtitle{margin-top:9px;font-size:clamp(16px,1.2vw,18px);line-height:1.35;}
+.template-mode #templateMetadata{grid-template-columns:repeat(2,minmax(120px,1fr));gap:10px;min-width:360px;}
+.template-mode #templateMetadata>div{min-height:64px;padding:10px 12px;}
+.template-mode #templateMetadata strong{display:block;margin-top:3px;font-size:.88rem;line-height:1.25;overflow-wrap:anywhere;}
+.template-mode .hero-tools{align-content:center;justify-content:flex-end;min-width:300px;}
+.template-mode .welcome-card{margin-bottom:14px;padding:20px 24px;}
+.template-mode .welcome-card h2{font-size:var(--welcome-title-size);line-height:1.12;}
+.template-mode .welcome-card .muted{max-width:880px;font-size:clamp(18px,1.3vw,20px);line-height:1.45;}
+@media (min-width:1180px){.template-mode .hero h1{white-space:nowrap;font-size:clamp(30px,2.8vw,42px);}}
+@media (max-width:1179px){.template-mode .hero{grid-template-columns:minmax(0,1fr) minmax(340px,1fr);}.template-mode .hero-tools{grid-column:1/-1;justify-content:flex-end;}.template-mode .hero h1{font-size:clamp(30px,3.2vw,38px);}}
+@media (max-width:760px){.template-mode .hero{grid-template-columns:1fr;gap:18px;padding:24px;}.template-mode #templateMetadata{min-width:0;grid-template-columns:repeat(2,minmax(0,1fr));}.template-mode .hero-tools{grid-column:auto;justify-content:flex-start;}.template-mode .hero h1{font-size:clamp(28px,8vw,32px);white-space:normal;}.template-mode .hero-subtitle{font-size:16px;}.template-mode .welcome-card{padding:18px;}.template-mode .welcome-card h2{font-size:clamp(26px,7vw,32px);}.template-mode .welcome-card .muted{font-size:18px;}}
