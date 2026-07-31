@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>New Journey | LGP Onboarding Hub</title>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="hub.css?v=7.0.0" />
+  <link rel="stylesheet" href="new-journey.css?v=1.0.0" />
+</head>
+<body>
+  <section id="loginGate" class="login-gate" hidden><div class="login-card"><div class="brand-mark">L</div><p class="eyebrow">LGP Onboarding Hub</p><h1>Sign in to continue</h1><button id="signInButton" class="button primary full" type="button">Sign in with Google</button><p id="loginMessage" class="login-message"></p></div></section>
+  <main id="app" class="role-library" hidden>
+    <header class="role-library-header"><a class="back-link" href="hub.html">← Back to Hub</a><div class="role-user"><strong id="userName"></strong><span id="userEmail"></span></div></header>
+    <section class="role-library-intro"><p class="eyebrow">New Journey</p><h1>Choose a role</h1><p>Select a role to review the onboarding format before assigning it to an employee.</p></section>
+    <section class="role-picker" aria-labelledby="rolePickerTitle"><div class="picker-top"><h2 id="rolePickerTitle">Role library</h2><label class="role-search"><span class="sr-only">Search roles</span><input id="roleSearch" type="search" placeholder="Search roles" autocomplete="off" /></label></div><p id="roleResultCount" class="picker-caption"></p><div id="roleList" class="role-list" role="listbox" aria-label="Available roles"></div></section>
+  </main>
+  <script type="module" src="new-journey.js?v=1.0.0"></script>
+</body>
+</html>
