@@ -37,7 +37,7 @@ function renderMetadata(metadata) {
   renderHeaderMode(data);
   employeeName.textContent = employee; roleManager.textContent = `${data.roleTitle || "Onboarding Journey"} · Manager: ${manager}`; startDateLabel.textContent = formatDate(data.startDate); document.title = `${employee} | First 90 Days`;
   const text = (id, value) => { const node = el(id); if (node) node.textContent = value; };
-  text("welcomeName", `Welcome, ${employee}`); [30, 60, 90].forEach(day => { text(`employeeReflection${day}Label`, `${employee}'s ${day}-day reflection`); text(`managerAssessment${day}Label`, `${manager}'s ${day}-day assessment`); });
+  const documentType = data.objectType || data.documentType || (isTemplatePreview ? "system_template" : isManagerTemplate ? "manager_template" : "employee_journey"); text("welcomeName", documentType === "employee_journey" ? `Welcome, ${employee}` : "Overview"); [30, 60, 90].forEach(day => { text(`employeeReflection${day}Label`, `${employee}'s ${day}-day reflection`); text(`managerAssessment${day}Label`, `${manager}'s ${day}-day assessment`); });
   if (data.roleMission) text("roleMissionTitle", data.roleMission); if (data.roleMissionDescription) text("roleMissionDescription", data.roleMissionDescription);
   window.journeyProfile = { employeeName: employee, managerName: manager }; window.workspaceApp?.setJourneyMetadata?.({ startDate: data.startDate || "", status: data.status || "", documentType: data.objectType || data.documentType || (isTemplatePreview ? "system_template" : isManagerTemplate ? "manager_template" : "employee_journey") }); window.dispatchEvent(new CustomEvent("journey-metadata-changed", { detail: { startDate: data.startDate || "" } })); window.workspaceApp?.render?.();
 }

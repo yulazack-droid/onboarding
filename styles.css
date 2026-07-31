@@ -279,3 +279,31 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 
 /* Manager template deletion confirmation. */
 .delete-template-dialog-card label{font-weight:750}.delete-template-dialog-card .auth-message{display:block!important;min-height:18px;margin:10px 0 0;color:var(--danger)}.button.danger{color:#fff;background:var(--danger)}.button.danger:disabled{cursor:not-allowed;opacity:.45}
+
+/* Template editor v6.1: content-first compact shell. */
+.template-mode{--editor-header-min-height:110px;--editor-header-padding-y:20px;--editor-header-padding-x:28px;--editor-section-gap:20px;--editor-card-padding:22px;--editor-title-size:clamp(30px,2.6vw,42px);--editor-subtitle-size:17px;--editor-meta-size:13px}
+.template-mode .hero{grid-template-areas:"title actions" "metadata actions";grid-template-columns:minmax(0,1fr) auto;gap:8px 28px;min-height:var(--editor-header-min-height);padding:var(--editor-header-padding-y) var(--editor-header-padding-x);align-items:center;}
+.template-mode .hero-title-block{grid-area:title;max-width:none;}
+.template-mode .hero h1{font-size:var(--editor-title-size);line-height:1.08;}
+.template-mode .hero .eyebrow.light{margin:0 0 4px;font-size:12px;}
+.template-mode .hero-subtitle{margin-top:6px;font-size:var(--editor-subtitle-size);}
+.template-mode #templateMetadata{grid-area:metadata;display:flex;min-width:0;align-items:center;gap:8px;overflow:hidden;}
+.template-mode #templateMetadata>div{display:inline-flex;min-width:0;min-height:0;padding:0;border:0;background:transparent;align-items:center;gap:4px;}
+.template-mode #templateMetadata>div+div::before{content:"•";margin-right:4px;color:#a19cb5;}
+.template-mode #templateMetadata span{display:none;}
+.template-mode #templateMetadata strong{margin:0;color:var(--muted);font-size:var(--editor-meta-size);font-weight:650;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.template-mode #templateMetadata>div:first-child strong{padding:4px 8px;border-radius:999px;color:#5d42c6;background:var(--purple-soft);font-weight:800;}
+.template-mode .hero-tools{grid-area:actions;min-width:0;align-items:center;justify-content:flex-end;flex-wrap:nowrap;gap:9px;}
+.template-mode .hero-tools .button{white-space:nowrap;}
+.template-mode .tabs{min-height:56px;margin-top:10px;padding:4px;}
+.template-mode .tab{min-height:46px;padding:9px 13px;}
+.template-mode .welcome-card{display:block;margin:12px 0 14px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.template-mode .welcome-card .eyebrow{display:none;}
+.template-mode .welcome-card h2{margin:0 0 4px;font-size:clamp(18px,1.5vw,22px);line-height:1.25;}
+.template-mode .welcome-card .muted{max-width:860px;font-size:clamp(14px,1.1vw,16px);line-height:1.5;}
+.template-mode .mission-card{gap:var(--editor-section-gap);padding:var(--editor-card-padding);border-radius:16px;box-shadow:none;}
+.template-mode .mission-card h2{margin-bottom:6px;font-size:clamp(20px,1.7vw,26px);line-height:1.2;}
+.template-mode .mission-pillars>div{min-height:0;padding:13px;}
+.template-mode .operating-strip{margin-top:var(--editor-section-gap);padding:var(--editor-card-padding);}
+@media (max-width:1100px){.template-mode .hero{grid-template-areas:"title metadata" "actions actions";grid-template-columns:minmax(0,1fr) minmax(280px,auto);gap:12px 20px;}.template-mode .hero-tools{justify-content:flex-start;flex-wrap:wrap;}.template-mode #templateMetadata{justify-content:flex-end;}.template-mode .tabs{margin-top:10px;}}
+@media (max-width:700px){.template-mode .hero{grid-template-areas:"title" "metadata" "actions";grid-template-columns:1fr;padding:20px;gap:10px;}.template-mode .hero h1{font-size:clamp(28px,8vw,32px);white-space:normal;}.template-mode #templateMetadata{flex-wrap:wrap;overflow:visible;}.template-mode #templateMetadata strong{white-space:normal;}.template-mode .hero-tools{flex-wrap:wrap;}.template-mode .tabs{min-height:54px;margin-top:8px;}.template-mode .tab{min-height:42px;}.template-mode .mission-card{grid-template-columns:1fr;padding:18px;}.template-mode .mission-pillars{grid-template-columns:1fr;}}
