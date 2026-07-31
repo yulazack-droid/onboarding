@@ -20,6 +20,7 @@ const roles = [
   { id: "qa-manager", name: "QA Manager", category: "Engineering & Quality", status: "Coming Soon", description: "Quality strategy and delivery." }
 ];
 
+window.addEventListener("pageshow", event => { if (event.persisted) window.location.reload(); });
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), provider = new GoogleAuthProvider();
 provider.setCustomParameters({ hd: "scopely.com" });
 const $ = id => document.getElementById(id);
