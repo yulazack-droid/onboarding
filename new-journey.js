@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/fireba
 import { browserLocalPersistence, getAuth, GoogleAuthProvider, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import { collection, getDocs, getFirestore, query, where } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
+window.addEventListener("unload",()=>{});
 const roles=[
  {id:"ai-transformation-lead",name:"AI Transformation Lead",category:"Leadership & Transformation",status:"Ready",description:"AI strategy, delivery and enablement."},
  {id:"data-analyst",name:"Data Analyst",category:"Analytics",status:"Ready",description:"Analytics, insights and decision support."},

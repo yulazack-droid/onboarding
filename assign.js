@@ -2,12 +2,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/fireba
 import { browserLocalPersistence, getAuth, GoogleAuthProvider, onAuthStateChanged, setPersistence, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { firebaseConfig, hubAdminEmail } from "./firebase-config.js";
+window.addEventListener("unload", () => {});
 
 const params = new URLSearchParams(location.search);
 const templateId = params.get("template");
 const managerTemplateId = params.get("managerTemplate");
 const draftId = params.get("draft");
-const app = initializeApp(firebaseConfig, "lgp-assign-journey");
+// Share the same persisted login used by the Hub and template pages.
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const $ = selector => document.querySelector(selector);

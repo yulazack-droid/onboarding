@@ -20,6 +20,8 @@ const roles = [
   { id: "qa-manager", name: "QA Manager", category: "Engineering & Quality", status: "Coming Soon", description: "Quality strategy and delivery." }
 ];
 
+// Do not restore an obsolete Hub from the browser back/forward cache.
+window.addEventListener("unload", () => {});
 window.addEventListener("pageshow", event => { if (event.persisted) window.location.reload(); });
 const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), provider = new GoogleAuthProvider();
 provider.setCustomParameters({ hd: "scopely.com" });
@@ -50,4 +52,6 @@ async function loadJourneys() { els.journeyState.textContent = "Loading journeys
 async function handleSignIn() { els.signInButton.disabled = true; setLoginMessage("Opening Google sign-in…"); try { await setPersistence(auth, browserLocalPersistence); const result = await signInWithPopup(auth, provider); if (!isScopelyUser(result.user)) { await signOut(auth); throw new Error("Please use your Scopely Google account."); } } catch (error) { setLoginMessage(error?.message || "Sign-in failed.", true); } finally { els.signInButton.disabled = false; } }
 els.roleSearch.addEventListener("input", renderRoleLibrary); els.signInButton.addEventListener("click", handleSignIn); els.signOutButton.addEventListener("click", () => signOut(auth)); els.cancelDelete.addEventListener("click", () => els.deleteDialog.close());
 els.confirmDelete.addEventListener("click", async () => { if (!journeyPendingDeletion || !canManageJourney(journeyPendingDeletion)) return; els.confirmDelete.disabled = true; els.deleteStatus.textContent = "Deleting Journey…"; try { await deleteDoc(doc(db, "workspaces", journeyPendingDeletion.id)); els.deleteDialog.close(); journeyPendingDeletion = null; await loadJourneys(); } catch (error) { els.deleteStatus.textContent = error?.code === "permission-denied" ? "Deletion is blocked by Firestore rules." : "Journey could not be deleted."; els.confirmDelete.disabled = false; } });
+function decorateJourneyProgress() { document.querySelectorAll(".journey-card").forEach(card => { if (card.dataset.progressReady) return; const detail = card.querySelector(".journey-detail")?.textContent || "", match = detail.match(/Week\s+(\d+)\s+of\s+(\d+)\s+·\s+(\d+)%/); if (!match) return; card.dataset.progressReady = "true"; const week = `Week ${match[1]} of ${match[2]}`, percent = Math.max(0, Math.min(100, Number(match[3]))), block = document.createElement("div"); block.className = "journey-progress"; block.innerHTML = `<div class="journey-progress-label"><span>${week}</span><strong>${percent}%</strong></div><div class="journey-track"><span style="width:${percent}%"></span></div>`; card.querySelector(".open-label")?.before(block); }); }
+new MutationObserver(decorateJourneyProgress).observe(els.journeyGrid, { childList: true, subtree: true });
 onAuthStateChanged(auth, async user => { if (!user) { currentUser = null; return showGate(); } if (!isScopelyUser(user)) { await signOut(auth); return showGate("Please use your Scopely Google account."); } currentUser = user; showHub(user); renderRoleLibrary(); await loadJourneys(); });

@@ -10,6 +10,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import { firebaseConfig } from "./firebase-config.js";
 
+// Template and Journey screens must always rehydrate from the shared session,
+// never from a stale browser history snapshot.
+window.addEventListener("unload", () => {});
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
