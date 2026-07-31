@@ -231,3 +231,23 @@ button { cursor: pointer; }
 
 /* Manager workspace home — v7 */
 .manager-workspace{padding-top:32px}.workspace-welcome{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 0 24px;border-bottom:1px solid var(--line)}.workspace-welcome h1{margin:0 0 5px;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.04em}.workspace-welcome p{margin:0;color:var(--muted);font-size:1rem}.new-journey-button{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap;padding:12px 17px}.journeys-section{margin-top:30px}.journeys-section .section-heading{margin-bottom:15px}.journey-grid{grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}.journey-card{min-height:176px;position:relative}.journey-open{display:flex;flex-direction:column;gap:10px;height:100%;padding:19px;text-decoration:none;color:inherit}.journey-card-copy h3{margin:0 0 3px}.journey-card-copy p{margin:0}.journey-detail{margin-top:9px!important;color:var(--muted);font-size:.82rem}.open-label{margin-top:auto;align-self:flex-start}.journey-more{position:absolute;right:12px;top:12px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-weight:900;letter-spacing:1px;cursor:pointer;padding:6px}.journey-more:hover{background:#f1eeff;color:var(--purple)}.state-card{display:flex;flex-direction:column;align-items:flex-start;gap:11px}.state-card .button{text-decoration:none}@media(max-width:700px){.workspace-welcome{align-items:flex-start;flex-direction:column}.manager-workspace{padding-top:20px}}
+
+/* Home layout v7.1: scalable official role library. */
+.page { width: min(1360px, calc(100% - 64px)); }
+.content-section { margin-top: 56px; }
+.official-library-section { padding-bottom: 8px; }
+.library-heading { align-items: end; }
+.library-heading p:last-child { max-width: 620px; margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.library-search input { width: min(300px, 100%); padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px; background: #fff; font: inherit; }
+.library-count { margin: -7px 0 13px; color: var(--muted); font-size: 12px; }
+.role-library-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 24px; }
+.official-role-card { min-height: 205px; padding: 19px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+.official-role-card.ready { border-color: #d8ccff; }
+.official-role-card.coming-soon { background: rgba(255,255,255,.7); opacity: .78; }
+.official-role-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.role-initials { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: var(--purple); background: var(--purple-soft); font-size: 11px; font-weight: 850; }
+.role-status { color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+.role-category { min-height: 15px; margin: 13px 0 4px !important; color: var(--purple) !important; font-size: 10px !important; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+.official-role-card h3 { margin: 0 0 7px; font-size: 17px; }
+.official-role-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+@media (max-width: 700px) { .page { width: min(100% - 28px, 1360px); } .library-heading { align-items: stretch; flex-direction: column; } .library-search input { width: 100%; } .role-library-grid { gap: 14px; } }
