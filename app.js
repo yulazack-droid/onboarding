@@ -75,7 +75,7 @@ function save(options={}){
     window.dispatchEvent(new CustomEvent('workspace-local-changed',{detail:{state:structuredClone(state)}}));
   }
 }
-function getWorkspaceState(){return structuredClone(state)}
+function getWorkspaceState(){const snapshot=structuredClone(state);delete snapshot.activeTab;delete snapshot.activeWeek;return snapshot}
 function applyWorkspaceState(nextState,options={}){
   if(!validWorkspace(nextState))throw new Error('Invalid workspace state');
   const localActiveTab=state.activeTab;
@@ -83,8 +83,8 @@ function applyWorkspaceState(nextState,options={}){
   cloudNotificationsEnabled=false;
   try{
     state=merge(structuredClone(defaults),nextState);
-    state.activeTab=localActiveTab||state.activeTab||'overview';
-    state.activeWeek=Number.isInteger(localActiveWeek)?localActiveWeek:(state.activeWeek||0);
+    state.activeTab=options.resetView?'overview':(localActiveTab||state.activeTab||'overview');
+    state.activeWeek=options.resetView?0:(Number.isInteger(localActiveWeek)?localActiveWeek:(state.activeWeek||0));
     state.schemaVersion=SCHEMA_VERSION;
     state.operatingModel=state.operatingModel||{label:'Ongoing role operating model',title:'Applies beyond the first 90 days',allocations:[{percent:'70%',label:'Hands-on delivery'},{percent:'20%',label:'Project management'},{percent:'10%',label:'Stakeholder engagement & opportunity mapping'}]};
     if(options.persistLocal!==false)save({notifyCloud:false,statusText:options.statusText||'Loaded from cloud'});
@@ -94,26 +94,45 @@ function applyWorkspaceState(nextState,options={}){
   }
 }
 function setReadOnly(value){readOnlyMode=Boolean(value);document.body.classList.toggle('read-only-mode',readOnlyMode);}
-window.workspaceApp={getState:getWorkspaceState,applyState:applyWorkspaceState,saveLocal:()=>save({notifyCloud:false,force:true}),setReadOnly,isReadOnly:()=>readOnlyMode,render:()=>render()};
+window.workspaceApp={getState:getWorkspaceState,applyState:applyWorkspaceState,saveLocal:()=>save({notifyCloud:false,force:true}),setReadOnly,isReadOnly:()=>readOnlyMode,render:()=>render(),setJourneyMetadata};
+let journeyMetadata={startDate:'',status:''};
 function today(){const t=new Date();t.setHours(0,0,0,0);return t}
-function dateOnly(s){return new Date(s+'T00:00:00')}
-function currentWeekIndex(){
-  const t=today();
-  const schedule=state.weeks;
-  if(t<dateOnly(schedule[0].start))return 0;
-  for(let i=0;i<schedule.length;i++){
-    if(t>=dateOnly(schedule[i].start)&&t<=dateOnly(schedule[i].end))return i;
-  }
-  return schedule.length-1;
+function dateOnly(value){const date=new Date(`${value||''}T00:00:00`);return Number.isNaN(date.getTime())?null:date}
+function formatLongDate(value){const date=dateOnly(value);return date?new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric'}).format(date):''}
+function totalRequiredTasks(){return state.weeks.flatMap(week=>week.actions||[])}
+function journeyTiming(){
+  const start=dateOnly(journeyMetadata.startDate)||dateOnly(state.weeks?.[0]?.start);
+  const totalWeeks=Math.max(1,state.weeks?.length||13);
+  if(!start)return{status:'not_started',week:null,elapsedDays:null,start:null,totalWeeks,progress:0};
+  const elapsedDays=Math.round((today()-start)/86400000);
+  if(elapsedDays<0)return{status:'not_started',week:null,elapsedDays,start,totalWeeks,progress:0};
+  const required=totalRequiredTasks();
+  const allComplete=required.length>0&&required.every(item=>item.done);
+  if(allComplete||elapsedDays>=90)return{status:'completed',week:null,elapsedDays,start,totalWeeks,progress:100};
+  return{status:'active',week:Math.min(Math.floor(elapsedDays/7)+1,totalWeeks),elapsedDays,start,totalWeeks,progress:null};
 }
-function phase(){const i=currentWeekIndex();return state.weeks[i].phase==='30'?'30 Days':state.weeks[i].phase==='60'?'60 Days':'90 Days'}
-function nav(){$$('.tab').forEach(b=>{if(b.classList.contains('add-custom-tab'))return;b.classList.toggle('active',b.dataset.tab===state.activeTab);b.onclick=()=>{state.activeTab=b.dataset.tab;nav();localStorage.setItem(KEY,JSON.stringify(state))}});$$('.panel').forEach(p=>p.classList.toggle('active',p.id===state.activeTab))}
-$$('.week-tab').forEach(b=>b.onclick=()=>{state.activeWeek=+b.dataset.week;renderWeek();renderOutcomeList();localStorage.setItem(KEY,JSON.stringify(state))});
+function currentWeekIndex(){const timing=journeyTiming();return timing.status==='not_started'?0:timing.status==='completed'?state.weeks.length-1:Math.max(0,(timing.week||1)-1)}
+function phase(){const timing=journeyTiming();return timing.status==='not_started'?'Not Started':timing.status==='completed'?'Completed':'Active'}
+function renderJourneyTiming(){
+  const timing=journeyTiming(), startLabel=$('#startDateLabel'), status=$('#currentPhase'), week=$('#currentWeekLabel'), actualStart=journeyMetadata.startDate||state.weeks?.[0]?.start;
+  if(startLabel){
+    if(timing.status==='not_started')startLabel.textContent=`Starts in ${Math.abs(timing.elapsedDays)} day${Math.abs(timing.elapsedDays)===1?'':'s'} · ${formatLongDate(actualStart)}`;
+    else if(timing.status==='active')startLabel.textContent=`Started ${formatLongDate(actualStart)}`;
+    else startLabel.textContent=formatLongDate(actualStart);
+  }
+  if(status)status.textContent=phase();
+  if(week)week.textContent=timing.status==='not_started'?'Not Started':timing.status==='completed'?'Completed':`Week ${timing.week}`;
+}
+function setJourneyMetadata(metadata={}){journeyMetadata={...journeyMetadata,...metadata};renderJourneyTiming();render()}
+function firstWeekForPhase(tab){const code={days30:'30',days60:'60',days90:'90'}[tab];return code?Math.max(0,state.weeks.findIndex(week=>week.phase===code)):state.activeWeek}
+function persistView(){localStorage.setItem(KEY,JSON.stringify(state))}
+function nav(){$$('.tab').forEach(b=>{if(b.classList.contains('add-custom-tab'))return;b.classList.toggle('active',b.dataset.tab===state.activeTab);b.onclick=()=>{state.activeTab=b.dataset.tab;if(['days30','days60','days90'].includes(state.activeTab))state.activeWeek=firstWeekForPhase(state.activeTab);nav();renderWeek();renderOutcomeList();persistView()}});$$('.panel').forEach(p=>p.classList.toggle('active',p.id===state.activeTab))}
+$$('.week-tab').forEach(b=>b.onclick=()=>{state.activeWeek=+b.dataset.week;renderWeek();renderOutcomeList();persistView()});
 function bindFields(){$$('[data-field]').forEach(f=>{const k=f.dataset.field;f.value=state[k]||'';f.oninput=e=>{state[k]=e.target.value;save()}})}
 function manualFor(i){state.manualTasks[i]=state.manualTasks[i]||[];return state.manualTasks[i]}
-function overviewItems(){const w=currentWeekIndex(),items=[];for(let i=0;i<w;i++)state.weeks[i].actions.forEach((a,j)=>{if(!a.done)items.push({kind:'week',w:i,j,item:a,carry:true})});state.weeks[w].actions.forEach((a,j)=>items.push({kind:'week',w,j,item:a,carry:false}));manualFor(w).forEach((a,j)=>items.push({kind:'manual',w,j,item:a,carry:false}));return items}
+function overviewItems(){const w=currentWeekIndex(),items=[],timing=journeyTiming();if(timing.status!=='not_started')for(let i=0;i<w;i++)state.weeks[i].actions.forEach((a,j)=>{if(!a.done)items.push({kind:'week',w:i,j,item:a,carry:true})});state.weeks[w].actions.forEach((a,j)=>items.push({kind:'week',w,j,item:a,carry:false}));manualFor(w).forEach((a,j)=>items.push({kind:'manual',w,j,item:a,carry:false}));return items}
 function escapeAttr(v){return String(v||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
-function renderOverview(){const w=currentWeekIndex();$('#overviewWeekTitle').textContent=state.weeks[w].title;$('#currentWeekLabel').textContent=`Week ${w+1}`;const root=$('#overviewTasks');root.innerHTML='';overviewItems().forEach(x=>{const d=document.createElement('div');d.className='task-card';d.innerHTML=`<input type="checkbox" ${x.item.done?'checked':''}><input value="${escapeAttr(x.item.text)}"><button>×</button>`;const[cb,inp,del]=d.children;cb.onchange=e=>{x.item.done=e.target.checked;renderOverview();progress();save()};inp.oninput=e=>{x.item.text=e.target.value;save()};del.onclick=()=>{if(x.kind==='manual')manualFor(x.w).splice(x.j,1);else state.weeks[x.w].actions.splice(x.j,1);renderOverview();progress();save()};root.appendChild(d)});progress()}
+function renderOverview(){const w=currentWeekIndex();$('#overviewWeekTitle').textContent=state.weeks[w].title;renderJourneyTiming();const root=$('#overviewTasks');root.innerHTML='';overviewItems().forEach(x=>{const d=document.createElement('div');d.className='task-card';d.innerHTML=`<input type="checkbox" ${x.item.done?'checked':''}><input value="${escapeAttr(x.item.text)}"><button>×</button>`;const[cb,inp,del]=d.children;cb.onchange=e=>{x.item.done=e.target.checked;renderOverview();progress();save()};inp.oninput=e=>{x.item.text=e.target.value;save()};del.onclick=()=>{if(x.kind==='manual')manualFor(x.w).splice(x.j,1);else state.weeks[x.w].actions.splice(x.j,1);renderOverview();progress();save()};root.appendChild(d)});progress()}
 $('#addManualTask').onclick=()=>{const w=currentWeekIndex();manualFor(w).push({text:'',done:false});renderOverview();save()}
 function profile(){return window.journeyProfile||{employeeName:'Employee',managerName:'Manager'}}
 function rating(label,val,key){return `<div><label>${label}</label><div class="rating">${[1,2,3,4,5].map(n=>`<button data-rate="${key}" data-value="${n}" class="${val===n?'active':''}">${n}</button>`).join('')}</div></div>`}
@@ -146,6 +165,8 @@ function renderCustomTabs(){const tabs=$('.tabs'),panels=$('#customTabPanels');i
 function openCustomTabDialog(){const dialog=$('#customTabDialog');if(!dialog)return;$('#customTabName').value='';dialog.showModal();$('#cancelCustomTab').onclick=()=>dialog.close();$('#customTabForm').onsubmit=event=>{event.preventDefault();const name=$('#customTabName').value.trim(),type=$('#customTabType').value;if(!name)return;state.customTabs.push({id:customTabId(),name,type,order:state.customTabs.length+1,blocks:[]});dialog.close();state.activeTab=state.customTabs.at(-1).id;render();save()}}
 function ratio(done,total){return total?Math.round(done/total*100):0}
 function phaseProgress(code){const indexes=phaseWeeks(code).map(x=>x.i),tasks=indexes.flatMap(i=>[...state.weeks[i].actions,...manualFor(i)]),done=tasks.filter(x=>x.done).length;return{done,total:tasks.length,p:ratio(done,tasks.length)}}
-function progress(){const items=overviewItems(),done=items.filter(x=>x.item.done).length,total=items.length,p=ratio(done,total);$('#weeklyProgressValue').textContent=`${p}%`;$('#weeklyProgressCount').textContent=`${done} / ${total}`;$('#weeklyProgressBar').style.width=`${p}%`;$('#weekStatus').textContent=p>=70?'On Track':'Needs Attention';$('#weekStatus').style.color=p>=70?'#14805e':'#b76d13';for(const [code,prefix] of [['30','30'],['60','60'],['90','90']]){const v=phaseProgress(code);$(`#progress${prefix}Value`).textContent=`${v.p}%`;$(`#progress${prefix}Count`).textContent=`${v.done} / ${v.total}`}$('#currentPhase').textContent=phase()}
+function progress(){const timing=journeyTiming(),items=overviewItems(),done=items.filter(x=>x.item.done).length,total=items.length,p=timing.status==='not_started'?0:timing.status==='completed'?100:ratio(done,total);$('#weeklyProgressValue').textContent=`${p}%`;$('#weeklyProgressCount').textContent=`${done} / ${total}`;$('#weeklyProgressBar').style.width=`${p}%`;$('#weekStatus').textContent=timing.status==='not_started'?'Not Started':timing.status==='completed'?'Completed':p>=70?'On Track':'Needs Attention';$('#weekStatus').style.color=timing.status==='not_started'?'#6d6a82':timing.status==='completed'?'#14805e':p>=70?'#14805e':'#b76d13';for(const [code,prefix] of [['30','30'],['60','60'],['90','90']]){const v=phaseProgress(code);$(`#progress${prefix}Value`).textContent=`${timing.status==='not_started'?0:v.p}%`;$(`#progress${prefix}Count`).textContent=`${timing.status==='not_started'?0:v.done} / ${v.total}`}renderJourneyTiming()}
 function render(){renderOperatingModel();renderCustomTabs();nav();renderOverview();renderWeek();renderOutcomeList();list('#deliverables30',state.deliverables30);success('#success30','success30');renderPhaseObjectives('#objectives60','60');list('#deliverables60',state.deliverables60);success('#success60','success60');renderPhaseObjectives('#objectives90','90');list('#deliverables90',state.deliverables90);success('#success90','success90');people();initiatives();resources();bindFields();progress()}
 render();
+function refreshAtNextLocalDay(){const next=new Date();next.setHours(24,0,1,0);setTimeout(()=>{render();refreshAtNextLocalDay()},Math.max(1000,next-new Date()))}
+refreshAtNextLocalDay();

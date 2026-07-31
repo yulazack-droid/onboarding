@@ -12,7 +12,7 @@
   </style>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://accounts.google.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=5.3.0" />
+  <link rel="stylesheet" href="styles.css?v=5.5.0" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite" hidden>
@@ -34,11 +34,11 @@
       </div>
       <div class="hero-meta">
         <div><span>Start date</span><strong id="startDateLabel">August 11, 2026</strong></div>
-        <div><span>Current phase</span><strong id="currentPhase">Pre-onboarding</strong></div>
+        <div><span>Journey status</span><strong id="currentPhase">Not Started</strong></div>
         <div><span>Current week</span><strong id="currentWeekLabel">Week 1</strong></div>
       </div>
       <div class="hero-tools">
-        <a id="backToHubButton" class="button glass compact back-to-hub-button" href="hub.html?v=7.1.1" hidden>← Back to Hub</a>
+        <a id="backToHubButton" class="button glass compact back-to-hub-button" href="hub.html?v=8.0.3" hidden>← Hub</a>
         <button id="editTemplateButton" class="button glass compact" type="button" hidden>Edit Template</button>
         <div id="templateMoreActions" class="template-more-actions" hidden>
           <button id="moreTemplateActionsButton" class="button glass compact more-actions-button" type="button" aria-label="More template actions" aria-expanded="false">•••</button>
@@ -177,7 +177,7 @@
         <div class="table-wrap"><table class="resources-table"><thead><tr><th>Name</th><th>Description</th><th>Link</th><th>Open</th><th></th></tr></thead><tbody id="resourcesBody"></tbody></table></div>
       </section>
       <div id="customTabPanels"></div>
-    </main><footer class="app-footer">Version 4.4.2 · Compact login</footer>
+    </main><footer class="app-footer" hidden></footer>
   </div>
   <dialog id="customizeTemplateDialog" class="template-dialog">
     <form id="customizeTemplateForm" class="template-dialog-card" method="dialog">
@@ -200,9 +200,9 @@
       <div class="dialog-actions"><button id="cancelCustomTab" class="button secondary" type="button">Cancel</button><button class="button primary" type="submit">Add Tab</button></div>
     </form>
   </dialog>
-  <script type="module" src="app.js?v=5.0.0"></script>
-  <script type="module" src="firebase-auth.js?v=5.1.1"></script>
-  <script type="module" src="firestore-workspace.js?v=5.2.3"></script>
+  <script type="module" src="app.js?v=5.2.0"></script>
+  <script type="module" src="firebase-auth.js?v=5.2.0"></script>
+  <script type="module" src="firestore-workspace.js?v=5.4.0"></script>
   <script type="module" src="editor-ui.js?v=1.0.1"></script>
 </body>
 </html>

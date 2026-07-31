@@ -32,7 +32,7 @@
       <main class="page manager-workspace">
         <section class="workspace-welcome"><div><h1 id="welcomeTitle">Welcome back</h1><p>Manage onboarding templates and employee journeys.</p></div></section>
         <a id="startJourneyButton" class="new-journey-panel" href="new-journey.html"><span class="new-journey-icon" aria-hidden="true">+</span><span class="new-journey-copy"><strong>New Journey</strong><small>Start a new onboarding journey for a team member.</small></span><span class="new-journey-arrow" aria-hidden="true">→</span></a>
-        <section class="content-section journeys-section" aria-labelledby="journeysTitle"><div class="section-heading"><div><h2 id="journeysTitle">Active journeys <span id="journeyCount" class="count-pill">0</span></h2></div><a class="section-link" href="#journeysTitle">View all journeys <span aria-hidden="true">→</span></a></div><div id="journeyState" class="state-card">Loading journeys…</div><div id="journeyGrid" class="journey-grid" hidden></div></section>
+        <section class="content-section journeys-section" aria-labelledby="journeysTitle"><div class="section-heading"><div><h2 id="journeysTitle">Active journeys <span id="journeyCount" class="count-pill">0</span></h2></div><a id="viewAllJourneys" class="section-link" href="#journeysTitle" hidden>View all journeys <span aria-hidden="true">→</span></a></div><div id="journeyState" class="state-card">Loading journeys…</div><div id="journeyGrid" class="journey-grid" hidden></div></section>
         <section class="content-section official-library-section" aria-labelledby="officialLibraryTitle"><div class="section-heading library-heading"><div><h2 id="officialLibraryTitle">Role library <span id="roleCount" class="count-pill">0</span></h2></div><a class="section-link" href="new-journey.html">View all roles <span aria-hidden="true">→</span></a></div><div class="library-controls"><label class="library-search"><span class="sr-only">Search roles</span><span aria-hidden="true">⌕</span><input id="roleSearch" type="search" placeholder="Search roles…" autocomplete="off" /></label><span class="category-filter">All categories <span aria-hidden="true">⌄</span></span></div><div id="roleLibraryGrid" class="role-library-grid"></div></section>
       </main>
       <footer class="footer">© 2026 Scopely, Inc. All rights reserved.</footer>
@@ -40,6 +40,6 @@
   </div>
 
   <dialog id="deleteJourneyDialog" class="dialog"><section class="dialog-card"><span class="dialog-icon" aria-hidden="true">!</span><p class="eyebrow">Delete Journey</p><h2>Delete <span id="deleteJourneyName"></span>?</h2><p>This action permanently deletes the Journey. It cannot be restored.</p><p id="deleteJourneyStatus" class="login-message" role="status"></p><div class="dialog-actions"><button id="cancelDelete" class="button ghost" type="button">Cancel</button><button id="confirmDelete" class="button danger" type="button">Delete permanently</button></div></section></dialog>
-  <script type="module" src="hub.js?v=8.0.2"></script>
+  <script type="module" src="hub.js?v=8.0.4"></script>
 </body>
 </html>
