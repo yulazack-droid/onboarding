@@ -276,3 +276,6 @@ body.read-only-mode #addManualTask, body.read-only-mode #addPerson, body.read-on
 @media (min-width:1180px){.template-mode .hero h1{white-space:nowrap;font-size:clamp(30px,2.8vw,42px);}}
 @media (max-width:1179px){.template-mode .hero{grid-template-columns:minmax(0,1fr) minmax(340px,1fr);}.template-mode .hero-tools{grid-column:1/-1;justify-content:flex-end;}.template-mode .hero h1{font-size:clamp(30px,3.2vw,38px);}}
 @media (max-width:760px){.template-mode .hero{grid-template-columns:1fr;gap:18px;padding:24px;}.template-mode #templateMetadata{min-width:0;grid-template-columns:repeat(2,minmax(0,1fr));}.template-mode .hero-tools{grid-column:auto;justify-content:flex-start;}.template-mode .hero h1{font-size:clamp(28px,8vw,32px);white-space:normal;}.template-mode .hero-subtitle{font-size:16px;}.template-mode .welcome-card{padding:18px;}.template-mode .welcome-card h2{font-size:clamp(26px,7vw,32px);}.template-mode .welcome-card .muted{font-size:18px;}}
+
+/* Manager template deletion confirmation. */
+.delete-template-dialog-card label{font-weight:750}.delete-template-dialog-card .auth-message{display:block!important;min-height:18px;margin:10px 0 0;color:var(--danger)}.button.danger{color:#fff;background:var(--danger)}.button.danger:disabled{cursor:not-allowed;opacity:.45}
