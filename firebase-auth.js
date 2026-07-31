@@ -110,7 +110,7 @@ function unlockWorkspace(user) {
     appShell.setAttribute("aria-hidden", "false");
   }
   showSignedInUser(user);
-  setAuthMessage("Connected to Firebase");
+  setAuthMessage("");
   dispatchAuth(user, true);
 }
 

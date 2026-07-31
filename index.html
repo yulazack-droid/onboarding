@@ -12,7 +12,7 @@
   </style>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://accounts.google.com" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=5.0.0" />
+  <link rel="stylesheet" href="styles.css?v=5.1.0" />
 </head>
 <body>
   <section id="loginGate" class="login-gate" aria-live="polite" hidden>
@@ -38,20 +38,23 @@
         <div><span>Current week</span><strong id="currentWeekLabel">Week 1</strong></div>
       </div>
       <div class="hero-tools">
-        <span class="hero-save" id="saveStatus">Saved locally</span>
+        <span class="hero-save" id="saveStatus">All changes save automatically</span>
         <a id="backToHubButton" class="button glass compact" href="hub.html" hidden>Back to Hub</a>
         <button id="editTemplateButton" class="button glass compact" type="button" hidden>Edit Template</button>
-        <button id="saveTemplateButton" class="button light compact" type="button" hidden>Save Changes</button>
-        <button id="duplicateTemplateButton" class="button glass compact" type="button" hidden>Duplicate</button>
-        <button id="resetTemplateButton" class="button glass compact" type="button" hidden>Reset</button>
-        <button id="deleteTemplateButton" class="button glass compact danger-template-button" type="button" hidden>Delete</button>
+        <div id="templateMoreActions" class="template-more-actions" hidden>
+          <button id="moreTemplateActionsButton" class="button glass compact more-actions-button" type="button" aria-label="More template actions" aria-expanded="false">•••</button>
+          <div id="templateActionsMenu" class="template-actions-menu" hidden>
+            <button id="duplicateTemplateButton" type="button">Duplicate</button>
+            <button id="resetTemplateButton" type="button">Reset from official</button>
+            <button id="deleteTemplateButton" class="danger-action" type="button">Delete template</button>
+          </div>
+        </div>
         <a id="assignTemplateButton" class="button primary assign-journey-button" href="#" hidden>Assign Journey <span aria-hidden="true">→</span></a>
         <div class="auth-area" id="authArea" aria-live="polite">
           <button id="signInButton" class="button glass auth-button" type="button">Sign in with Google</button>
           <div id="signedInUser" class="signed-in-user" hidden>
             <img id="userAvatar" class="user-avatar" alt="" hidden />
             <div class="user-copy"><strong id="userName"></strong><span id="userEmail"></span></div>
-            <button id="signOutButton" class="button glass compact" type="button">Sign out</button>
           </div>
           <span id="authMessage" class="auth-message"></span>
         </div>
@@ -199,7 +202,7 @@
     </form>
   </dialog>
   <script type="module" src="app.js?v=5.0.0"></script>
-  <script type="module" src="firebase-auth.js?v=4.5.0"></script>
-  <script type="module" src="firestore-workspace.js?v=4.9.0"></script>
+  <script type="module" src="firebase-auth.js?v=5.1.0"></script>
+  <script type="module" src="firestore-workspace.js?v=5.1.0"></script>
 </body>
 </html>
